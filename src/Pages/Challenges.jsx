@@ -168,7 +168,8 @@ function Challenges() {
       try {
         setLoading(true);
         const [challengesRes] = await Promise.all([
-          axios.get("http://localhost:3000/challenges"),
+          // axios.get("http://localhost:3000/challenges"), //for development
+          axios.get("https://json-server-infinacode.onrender.com"), // for vercle
           new Promise(resolve => setTimeout(resolve, 500)) // Simulated delay for better UX
         ]);
 
