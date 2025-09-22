@@ -1,0 +1,1389 @@
+{
+  "challenges": [
+    {
+      "id": 1,
+      "title": "Reverse an Array",
+      "description": "Given an array of integers, return the reversed array.",
+      "points": 10,
+      "options": ["[4,3,2,1]", "[1,2,3,4]", "[1,4,3,2]", "[2,1,3,4]"],
+      "correct": "[4,3,2,1]"
+    },
+    {
+      "id": 2,
+      "title": "Find Maximum",
+      "description": "Given an array, find the maximum number.",
+      "points": 10,
+      "options": ["9", "7", "2", "1"],
+      "correct": "9"
+    },
+    {
+      "id": 3,
+      "title": "Sum of Array",
+      "description": "Return the sum of all elements in an array.",
+      "points": 10,
+      "options": ["18", "15", "20", "10"],
+      "correct": "18"
+    },
+    {
+      "id": 4,
+      "title": "Check Prime",
+      "description": "Check if a given number is prime.",
+      "points": 15,
+      "options": ["true", "false"],
+      "correct": "true"
+    },
+    {
+      "id": 5,
+      "title": "Fibonacci Number",
+      "description": "Return the nth Fibonacci number.",
+      "points": 15,
+      "options": ["13", "8", "21", "5"],
+      "correct": "13"
+    },
+    {
+      "id": 6,
+      "title": "Palindrome String",
+      "description": "Check if the given string is a palindrome.",
+      "points": 10,
+      "options": ["true", "false"],
+      "correct": "true"
+    },
+    {
+      "id": 7,
+      "title": "Count Vowels",
+      "description": "Count the number of vowels in a string.",
+      "points": 10,
+      "options": ["3", "2", "4", "1"],
+      "correct": "3"
+    },
+    {
+      "id": 8,
+      "title": "Remove Duplicates",
+      "description": "Remove duplicate elements from an array.",
+      "points": 10,
+      "options": ["[1,2,3,4]", "[1,2,2,3,3,4]", "[1,3,4,2]", "[1,2,3]"],
+      "correct": "[1,2,3,4]"
+    },
+    {
+      "id": 9,
+      "title": "Factorial",
+      "description": "Return factorial of a given number.",
+      "points": 15,
+      "options": ["120", "24", "720", "60"],
+      "correct": "120"
+    },
+    {
+      "id": 10,
+      "title": "Sum of Digits",
+      "description": "Return the sum of digits of a number.",
+      "points": 10,
+      "options": ["10", "9", "8", "12"],
+      "correct": "10"
+    },
+    {
+      "id": 11,
+      "title": "Binary Search",
+      "description": "Implement binary search on a sorted array.",
+      "points": 20,
+      "options": ["4", "2", "5", "3"],
+      "correct": "4"
+    },
+    {
+      "id": 12,
+      "title": "Merge Sorted Arrays",
+      "description": "Merge two sorted arrays into one sorted array.",
+      "points": 15,
+      "options": ["[1,2,3,4,5,6]", "[1,3,2,4,5,6]", "[1,2,3,4,6,5]", "[1,2,4,3,5,6]"],
+      "correct": "[1,2,3,4,5,6]"
+    },
+    {
+      "id": 13,
+      "title": "Find Minimum",
+      "description": "Find the minimum value in an array.",
+      "points": 10,
+      "options": ["1", "3", "0", "2"],
+      "correct": "0"
+    },
+    {
+      "id": 14,
+      "title": "String Length",
+      "description": "Return the length of a string.",
+      "points": 5,
+      "options": ["11", "10", "12", "9"],
+      "correct": "11"
+    },
+    {
+      "id": 15,
+      "title": "Array Average",
+      "description": "Calculate the average of array elements.",
+      "points": 10,
+      "options": ["4.5", "5", "4", "5.5"],
+      "correct": "4.5"
+    },
+    {
+      "id": 16,
+      "title": "Power Calculation",
+      "description": "Calculate base raised to the exponent.",
+      "points": 10,
+      "options": ["16", "8", "32", "64"],
+      "correct": "16"
+    },
+    {
+      "id": 17,
+      "title": "GCD Calculation",
+      "description": "Find the greatest common divisor of two numbers.",
+      "points": 15,
+      "options": ["6", "3", "2", "12"],
+      "correct": "6"
+    },
+    {
+      "id": 18,
+      "title": "LCM Calculation",
+      "description": "Find the least common multiple of two numbers.",
+      "points": 15,
+      "options": ["36", "12", "18", "24"],
+      "correct": "36"
+    },
+    {
+      "id": 19,
+      "title": "Check Even",
+      "description": "Check if a number is even.",
+      "points": 5,
+      "options": ["true", "false"],
+      "correct": "true"
+    },
+    {
+      "id": 20,
+      "title": "Check Odd",
+      "description": "Check if a number is odd.",
+      "points": 5,
+      "options": ["true", "false"],
+      "correct": "true"
+    },
+    {
+      "id": 21,
+      "title": "Square Root",
+      "description": "Calculate the square root of a number.",
+      "points": 10,
+      "options": ["5", "4", "6", "7"],
+      "correct": "5"
+    },
+    {
+      "id": 22,
+      "title": "Count Words",
+      "description": "Count the number of words in a string.",
+      "points": 10,
+      "options": ["4", "3", "5", "6"],
+      "correct": "4"
+    },
+    {
+      "id": 23,
+      "title": "Reverse String",
+      "description": "Reverse the characters in a string.",
+      "points": 10,
+      "options": ["dlrow olleH", "Hello world", "world Hello", "olleH dlrow"],
+      "correct": "dlrow olleH"
+    },
+    {
+      "id": 24,
+      "title": "Title Case",
+      "description": "Convert a string to title case.",
+      "points": 10,
+      "options": ["Hello World", "hello world", "HELLO WORLD", "Hello world"],
+      "correct": "Hello World"
+    },
+    {
+      "id": 25,
+      "title": "Find Median",
+      "description": "Find the median of an array.",
+      "points": 15,
+      "options": ["5", "4.5", "5.5", "6"],
+      "correct": "5"
+    },
+    {
+      "id": 26,
+      "title": "Mode of Array",
+      "description": "Find the mode of an array.",
+      "points": 15,
+      "options": ["3", "5", "2", "4"],
+      "correct": "3"
+    },
+    {
+      "id": 27,
+      "title": "Range of Array",
+      "description": "Find the range of an array.",
+      "points": 10,
+      "options": ["8", "7", "9", "10"],
+      "correct": "8"
+    },
+    {
+      "id": 28,
+      "title": "Check Anagram",
+      "description": "Check if two strings are anagrams.",
+      "points": 15,
+      "options": ["true", "false"],
+      "correct": "true"
+    },
+    {
+      "id": 29,
+      "title": "Binary to Decimal",
+      "description": "Convert a binary number to decimal.",
+      "points": 15,
+      "options": ["13", "11", "15", "9"],
+      "correct": "13"
+    },
+    {
+      "id": 30,
+      "title": "Decimal to Binary",
+      "description": "Convert a decimal number to binary.",
+      "points": 15,
+      "options": ["1101", "1011", "1111", "1001"],
+      "correct": "1101"
+    },
+    {
+      "id": 31,
+      "title": "FizzBuzz",
+      "description": "Implement FizzBuzz for a given number.",
+      "points": 10,
+      "options": ["Fizz", "Buzz", "FizzBuzz", "13"],
+      "correct": "Fizz"
+    },
+    {
+      "id": 32,
+      "title": "Check Perfect Square",
+      "description": "Check if a number is a perfect square.",
+      "points": 10,
+      "options": ["true", "false"],
+      "correct": "true"
+    },
+    {
+      "id": 33,
+      "title": "Check Perfect Number",
+      "description": "Check if a number is a perfect number.",
+      "points": 15,
+      "options": ["true", "false"],
+      "correct": "true"
+    },
+    {
+      "id": 34,
+      "title": "Find Factors",
+      "description": "Find all factors of a number.",
+      "points": 10,
+      "options": ["[1,2,3,6]", "[1,2,6]", "[1,6]", "[2,3]"],
+      "correct": "[1,2,3,6]"
+    },
+    {
+      "id": 35,
+      "title": "Prime Factors",
+      "description": "Find prime factors of a number.",
+      "points": 15,
+      "options": ["[2,3]", "[2,2,3]", "[1,2,3]", "[6]"],
+      "correct": "[2,3]"
+    },
+    {
+      "id": 36,
+      "title": "Check Armstrong",
+      "description": "Check if a number is an Armstrong number.",
+      "points": 15,
+      "options": ["true", "false"],
+      "correct": "true"
+    },
+    {
+      "id": 37,
+      "title": "Check Palindrome Number",
+      "description": "Check if a number is a palindrome.",
+      "points": 10,
+      "options": ["true", "false"],
+      "correct": "true"
+    },
+    {
+      "id": 38,
+      "title": "Sort Array",
+      "description": "Sort an array in ascending order.",
+      "points": 10,
+      "options": ["[1,2,3,4,5]", "[5,4,3,2,1]", "[1,3,2,4,5]", "[1,2,4,3,5]"],
+      "correct": "[1,2,3,4,5]"
+    },
+    {
+      "id": 39,
+      "title": "Sort Array Descending",
+      "description": "Sort an array in descending order.",
+      "points": 10,
+      "options": ["[5,4,3,2,1]", "[1,2,3,4,5]", "[5,4,2,3,1]", "[5,3,4,2,1]"],
+      "correct": "[5,4,3,2,1]"
+    },
+    {
+      "id": 40,
+      "title": "Find Second Largest",
+      "description": "Find the second largest number in an array.",
+      "points": 15,
+      "options": ["8", "9", "7", "10"],
+      "correct": "8"
+    },
+    {
+      "id": 41,
+      "title": "Find Second Smallest",
+      "description": "Find the second smallest number in an array.",
+      "points": 15,
+      "options": ["2", "1", "3", "4"],
+      "correct": "2"
+    },
+    {
+      "id": 42,
+      "title": "Rotate Array",
+      "description": "Rotate array elements by k positions.",
+      "points": 15,
+      "options": ["[4,5,1,2,3]", "[3,4,5,1,2]", "[5,1,2,3,4]", "[2,3,4,5,1]"],
+      "correct": "[4,5,1,2,3]"
+    },
+    {
+      "id": 43,
+      "title": "Find Missing Number",
+      "description": "Find the missing number in an array.",
+      "points": 15,
+      "options": ["5", "4", "6", "7"],
+      "correct": "5"
+    },
+    {
+      "id": 44,
+      "title": "Find Duplicates",
+      "description": "Find duplicate elements in an array.",
+      "points": 15,
+      "options": ["[3,6]", "[3]", "[6]", "[3,6,9]"],
+      "correct": "[3,6]"
+    },
+    {
+      "id": 45,
+      "title": "Matrix Addition",
+      "description": "Add two matrices.",
+      "points": 15,
+      "options": ["[[6,8],[10,12]]", "[[5,7],[9,11]]", "[[6,7],[10,11]]", "[[5,8],[9,12]]"],
+      "correct": "[[6,8],[10,12]]"
+    },
+    {
+      "id": 46,
+      "title": "Matrix Multiplication",
+      "description": "Multiply two matrices.",
+      "points": 20,
+      "options": ["[[19,22],[43,50]]", "[[18,21],[42,49]]", "[[19,21],[43,49]]", "[[18,22],[42,50]]"],
+      "correct": "[[19,22],[43,50]]"
+    },
+    {
+      "id": 47,
+      "title": "Transpose Matrix",
+      "description": "Transpose a matrix.",
+      "points": 15,
+      "options": ["[[1,4],[2,5],[3,6]]", "[[1,2,3],[4,5,6]]", "[[1,3,5],[2,4,6]]", "[[1,4],[2,5]]"],
+      "correct": "[[1,4],[2,5],[3,6]]"
+    },
+    {
+      "id": 48,
+      "title": "Check Identity Matrix",
+      "description": "Check if a matrix is an identity matrix.",
+      "points": 15,
+      "options": ["true", "false"],
+      "correct": "true"
+    },
+    {
+      "id": 49,
+      "title": "Check Sparse Matrix",
+      "description": "Check if a matrix is a sparse matrix.",
+      "points": 15,
+      "options": ["true", "false"],
+      "correct": "true"
+    },
+    {
+      "id": 50,
+      "title": "String Concatenation",
+      "description": "Concatenate two strings.",
+      "points": 5,
+      "options": ["HelloWorld", "Hello World", "Helloworld", "hello world"],
+      "correct": "HelloWorld"
+    },
+    {
+      "id": 51,
+      "title": "String Contains",
+      "description": "Check if a string contains a substring.",
+      "points": 10,
+      "options": ["true", "false"],
+      "correct": "true"
+    },
+    {
+      "id": 52,
+      "title": "String Replace",
+      "description": "Replace all occurrences of a substring in a string.",
+      "points": 10,
+      "options": ["Hello Universe", "Hello World", "Universe", "World"],
+      "correct": "Hello Universe"
+    },
+    {
+      "id": 53,
+      "title": "String Split",
+      "description": "Split a string into an array of words.",
+      "points": 10,
+      "options": ["['Hello','World']", "['Hello World']", "['H','e','l','l','o']", "['Hello',' ','World']"],
+      "correct": "['Hello','World']"
+    },
+    {
+      "id": 54,
+      "title": "String Trim",
+      "description": "Remove whitespace from both ends of a string.",
+      "points": 5,
+      "options": ["Hello World", " Hello World ", "Hello World  ", "  Hello World"],
+      "correct": "Hello World"
+    },
+    {
+      "id": 55,
+      "title": "String Upper Case",
+      "description": "Convert a string to uppercase.",
+      "points": 5,
+      "options": ["HELLO WORLD", "hello world", "Hello World", "Hello world"],
+      "correct": "HELLO WORLD"
+    },
+    {
+      "id": 56,
+      "title": "String Lower Case",
+      "description": "Convert a string to lowercase.",
+      "points": 5,
+      "options": ["hello world", "HELLO WORLD", "Hello World", "Hello world"],
+      "correct": "hello world"
+    },
+    {
+      "id": 57,
+      "title": "Check Substring",
+      "description": "Check if a string is a substring of another string.",
+      "points": 10,
+      "options": ["true", "false"],
+      "correct": "true"
+    },
+    {
+      "id": 58,
+      "title": "Find Substring Index",
+      "description": "Find the index of a substring in a string.",
+      "points": 10,
+      "options": ["6", "5", "7", "8"],
+      "correct": "6"
+    },
+    {
+      "id": 59,
+      "title": "Count Substring",
+      "description": "Count occurrences of a substring in a string.",
+      "points": 10,
+      "options": ["2", "1", "3", "4"],
+      "correct": "2"
+    },
+    {
+      "id": 60,
+      "title": "Check Prefix",
+      "description": "Check if a string starts with a given prefix.",
+      "points": 10,
+      "options": ["true", "false"],
+      "correct": "true"
+    },
+    {
+      "id": 61,
+      "title": "Check Suffix",
+      "description": "Check if a string ends with a given suffix.",
+      "points": 10,
+      "options": ["true", "false"],
+      "correct": "true"
+    },
+    {
+      "id": 62,
+      "title": "String Repeat",
+      "description": "Repeat a string n times.",
+      "points": 10,
+      "options": ["HelloHelloHello", "Hello Hello Hello", "HelloHello", "Hello Hello"],
+      "correct": "HelloHelloHello"
+    },
+    {
+      "id": 63,
+      "title": "String Reverse Words",
+      "description": "Reverse the order of words in a string.",
+      "points": 15,
+      "options": ["World Hello", "Hello World", "dlroW olleH", "olleH dlroW"],
+      "correct": "World Hello"
+    },
+    {
+      "id": 64,
+      "title": "Check Valid Email",
+      "description": "Check if a string is a valid email address.",
+      "points": 15,
+      "options": ["true", "false"],
+      "correct": "true"
+    },
+    {
+      "id": 65,
+      "title": "Check Valid URL",
+      "description": "Check if a string is a valid URL.",
+      "points": 15,
+      "options": ["true", "false"],
+      "correct": "true"
+    },
+    {
+      "id": 66,
+      "title": "Check Valid IP",
+      "description": "Check if a string is a valid IP address.",
+      "points": 15,
+      "options": ["true", "false"],
+      "correct": "true"
+    },
+    {
+      "id": 67,
+      "title": "Extract Domain",
+      "description": "Extract domain from a URL.",
+      "points": 10,
+      "options": ["example.com", "www.example.com", "https://www.example.com", "example"],
+      "correct": "example.com"
+    },
+    {
+      "id": 68,
+      "title": "Extract Protocol",
+      "description": "Extract protocol from a URL.",
+      "points": 10,
+      "options": ["https", "http", "ftp", "www"],
+      "correct": "https"
+    },
+    {
+      "id": 69,
+      "title": "Count Characters",
+      "description": "Count occurrences of each character in a string.",
+      "points": 15,
+      "options": ["{'H':1,'e':1,'l':2,'o':1}", "{'H':1,'e':1,'l':2,'o':1,' ':1,'W':1,'r':1,'d':1}", "{'H':1,'e':1,'l':3,'o':2}", "{'H':1,'e':1,'l':2,'o':1,'W':1,'r':1,'d':1}"],
+      "correct": "{'H':1,'e':1,'l':2,'o':1}"
+    },
+    {
+      "id": 70,
+      "title": "Check Isogram",
+      "description": "Check if a string is an isogram.",
+      "points": 15,
+      "options": ["true", "false"],
+      "correct": "true"
+    },
+    {
+      "id": 71,
+      "title": "Check Pangram",
+      "description": "Check if a string is a pangram.",
+      "points": 15,
+      "options": ["true", "false"],
+      "correct": "true"
+    },
+    {
+      "id": 72,
+      "title": "Caesar Cipher",
+      "description": "Encrypt a string using Caesar cipher.",
+      "points": 20,
+      "options": ["Khoor Zruog", "Hello World", "Khooq Zruog", "Khoor World"],
+      "correct": "Khoor Zruog"
+    },
+    {
+      "id": 73,
+      "title": "Run-Length Encoding",
+      "description": "Encode a string using run-length encoding.",
+      "points": 20,
+      "options": ["3A2B1C", "A3B2C1", "3A2B1C2", "A A A B B C"],
+      "correct": "3A2B1C"
+    },
+    {
+      "id": 74,
+      "title": "Run-Length Decoding",
+      "description": "Decode a run-length encoded string.",
+      "points": 20,
+      "options": ["AAABBC", "A3B2C1", "3A2B1C", "AAABB C"],
+      "correct": "AAABBC"
+    },
+    {
+      "id": 75,
+      "title": "Check Balanced Parentheses",
+      "description": "Check if parentheses in a string are balanced.",
+      "points": 15,
+      "options": ["true", "false"],
+      "correct": "true"
+    },
+    {
+      "id": 76,
+      "title": "Check Balanced Brackets",
+      "description": "Check if all types of brackets in a string are balanced.",
+      "points": 20,
+      "options": ["true", "false"],
+      "correct": "true"
+    },
+    {
+      "id": 77,
+      "title": "Infix to Postfix",
+      "description": "Convert an infix expression to postfix.",
+      "points": 25,
+      "options": ["AB+C*", "A+B*C", "ABC*+", "AB*C+"],
+      "correct": "AB+C*"
+    },
+    {
+      "id": 78,
+      "title": "Evaluate Postfix",
+      "description": "Evaluate a postfix expression.",
+      "points": 25,
+      "options": ["7", "9", "5", "11"],
+      "correct": "7"
+    },
+    {
+      "id": 79,
+      "title": "Tower of Hanoi",
+      "description": "Solve Tower of Hanoi for n disks.",
+      "points": 30,
+      "options": ["7", "15", "3", "5"],
+      "correct": "7"
+    },
+    {
+      "id": 80,
+      "title": "Fibonacci Sequence",
+      "description": "Generate Fibonacci sequence up to n terms.",
+      "points": 15,
+      "options": ["[0,1,1,2,3,5,8]", "[1,1,2,3,5,8]", "[0,1,2,3,5,8]", "[1,2,3,5,8]"],
+      "correct": "[0,1,1,2,3,5,8]"
+    },
+    {
+      "id": 81,
+      "title": "Prime Numbers",
+      "description": "Generate prime numbers up to n.",
+      "points": 20,
+      "options": ["[2,3,5,7]", "[1,2,3,5,7]", "[2,3,5,7,9]", "[3,5,7]"],
+      "correct": "[2,3,5,7]"
+    },
+    {
+      "id": 82,
+      "title": "Sieve of Eratosthenes",
+      "description": "Find all primes up to n using Sieve of Eratosthenes.",
+      "points": 25,
+      "options": ["[2,3,5,7]", "[1,2,3,5,7]", "[2,3,5,7,9]", "[3,5,7]"],
+      "correct": "[2,3,5,7]"
+    },
+    {
+      "id": 83,
+      "title": "Bubble Sort",
+      "description": "Sort an array using bubble sort.",
+      "points": 15,
+      "options": ["[1,2,3,4,5]", "[5,4,3,2,1]", "[1,3,2,4,5]", "[1,2,4,3,5]"],
+      "correct": "[1,2,3,4,5]"
+    },
+    {
+      "id": 84,
+      "title": "Selection Sort",
+      "description": "Sort an array using selection sort.",
+      "points": 15,
+      "options": ["[1,2,3,4,5]", "[5,4,3,2,1]", "[1,3,2,4,5]", "[1,2,4,3,5]"],
+      "correct": "[1,2,3,4,5]"
+    },
+    {
+      "id": 85,
+      "title": "Insertion Sort",
+      "description": "Sort an array using insertion sort.",
+      "points": 15,
+      "options": ["[1,2,3,4,5]", "[5,4,3,2,1]", "[1,3,2,4,5]", "[1,2,4,3,5]"],
+      "correct": "[1,2,3,4,5]"
+    },
+    {
+      "id": 86,
+      "title": "Merge Sort",
+      "description": "Sort an array using merge sort.",
+      "points": 20,
+      "options": ["[1,2,3,4,5]", "[5,4,3,2,1]", "[1,3,2,4,5]", "[1,2,4,3,5]"],
+      "correct": "[1,2,3,4,5]"
+    },
+    {
+      "id": 87,
+      "title": "Quick Sort",
+      "description": "Sort an array using quick sort.",
+      "points": 20,
+      "options": ["[1,2,3,4,5]", "[5,4,3,2,1]", "[1,3,2,4,5]", "[1,2,4,3,5]"],
+      "correct": "[1,2,3,4,5]"
+    },
+    {
+      "id": 88,
+      "title": "Heap Sort",
+      "description": "Sort an array using heap sort.",
+      "points": 25,
+      "options": ["[1,2,3,4,5]", "[5,4,3,2,1]", "[1,3,2,4,5]", "[1,2,4,3,5]"],
+      "correct": "[1,2,3,4,5]"
+    },
+    {
+      "id": 89,
+      "title": "Linear Search",
+      "description": "Search for an element in an array using linear search.",
+      "points": 10,
+      "options": ["4", "3", "5", "2"],
+      "correct": "4"
+    },
+    {
+      "id": 90,
+      "title": "Binary Search",
+      "description": "Search for an element in a sorted array using binary search.",
+      "points": 15,
+      "options": ["4", "3", "5", "2"],
+      "correct": "4"
+    },
+    {
+      "id": 91,
+      "title": "Interpolation Search",
+      "description": "Search for an element in a sorted array using interpolation search.",
+      "points": 20,
+      "options": ["4", "3", "5", "2"],
+      "correct": "4"
+    },
+    {
+      "id": 92,
+      "title": "Jump Search",
+      "description": "Search for an element in a sorted array using jump search.",
+      "points": 20,
+      "options": ["4", "3", "5", "2"],
+      "correct": "4"
+    },
+    {
+      "id": 93,
+      "title": "Exponential Search",
+      "description": "Search for an element in a sorted array using exponential search.",
+      "points": 25,
+      "options": ["4", "3", "5", "2"],
+      "correct": "4"
+    },
+    {
+      "id": 94,
+      "title": "Ternary Search",
+      "description": "Search for an element in a sorted array using ternary search.",
+      "points": 25,
+      "options": ["4", "3", "5", "2"],
+      "correct": "4"
+    },
+    {
+      "id": 95,
+      "title": "Find Peak Element",
+      "description": "Find a peak element in an array.",
+      "points": 20,
+      "options": ["5", "3", "4", "2"],
+      "correct": "5"
+    },
+    {
+      "id": 96,
+      "title": "Find Floor",
+      "description": "Find floor of a number in a sorted array.",
+      "points": 15,
+      "options": ["4", "5", "3", "6"],
+      "correct": "4"
+    },
+    {
+      "id": 97,
+      "title": "Find Ceiling",
+      "description": "Find ceiling of a number in a sorted array.",
+      "points": 15,
+      "options": ["5", "4", "6", "3"],
+      "correct": "5"
+    },
+    {
+      "id": 98,
+      "title": "Count Inversions",
+      "description": "Count inversions in an array.",
+      "points": 25,
+      "options": ["5", "4", "6", "3"],
+      "correct": "5"
+    },
+    {
+      "id": 99,
+      "title": "Next Permutation",
+      "description": "Find next permutation of an array.",
+      "points": 30,
+      "options": ["[1,3,2]", "[2,1,3]", "[3,1,2]", "[2,3,1]"],
+      "correct": "[1,3,2]"
+    },
+    {
+      "id": 100,
+      "title": "Previous Permutation",
+      "description": "Find previous permutation of an array.",
+      "points": 30,
+      "options": ["[3,2,1]", "[2,3,1]", "[1,3,2]", "[3,1,2]"],
+      "correct": "[3,2,1]"
+    },
+    {
+      "id": 101,
+      "title": "Kadane's Algorithm",
+      "description": "Find the maximum subarray sum using Kadane's algorithm.",
+      "points": 25,
+      "options": ["6", "5", "7", "4"],
+      "correct": "6"
+    },
+    {
+      "id": 102,
+      "title": "Sliding Window Maximum",
+      "description": "Find the maximum in each sliding window of size k.",
+      "points": 30,
+      "options": ["[3,3,5,5,6,7]", "[3,5,5,6,7]", "[3,3,5,6,7]", "[3,5,6,7]"],
+      "correct": "[3,3,5,5,6,7]"
+    },
+    {
+      "id": 103,
+      "title": "Trapping Rain Water",
+      "description": "Calculate how much rainwater can be trapped between bars.",
+      "points": 30,
+      "options": ["6", "5", "7", "8"],
+      "correct": "6"
+    },
+    {
+      "id": 104,
+      "title": "Container With Most Water",
+      "description": "Find two lines that together with the x-axis form a container that holds the most water.",
+      "points": 25,
+      "options": ["49", "48", "50", "47"],
+      "correct": "49"
+    },
+    {
+      "id": 105,
+      "title": "Three Sum",
+      "description": "Find all unique triplets that sum to zero.",
+      "points": 25,
+      "options": ["[[-1,-1,2],[-1,0,1]]", "[[-1,0,1]]", "[[-1,-1,2]]", "[[-2,0,2],[-1,0,1]]"],
+      "correct": "[[-1,-1,2],[-1,0,1]]"
+    },
+    {
+      "id": 106,
+      "title": "Four Sum",
+      "description": "Find all unique quadruplets that sum to target.",
+      "points": 30,
+      "options": ["[[-2,-1,1,2],[-2,0,0,2],[-1,0,0,1]]", "[[-2,-1,1,2]]", "[[-2,0,0,2],[-1,0,0,1]]", "[[-2,-1,1,2],[-1,0,0,1]]"],
+      "correct": "[[-2,-1,1,2],[-2,0,0,2],[-1,0,0,1]]"
+    },
+    {
+      "id": 107,
+      "title": "Remove Nth Node From End",
+      "description": "Remove the nth node from the end of a linked list.",
+      "points": 20,
+      "options": ["[1,2,3,5]", "[1,2,3,4,5]", "[2,3,4,5]", "[1,2,4,5]"],
+      "correct": "[1,2,3,5]"
+    },
+    {
+      "id": 108,
+      "title": "Reverse Linked List",
+      "description": "Reverse a singly linked list.",
+      "points": 15,
+      "options": ["[5,4,3,2,1]", "[1,2,3,4,5]", "[5,4,3,2]", "[4,3,2,1]"],
+      "correct": "[5,4,3,2,1]"
+    },
+    {
+      "id": 109,
+      "title": "Merge Two Sorted Lists",
+      "description": "Merge two sorted linked lists.",
+      "points": 20,
+      "options": ["[1,1,2,3,4,4]", "[1,2,3,4]", "[1,1,2,3,4]", "[1,2,3,4,4]"],
+      "correct": "[1,1,2,3,4,4]"
+    },
+    {
+      "id": 110,
+      "title": "Linked List Cycle",
+      "description": "Detect if a linked list has a cycle.",
+      "points": 15,
+      "options": ["true", "false"],
+      "correct": "true"
+    },
+    {
+      "id": 111,
+      "title": "Find Cycle Start",
+      "description": "Find the node where a cycle begins in a linked list.",
+      "points": 20,
+      "options": ["3", "2", "4", "1"],
+      "correct": "3"
+    },
+    {
+      "id": 112,
+      "title": "Intersection of Two Lists",
+      "description": "Find the intersection node of two linked lists.",
+      "points": 20,
+      "options": ["8", "4", "2", "1"],
+      "correct": "8"
+    },
+    {
+      "id": 113,
+      "title": "Palindrome Linked List",
+      "description": "Check if a linked list is a palindrome.",
+      "points": 20,
+      "options": ["true", "false"],
+      "correct": "true"
+    },
+    {
+      "id": 114,
+      "title": "Add Two Numbers",
+      "description": "Add two numbers represented as linked lists.",
+      "points": 25,
+      "options": ["[7,0,8]", "[7,0,9]", "[8,0,7]", "[7,1,8]"],
+      "correct": "[7,0,8]"
+    },
+    {
+      "id": 115,
+      "title": "Copy List with Random Pointer",
+      "description": "Create a deep copy of a linked list with random pointers.",
+      "points": 30,
+      "options": ["[[7,null],[13,0],[11,4],[10,2],[1,0]]", "[[7,null],[13,7],[11,1],[10,11],[1,7]]", "[[7,null],[13,0],[11,4],[10,2]]", "[[7,null],[13,0],[11,4],[10,2],[1,4]]"],
+      "correct": "[[7,null],[13,0],[11,4],[10,2],[1,0]]"
+    },
+    {
+      "id": 116,
+      "title": "LRU Cache",
+      "description": "Implement Least Recently Used (LRU) cache.",
+      "points": 30,
+      "options": ["[1,-1]", "[1,-1,3]", "[-1,3,4]", "[1,3,4]"],
+      "correct": "[1,-1]"
+    },
+    {
+      "id": 117,
+      "title": "Binary Tree Inorder Traversal",
+      "description": "Perform inorder traversal of a binary tree.",
+      "points": 15,
+      "options": ["[4,2,5,1,3]", "[1,2,4,5,3]", "[4,5,2,3,1]", "[1,2,3,4,5]"],
+      "correct": "[4,2,5,1,3]"
+    },
+    {
+      "id": 118,
+      "title": "Binary Tree Preorder Traversal",
+      "description": "Perform preorder traversal of a binary tree.",
+      "points": 15,
+      "options": ["[1,2,4,5,3]", "[4,2,5,1,3]", "[1,2,3,4,5]", "[4,5,2,3,1]"],
+      "correct": "[1,2,4,5,3]"
+    },
+    {
+      "id": 119,
+      "title": "Binary Tree Postorder Traversal",
+      "description": "Perform postorder traversal of a binary tree.",
+      "points": 15,
+      "options": ["[4,5,2,3,1]", "[1,2,4,5,3]", "[4,2,5,1,3]", "[1,2,3,4,5]"],
+      "correct": "[4,5,2,3,1]"
+    },
+    {
+      "id": 120,
+      "title": "Binary Tree Level Order",
+      "description": "Perform level order traversal of a binary tree.",
+      "points": 20,
+      "options": ["[[3],[9,20],[15,7]]", "[[3],[9,20],[7,15]]", "[[3,9,20],[15,7]]", "[[3],[9],[20],[15],[7]]"],
+      "correct": "[[3],[9,20],[15,7]]"
+    },
+    {
+      "id": 121,
+      "title": "Maximum Depth of Binary Tree",
+      "description": "Find the maximum depth of a binary tree.",
+      "points": 15,
+      "options": ["3", "2", "4", "1"],
+      "correct": "3"
+    },
+    {
+      "id": 122,
+      "title": "Symmetric Tree",
+      "description": "Check if a binary tree is symmetric.",
+      "points": 20,
+      "options": ["true", "false"],
+      "correct": "true"
+    },
+    {
+      "id": 123,
+      "title": "Path Sum",
+      "description": "Check if the tree has a root-to-leaf path with given sum.",
+      "points": 20,
+      "options": ["true", "false"],
+      "correct": "true"
+    },
+    {
+      "id": 124,
+      "title": "Construct Binary Tree from Preorder and Inorder",
+      "description": "Construct binary tree from preorder and inorder traversal arrays.",
+      "points": 30,
+      "options": ["[3,9,20,null,null,15,7]", "[3,9,20,15,7]", "[3,9,20,null,15,7]", "[3,9,null,20,15,7]"],
+      "correct": "[3,9,20,null,null,15,7]"
+    },
+    {
+      "id": 125,
+      "title": "Construct Binary Tree from Inorder and Postorder",
+      "description": "Construct binary tree from inorder and postorder traversal arrays.",
+      "points": 30,
+      "options": ["[3,9,20,null,null,15,7]", "[3,9,20,15,7]", "[3,9,20,null,15,7]", "[3,9,null,20,15,7]"],
+      "correct": "[3,9,20,null,null,15,7]"
+    },
+    {
+      "id": 126,
+      "title": "Binary Search Tree Validation",
+      "description": "Validate if a binary tree is a valid BST.",
+      "points": 25,
+      "options": ["true", "false"],
+      "correct": "true"
+    },
+    {
+      "id": 127,
+      "title": "Kth Smallest Element in BST",
+      "description": "Find the kth smallest element in a BST.",
+      "points": 25,
+      "options": ["1", "2", "3", "4"],
+      "correct": "1"
+    },
+    {
+      "id": 128,
+      "title": "Lowest Common Ancestor of BST",
+      "description": "Find the lowest common ancestor of two nodes in a BST.",
+      "points": 25,
+      "options": ["6", "2", "8", "4"],
+      "correct": "6"
+    },
+    {
+      "id": 129,
+      "title": "Implement Trie",
+      "description": "Implement a trie (prefix tree) data structure.",
+      "points": 30,
+      "options": ["[true, true, false]", "[true, false, true]", "[false, true, true]", "[true, true, true]"],
+      "correct": "[true, true, false]"
+    },
+    {
+      "id": 130,
+      "title": "Word Search",
+      "description": "Check if a word exists in a 2D board of characters.",
+      "points": 30,
+      "options": ["true", "false"],
+      "correct": "true"
+    },
+    {
+      "id": 131,
+      "title": "Number of Islands",
+      "description": "Count the number of islands in a 2D grid.",
+      "points": 30,
+      "options": ["1", "2", "3", "4"],
+      "correct": "1"
+    },
+    {
+      "id": 132,
+      "title": "Course Schedule",
+      "description": "Check if you can finish all courses given prerequisites.",
+      "points": 30,
+      "options": ["true", "false"],
+      "correct": "true"
+    },
+    {
+      "id": 133,
+      "title": "Alien Dictionary",
+      "description": "Find the order of characters in an alien language.",
+      "points": 35,
+      "options": ["'wertf'", "'wert'", "'wertfs'", "'werft'"],
+      "correct": "'wertf'"
+    },
+    {
+      "id": 134,
+      "title": "Graph Valid Tree",
+      "description": "Check if a graph is a valid tree.",
+      "points": 25,
+      "options": ["true", "false"],
+      "correct": "true"
+    },
+    {
+      "id": 135,
+      "title": "Number of Connected Components",
+      "description": "Count the number of connected components in an undirected graph.",
+      "points": 25,
+      "options": ["2", "1", "3", "4"],
+      "correct": "2"
+    },
+    {
+      "id": 136,
+      "title": "Clone Graph",
+      "description": "Create a deep copy of a graph.",
+      "points": 30,
+      "options": ["[[2,4],[1,3],[2,4],[1,3]]", "[[2,4],[1,3],[4],[3]]", "[[2],[1,3],[2,4],[1]]", "[[2,4],[3],[4],[1]]"],
+      "correct": "[[2,4],[1,3],[2,4],[1,3]]"
+    },
+    {
+      "id": 137,
+      "title": "Pacific Atlantic Water Flow",
+      "description": "Find cells where water can flow to both Pacific and Atlantic oceans.",
+      "points": 35,
+      "options": ["[[0,4],[1,3],[1,4],[2,2],[3,0],[3,1],[4,0]]", "[[0,4],[1,3],[1,4],[2,2],[3,0],[4,0]]", "[[0,4],[1,3],[1,4],[3,0],[3,1],[4,0]]", "[[0,4],[1,3],[1,4],[2,2],[3,1],[4,0]]"],
+      "correct": "[[0,4],[1,3],[1,4],[2,2],[3,0],[3,1],[4,0]]"
+    },
+    {
+      "id": 138,
+      "title": "Longest Increasing Path",
+      "description": "Find the length of the longest increasing path in a matrix.",
+      "points": 35,
+      "options": ["4", "3", "5", "6"],
+      "correct": "4"
+    },
+    {
+      "id": 139,
+      "title": "Robot Room Cleaner",
+      "description": "Clean an entire room using a robot cleaner.",
+      "points": 40,
+      "options": ["All cells cleaned", "Some cells cleaned", "No cells cleaned", "Error"],
+      "correct": "All cells cleaned"
+    },
+    {
+      "id": 140,
+      "title": "Word Ladder",
+      "description": "Find the length of the shortest transformation sequence from beginWord to endWord.",
+      "points": 35,
+      "options": ["5", "4", "6", "3"],
+      "correct": "5"
+    },
+    {
+      "id": 141,
+      "title": "Minimum Knight Moves",
+      "description": "Find the minimum number of moves for a knight to reach target position.",
+      "points": 30,
+      "options": ["1", "2", "3", "4"],
+      "correct": "1"
+    },
+    {
+      "id": 142,
+      "title": "Chessboard Knight Probability",
+      "description": "Calculate the probability that a knight remains on the board after k moves.",
+      "points": 35,
+      "options": ["0.0625", "0.125", "0.25", "0.5"],
+      "correct": "0.0625"
+    },
+    {
+      "id": 143,
+      "title": "Sudoku Solver",
+      "description": "Solve a Sudoku puzzle.",
+      "points": 40,
+      "options": ["[['5','3','4','6','7','8','9','1','2'],['6','7','2','1','9','5','3','4','8'],['1','9','8','3','4','2','5','6','7'],['8','5','9','7','6','1','4','2','3'],['4','2','6','8','5','3','7','9','1'],['7','1','3','9','2','4','8','5','6'],['9','6','1','5','3','7','2','8','4'],['2','8','7','4','1','9','6','3','5'],['3','4','5','2','8','6','1','7','9']]", "[['5','3','4','6','7','8','9','1','2'],['6','7','2','1','9','5','3','4','8'],['1','9','8','3','4','2','5','6','7'],['8','5','9','7','6','1','4','2','3'],['4','2','6','8','5','3','7','9','1'],['7','1','3','9','2','4','8','5','6'],['9','6','1','5','3','7','2','8','4'],['2','8','7','4','1','9','6','3','5'],['3','4','5','2','8','6','1','7','9']]", "[['5','3','4','6','7','8','9','1','2'],['6','7','2','1','9','5','3','4','8'],['1','9','8','3','4','2','5','6','7'],['8','5','9','7','6','1','4','2','3'],['4','2','6','8','5','3','7','9','1'],['7','1','3','9','2','4','8','5','6'],['9','6','1','5','3','7','2','8','4'],['2','8','7','4','1','9','6','3','5'],['3','4','5','2','8','6','1','7','9']]", "[['5','3','4','6','7','8','9','1','2'],['6','7','2','1','9','5','3','4','8'],['1','9','8','3','4','2','5','6','7'],['8','5','9','7','6','1','4','2','3'],['4','2','6','8','5','3','7','9','1'],['7','1','3','9','2','4','8','5','6'],['9','6','1','5','3','7','2','8','4'],['2','8','7','4','1','9','6','3','5'],['3','4','5','2','8','6','1','7','9']]"],
+      "correct": "[['5','3','4','6','7','8','9','1','2'],['6','7','2','1','9','5','3','4','8'],['1','9','8','3','4','2','5','6','7'],['8','5','9','7','6','1','4','2','3'],['4','2','6','8','5','3','7','9','1'],['7','1','3','9','2','4','8','5','6'],['9','6','1','5','3','7','2','8','4'],['2','8','7','4','1','9','6','3','5'],['3','4','5','2','8','6','1','7','9']]"
+    },
+    {
+      "id": 144,
+      "title": "N-Queens",
+      "description": "Solve the N-Queens puzzle.",
+      "points": 35,
+      "options": ["[['.Q..','...Q','Q...','..Q.'],['..Q.','Q...','...Q','.Q..']]", "[['Q...','..Q.','.Q..','...Q']]", "[['.Q..','...Q','Q...','..Q.']]", "[['.Q..','...Q'],['Q...','..Q.']]"],
+      "correct": "[['.Q..','...Q','Q...','..Q.'],['..Q.','Q...','...Q','.Q..']]"
+    },
+    {
+      "id": 145,
+      "title": "N-Queens II",
+      "description": "Count the number of distinct solutions to the N-Queens problem.",
+      "points": 35,
+      "options": ["2", "1", "3", "4"],
+      "correct": "2"
+    },
+    {
+      "id": 146,
+      "title": "Generate Parentheses",
+      "description": "Generate all combinations of well-formed parentheses.",
+      "points": 30,
+      "options": ["['((()))','(()())','(())()','()(())','()()()']", "['((()))','(()())','(())()','()(())']", "['((()))','(()())','(())()','()()()']", "['(()())','(())()','()(())','()()()']"],
+      "correct": "['((()))','(()())','(())()','()(())','()()()']"
+    },
+    {
+      "id": 147,
+      "title": "Word Break",
+      "description": "Determine if a string can be segmented into dictionary words.",
+      "points": 30,
+      "options": ["true", "false"],
+      "correct": "true"
+    },
+    {
+      "id": 148,
+      "title": "Palindrome Partitioning",
+      "description": "Partition a string such that every substring is a palindrome.",
+      "points": 30,
+      "options": ["[['a','a','b'],['aa','b']]", "[['aab']]", "[['a','a','b']]", "[['aa','b']]"],
+      "correct": "[['a','a','b'],['aa','b']]"
+    },
+    {
+      "id": 149,
+      "title": "Decode Ways",
+      "description": "Count how many ways a string of digits can be decoded to letters.",
+      "points": 30,
+      "options": ["2", "1", "3", "4"],
+      "correct": "2"
+    },
+    {
+      "id": 150,
+      "title": "Integer to English Words",
+      "description": "Convert a non-negative integer to its English words representation.",
+      "points": 35,
+      "options": ["'One Hundred Twenty Three'", "'One Hundred Twenty Three '", "'One Hundred and Twenty Three'", "'One Hundred Twenty-Three'"],
+      "correct": "'One Hundred Twenty Three'"
+    },
+    {
+      "id": 151,
+      "title": "Basic Calculator",
+      "description": "Implement a basic calculator to evaluate a simple expression string.",
+      "points": 35,
+      "options": ["2", "1", "3", "4"],
+      "correct": "2"
+    },
+    {
+      "id": 152,
+      "title": "Basic Calculator II",
+      "description": "Implement a calculator to evaluate a simple expression string with +, -, *, /.",
+      "points": 35,
+      "options": ["7", "6", "8", "5"],
+      "correct": "7"
+    },
+    {
+      "id": 153,
+      "title": "Reverse Integer",
+      "description": "Reverse digits of a 32-bit signed integer.",
+      "points": 20,
+      "options": ["321", "123", "-321", "-123"],
+      "correct": "321"
+    },
+    {
+      "id": 154,
+      "title": "String to Integer (atoi)",
+      "description": "Implement the atoi function to convert a string to an integer.",
+      "points": 25,
+      "options": ["42", "-42", "0", "-0"],
+      "correct": "42"
+    },
+    {
+      "id": 155,
+      "title": "Palindrome Number",
+      "description": "Determine whether an integer is a palindrome.",
+      "points": 15,
+      "options": ["true", "false"],
+      "correct": "true"
+    },
+    {
+      "id": 156,
+      "title": "Roman to Integer",
+      "description": "Convert a Roman numeral to an integer.",
+      "points": 20,
+      "options": ["3", "4", "5", "6"],
+      "correct": "3"
+    },
+    {
+      "id": 157,
+      "title": "Integer to Roman",
+      "description": "Convert an integer to a Roman numeral.",
+      "points": 20,
+      "options": ["'III'", "'IIII'", "'IV'", "'IIV'"],
+      "correct": "'III'"
+    },
+    {
+      "id": 158,
+      "title": "Plus One",
+      "description": "Add one to a number represented as an array of digits.",
+      "points": 15,
+      "options": ["[1,2,4]", "[1,2,3]", "[1,2,3,4]", "[1,2,4,0]"],
+      "correct": "[1,2,4]"
+    },
+    {
+      "id": 159,
+      "title": "Add Binary",
+      "description": "Add two binary strings.",
+      "points": 15,
+      "options": ["'100'", "'101'", "'110'", "'111'"],
+      "correct": "'100'"
+    },
+    {
+      "id": 160,
+      "title": "Multiply Strings",
+      "description": "Multiply two numbers represented as strings.",
+      "points": 30,
+      "options": ["'56088'", "'56088 '", "'56089'", "'56087'"],
+      "correct": "'56088'"
+    },
+    {
+      "id": 161,
+      "title": "Sqrt(x)",
+      "description": "Compute the square root of x rounded down to the nearest integer.",
+      "points": 20,
+      "options": ["2", "1", "3", "4"],
+      "correct": "2"
+    },
+    {
+      "id": 162,
+      "title": "Pow(x, n)",
+      "description": "Implement pow(x, n), which calculates x raised to the power n.",
+      "points": 25,
+      "options": ["1024.0", "1024", "1024.00000", "1024.0"],
+      "correct": "1024.0"
+    },
+    {
+      "id": 163,
+      "title": "Divide Two Integers",
+      "description": "Divide two integers without using multiplication, division, and mod operator.",
+      "points": 30,
+      "options": ["3", "2", "4", "5"],
+      "correct": "3"
+    },
+    {
+      "id": 164,
+      "title": "Fraction to Recurring Decimal",
+      "description": "Given two integers representing numerator and denominator, return the fraction in string format.",
+      "points": 30,
+      "options": ["'0.5'", "'0.5(0)'", "'0.50'", "'0.4(9)'"],
+      "correct": "'0.5'"
+    },
+    {
+      "id": 165,
+      "title": "Max Points on a Line",
+      "description": "Given an array of points, find the maximum number of points that lie on the same straight line.",
+      "points": 35,
+      "options": ["3", "2", "4", "5"],
+      "correct": "3"
+    },
+    {
+      "id": 166,
+      "title": "Factorial Trailing Zeroes",
+      "description": "Count the number of trailing zeroes in n!.",
+      "points": 20,
+      "options": ["0", "1", "2", "3"],
+      "correct": "0"
+    },
+    {
+      "id": 167,
+      "title": "Happy Number",
+      "description": "Determine if a number is happy.",
+      "points": 20,
+      "options": ["true", "false"],
+      "correct": "true"
+    },
+    {
+      "id": 168,
+      "title": "Ugly Number",
+      "description": "Check if a number is an ugly number.",
+      "points": 15,
+      "options": ["true", "false"],
+      "correct": "true"
+    },
+    {
+      "id": 169,
+      "title": "Nth Ugly Number",
+      "description": "Find the nth ugly number.",
+      "points": 25,
+      "options": ["12", "10", "14", "16"],
+      "correct": "12"
+    },
+    {
+      "id": 170,
+      "title": "Super Ugly Number",
+      "description": "Find the nth super ugly number.",
+      "points": 30,
+      "options": ["32", "30", "34", "36"],
+      "correct": "32"
+    },
+    {
+      "id": 171,
+      "title": "Count Primes",
+      "description": "Count the number of prime numbers less than a non-negative number, n.",
+      "points": 20,
+      "options": ["4", "3", "5", "6"],
+      "correct": "4"
+    },
+    {
+      "id": 172,
+      "title": "Perfect Squares",
+      "description": "Find the least number of perfect square numbers which sum to n.",
+      "points": 25,
+      "options": ["3", "2", "4", "5"],
+      "correct": "3"
+    },
+    {
+      "id": 173,
+      "title": "Excel Sheet Column Title",
+      "description": "Convert a column number to an Excel column title.",
+      "points": 20,
+      "options": ["'A'", "'B'", "'C'", "'D'"],
+      "correct": "'A'"
+    }
+  ]
+}
+    
