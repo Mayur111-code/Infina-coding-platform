@@ -26,7 +26,7 @@ function Dashboard() {
 
     // Fetch all questions from JSON server
     // axios.get("http://localhost:3000/challenges") // for development
-    axios.get("https://json-server-infinacode.onrender.com") // for vercle
+     axios.get("https://json-server-infinacode.onrender.com") // for vercle
       .then((res) => {
         const questionsArray = res.data;
         setAllQuestionsCount(questionsArray.length);
