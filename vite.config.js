@@ -7,3 +7,8 @@ import tailwindcss from '@tailwindcss/vite'
 export default defineConfig({
   plugins: [tailwindcss(),react()],
 })
+
+// module.exports = {
+//   darkMode: 'class',
+//   // rest config...
+// }

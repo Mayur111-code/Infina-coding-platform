@@ -122,11 +122,30 @@ function Marketplace() {
   const [sortBy, setSortBy] = useState("points");
   const [showFilters, setShowFilters] = useState(false);
 
+  // useEffect(() => {
+  //   // Load user points from localStorage
+  //   const storedPoints = parseInt(localStorage.getItem("totalPoints")) || 0;
+  //   setUserPoints(storedPoints);
+  // }, []);
+
   useEffect(() => {
-    // Load user points from localStorage
-    const storedPoints = parseInt(localStorage.getItem("totalPoints")) || 0;
-    setUserPoints(storedPoints);
-  }, []);
+  // Load points whenever Marketplace mounts
+  const storedPoints = parseInt(localStorage.getItem("totalPoints")) || 0;
+  setUserPoints(storedPoints);
+
+  // 🔹 Listen for changes in localStorage (sync across app)
+  const handleStorageChange = () => {
+    const updatedPoints = parseInt(localStorage.getItem("totalPoints")) || 0;
+    setUserPoints(updatedPoints);
+  };
+
+  window.addEventListener("storage", handleStorageChange);
+
+  return () => {
+    window.removeEventListener("storage", handleStorageChange);
+  };
+}, []);
+
 
   const categories = [
     { id: "all", name: "All Categories", icon: "📱", color: "from-gray-500 to-gray-700" },
@@ -148,28 +167,62 @@ function Marketplace() {
       return 0;
     });
 
+
+
+  // const handleRedeem = (subscription) => {
+  //   if (userPoints >= subscription.pointsRequired) {
+  //     const newPoints = userPoints - subscription.pointsRequired;
+  //     setUserPoints(newPoints);
+  //     localStorage.setItem("totalPoints", newPoints.toString());
+      
+  //     // Add to redemption history
+  //     const redemptionHistory = JSON.parse(localStorage.getItem("redemptionHistory")) || [];
+  //     const newRedemption = {
+  //       id: Date.now(),
+  //       subscription: subscription.title,
+  //       pointsUsed: subscription.pointsRequired,
+  //       date: new Date().toISOString().split('T')[0],
+  //       status: "Active"
+  //     };
+  //     localStorage.setItem("redemptionHistory", JSON.stringify([...redemptionHistory, newRedemption]));
+      
+  //     alert(`🎉 Successfully redeemed ${subscription.title}! Check your email for activation details.`);
+  //   } else {
+  //     alert(`❌ Oops! You need ${subscription.pointsRequired - userPoints} more points to redeem this.`);
+  //   }
+  // };
+
+  
   const handleRedeem = (subscription) => {
-    if (userPoints >= subscription.pointsRequired) {
-      const newPoints = userPoints - subscription.pointsRequired;
-      setUserPoints(newPoints);
-      localStorage.setItem("totalPoints", newPoints.toString());
-      
-      // Add to redemption history
-      const redemptionHistory = JSON.parse(localStorage.getItem("redemptionHistory")) || [];
-      const newRedemption = {
-        id: Date.now(),
-        subscription: subscription.title,
-        pointsUsed: subscription.pointsRequired,
-        date: new Date().toISOString().split('T')[0],
-        status: "Active"
-      };
-      localStorage.setItem("redemptionHistory", JSON.stringify([...redemptionHistory, newRedemption]));
-      
-      alert(`🎉 Successfully redeemed ${subscription.title}! Check your email for activation details.`);
-    } else {
-      alert(`❌ Oops! You need ${subscription.pointsRequired - userPoints} more points to redeem this.`);
-    }
-  };
+  if (userPoints >= subscription.pointsRequired) {
+    const newPoints = userPoints - subscription.pointsRequired;
+
+    // Update both state and localStorage
+    setUserPoints(newPoints);
+    localStorage.setItem("totalPoints", newPoints.toString());
+
+    // Save redemption history
+    const redemptionHistory = JSON.parse(localStorage.getItem("redemptionHistory")) || [];
+    const newRedemption = {
+      id: Date.now(),
+      subscription: subscription.title,
+      pointsUsed: subscription.pointsRequired,
+      date: new Date().toISOString().split("T")[0],
+      status: "Active"
+    };
+    localStorage.setItem("redemptionHistory", JSON.stringify([...redemptionHistory, newRedemption]));
+
+    // Success alert
+    alert(`🎉 Successfully redeemed ${subscription.title}! Check your email for activation details.`);
+
+    // 🔹 Dispatch storage event manually so Dashboard/other components update too
+    window.dispatchEvent(new Event("storage"));
+
+  } else {
+    alert(`❌ Oops! You need ${subscription.pointsRequired - userPoints} more points to redeem this.`);
+  }
+};
+
 
   const getCategoryColor = (categoryId) => {
     const category = categories.find(cat => cat.id === categoryId);

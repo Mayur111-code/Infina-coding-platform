@@ -1383,7 +1383,881 @@
       "points": 20,
       "options": ["'A'", "'B'", "'C'", "'D'"],
       "correct": "'A'"
+    },
+    {
+      "id": 174,
+      "title": "Excel Sheet Column Number",
+      "description": "Convert an Excel column title to a column number.",
+      "points": 20,
+      "options": ["1", "2", "3", "4"],
+      "correct": "1"
+    },
+    {
+      "id": 175,
+      "title": "Power of Two",
+      "description": "Check if a number is a power of two.",
+      "points": 15,
+      "options": ["true", "false"],
+      "correct": "true"
+    },
+    {
+      "id": 176,
+      "title": "Power of Three",
+      "description": "Check if a number is a power of three.",
+      "points": 15,
+      "options": ["true", "false"],
+      "correct": "true"
+    },
+    {
+      "id": 177,
+      "title": "Power of Four",
+      "description": "Check if a number is a power of four.",
+      "points": 15,
+      "options": ["true", "false"],
+      "correct": "true"
+    },
+    {
+      "id": 178,
+      "title": "Number of 1 Bits",
+      "description": "Return the number of '1' bits in a number.",
+      "points": 15,
+      "options": ["2", "1", "3", "4"],
+      "correct": "2"
+    },
+    {
+      "id": 179,
+      "title": "Reverse Bits",
+      "description": "Reverse bits of a given 32 bits unsigned integer.",
+      "points": 20,
+      "options": ["964176192", "964176191", "964176193", "964176190"],
+      "correct": "964176192"
+    },
+    {
+      "id": 180,
+      "title": "Missing Number",
+      "description": "Find the missing number in an array containing n distinct numbers taken from 0, 1, 2, ..., n.",
+      "points": 20,
+      "options": ["2", "1", "3", "4"],
+      "correct": "2"
+    },
+    {
+      "id": 181,
+      "title": "First Missing Positive",
+      "description": "Find the smallest missing positive integer.",
+      "points": 30,
+      "options": ["3", "2", "4", "5"],
+      "correct": "3"
+    },
+    {
+      "id": 182,
+      "title": "Find All Duplicates",
+      "description": "Find all duplicates in an array where elements are between 1 and n.",
+      "points": 25,
+      "options": ["[2,3]", "[1,2]", "[3,4]", "[1,4]"],
+      "correct": "[2,3]"
+    },
+    {
+      "id": 183,
+      "title": "Set Matrix Zeroes",
+      "description": "If an element in an MxN matrix is 0, set its entire row and column to 0.",
+      "points": 25,
+      "options": ["[[1,0,1],[0,0,0],[1,0,1]]", "[[0,0,0],[0,0,0],[0,0,0]]", "[[1,0,1],[0,0,0],[0,0,0]]", "[[0,0,0],[0,0,0],[1,0,1]]"],
+      "correct": "[[1,0,1],[0,0,0],[1,0,1]]"
+    },
+    {
+      "id": 184,
+      "title": "Spiral Matrix",
+      "description": "Return all elements of the matrix in spiral order.",
+      "points": 25,
+      "options": ["[1,2,3,6,9,8,7,4,5]", "[1,2,3,4,5,6,7,8,9]", "[1,4,7,8,9,6,3,2,5]", "[1,2,3,6,9,8,7,4]"],
+      "correct": "[1,2,3,6,9,8,7,4,5]"
+    },
+    {
+      "id": 185,
+      "title": "Rotate Image",
+      "description": "Rotate an n x n 2D matrix by 90 degrees clockwise.",
+      "points": 25,
+      "options": ["[[7,4,1],[8,5,2],[9,6,3]]", "[[7,4,1],[8,5,2],[9,6,3]]", "[[9,8,7],[6,5,4],[3,2,1]]", "[[3,6,9],[2,5,8],[1,4,7]]"],
+      "correct": "[[7,4,1],[8,5,2],[9,6,3]]"
+    },
+    {
+      "id": 186,
+      "title": "Valid Sudoku",
+      "description": "Determine if a 9x9 Sudoku board is valid.",
+      "points": 25,
+      "options": ["true", "false"],
+      "correct": "true"
+    },
+    {
+      "id": 187,
+      "title": "Game of Life",
+      "description": "Simulate the Game of Life according to Conway's rules.",
+      "points": 30,
+      "options": ["[[0,0,0],[1,0,1],[0,1,1],[0,1,0]]", "[[0,0,0],[1,1,1],[0,1,1],[0,1,0]]", "[[1,1,1],[1,0,1],[1,1,1],[1,1,1]]", "[[0,0,0],[0,0,0],[0,0,0],[0,0,0]]"],
+      "correct": "[[0,0,0],[1,0,1],[0,1,1],[0,1,0]]"
+    },
+    
+    {
+      "id": 188,
+      "title": "Two Sum",
+      "description": "Find two numbers in an array that add up to a target sum.",
+      "points": 15,
+      "options": ["[0,1]", "[1,2]", "[0,2]", "[1,3]"],
+      "correct": "[0,1]"
+    },
+    {
+      "id": 189,
+      "title": "Valid Parentheses",
+      "description": "Determine if the input string has valid parentheses.",
+      "points": 15,
+      "options": ["true", "false"],
+      "correct": "true"
+    },
+    {
+      "id": 190,
+      "title": "Longest Substring Without Repeating",
+      "description": "Find the length of the longest substring without repeating characters.",
+      "points": 25,
+      "options": ["3", "2", "4", "5"],
+      "correct": "3"
+    },
+    {
+      "id": 191,
+      "title": "Median of Two Sorted Arrays",
+      "description": "Find the median of two sorted arrays.",
+      "points": 30,
+      "options": ["2.0", "2.5", "3.0", "1.5"],
+      "correct": "2.0"
+    },
+    {
+      "id": 192,
+      "title": "Longest Palindromic Substring",
+      "description": "Find the longest palindromic substring.",
+      "points": 25,
+      "options": ["'bab'", "'aba'", "'bb'", "'baab'"],
+      "correct": "'bab'"
+    },
+    {
+      "id": 193,
+      "title": "ZigZag Conversion",
+      "description": "Convert string to zigzag pattern and read line by line.",
+      "points": 20,
+      "options": ["'PAHNAPLSIIGYIR'", "'PAYPALISHIRING'", "'PINALSIGYAHRPI'", "'PAHNAPLSIGYIIR'"],
+      "correct": "'PAHNAPLSIIGYIR'"
+    },
+    {
+      "id": 194,
+      "title": "Container With Most Water",
+      "description": "Find the container that can hold the most water.",
+      "points": 25,
+      "options": ["49", "48", "50", "47"],
+      "correct": "49"
+    },
+    {
+      "id": 195,
+      "title": "3Sum Closest",
+      "description": "Find three integers whose sum is closest to target.",
+      "points": 25,
+      "options": ["2", "1", "3", "0"],
+      "correct": "2"
+    },
+    {
+      "id": 196,
+      "title": "Letter Combinations Phone Number",
+      "description": "Generate all possible letter combinations of a phone number.",
+      "points": 20,
+      "options": ["['ad','ae','af','bd','be','bf','cd','ce','cf']", "['abc','def']", "['adg','aeh','afi']", "['ad','be','cf']"],
+      "correct": "['ad','ae','af','bd','be','bf','cd','ce','cf']"
+    },
+    {
+      "id": 197,
+      "title": "Remove Nth Node From End",
+      "description": "Remove nth node from the end of linked list.",
+      "points": 20,
+      "options": ["[1,2,3,5]", "[1,2,3,4,5]", "[2,3,4,5]", "[1,2,4,5]"],
+      "correct": "[1,2,3,5]"
+    },
+    {
+      "id": 198,
+      "title": "Valid Sudoku",
+      "description": "Check if a Sudoku board is valid.",
+      "points": 25,
+      "options": ["true", "false"],
+      "correct": "true"
+    },
+    {
+      "id": 199,
+      "title": "Count and Say",
+      "description": "Generate the nth term of count-and-say sequence.",
+      "points": 20,
+      "options": ["'1211'", "'111221'", "'312211'", "'21'"],
+      "correct": "'1211'"
+    },
+    {
+      "id": 200,
+      "title": "Combination Sum",
+      "description": "Find all unique combinations that sum to target.",
+      "points": 25,
+      "options": ["[[7],[2,2,3]]", "[[2,2,3]]", "[[7]]", "[[2,3,2]]"],
+      "correct": "[[7],[2,2,3]]"
+    },
+    {
+      "id": 201,
+      "title": "First Missing Positive",
+      "description": "Find the smallest positive integer not in array.",
+      "points": 30,
+      "options": ["3", "2", "4", "1"],
+      "correct": "3"
+    },
+    {
+      "id": 202,
+      "title": "Trapping Rain Water",
+      "description": "Calculate trapped rainwater between elevation bars.",
+      "points": 30,
+      "options": ["6", "5", "7", "8"],
+      "correct": "6"
+    },
+    {
+      "id": 203,
+      "title": "Jump Game",
+      "description": "Determine if you can reach the last index.",
+      "points": 25,
+      "options": ["true", "false"],
+      "correct": "true"
+    },
+    {
+      "id": 204,
+      "title": "Merge Intervals",
+      "description": "Merge overlapping intervals.",
+      "points": 25,
+      "options": ["[[1,6],[8,10],[15,18]]", "[[1,4],[6,8],[10,15]]", "[[1,5],[6,9],[11,18]]", "[[1,3],[4,6],[8,10]]"],
+      "correct": "[[1,6],[8,10],[15,18]]"
+    },
+    {
+      "id": 205,
+      "title": "Unique Paths",
+      "description": "Count unique paths in a grid from top-left to bottom-right.",
+      "points": 20,
+      "options": ["3", "2", "4", "6"],
+      "correct": "3"
+    },
+    {
+      "id": 206,
+      "title": "Minimum Path Sum",
+      "description": "Find path with minimum sum from top-left to bottom-right.",
+      "points": 25,
+      "options": ["7", "6", "8", "9"],
+      "correct": "7"
+    },
+    {
+      "id": 207,
+      "title": "Climb Stairs",
+      "description": "Count distinct ways to climb n stairs.",
+      "points": 15,
+      "options": ["2", "1", "3", "4"],
+      "correct": "2"
+    },
+    {
+      "id": 208,
+      "title": "Edit Distance",
+      "description": "Find minimum edit distance between two strings.",
+      "points": 30,
+      "options": ["3", "2", "4", "5"],
+      "correct": "3"
+    },
+    {
+      "id": 209,
+      "title": "Set Matrix Zeroes",
+      "description": "Set entire row and column to zero if element is zero.",
+      "points": 25,
+      "options": ["[[1,0,1],[0,0,0],[1,0,1]]", "[[0,0,0],[0,0,0],[0,0,0]]", "[[1,0,1],[0,0,0],[0,0,0]]", "[[0,0,0],[0,0,0],[1,0,1]]"],
+      "correct": "[[1,0,1],[0,0,0],[1,0,1]]"
+    },
+    {
+      "id": 210,
+      "title": "Search in Rotated Array",
+      "description": "Search for target in rotated sorted array.",
+      "points": 25,
+      "options": ["4", "3", "5", "-1"],
+      "correct": "4"
+    },
+    {
+      "id": 211,
+      "title": "Word Search",
+      "description": "Find if word exists in 2D character board.",
+      "points": 30,
+      "options": ["true", "false"],
+      "correct": "true"
+    },
+    {
+      "id": 212,
+      "title": "Largest Rectangle Histogram",
+      "description": "Find area of largest rectangle in histogram.",
+      "points": 35,
+      "options": ["10", "8", "12", "6"],
+      "correct": "10"
+    },
+    {
+      "id": 213,
+      "title": "Maximal Rectangle",
+      "description": "Find largest rectangle containing only 1s in binary matrix.",
+      "points": 35,
+      "options": ["6", "4", "8", "2"],
+      "correct": "6"
+    },
+    {
+      "id": 214,
+      "title": "Decode Ways",
+      "description": "Count ways to decode a digit string.",
+      "points": 25,
+      "options": ["2", "1", "3", "4"],
+      "correct": "2"
+    },
+    {
+      "id": 215,
+      "title": "Interleaving String",
+      "description": "Check if s3 is formed by interleaving s1 and s2.",
+      "points": 30,
+      "options": ["true", "false"],
+      "correct": "true"
+    },
+    {
+      "id": 216,
+      "title": "Best Time Buy Sell Stock",
+      "description": "Find maximum profit from buying and selling stock once.",
+      "points": 20,
+      "options": ["5", "4", "6", "3"],
+      "correct": "5"
+    },
+    {
+      "id": 217,
+      "title": "Best Time Buy Sell Stock II",
+      "description": "Find maximum profit with multiple transactions.",
+      "points": 25,
+      "options": ["7", "6", "8", "5"],
+      "correct": "7"
+    },
+    {
+      "id": 218,
+      "title": "Valid Palindrome",
+      "description": "Check if string is a palindrome ignoring case and non-alphanumeric.",
+      "points": 15,
+      "options": ["true", "false"],
+      "correct": "true"
+    },
+    {
+      "id": 219,
+      "title": "Word Ladder II",
+      "description": "Find all shortest transformation sequences.",
+      "points": 40,
+      "options": ["[['hit','hot','dot','dog','cog'],['hit','hot','lot','log','cog']]", "[['hit','hot','dot','dog','cog']]", "[['hit','hot','lot','log','cog']]", "[]"],
+      "correct": "[['hit','hot','dot','dog','cog'],['hit','hot','lot','log','cog']]"
+    },
+    {
+      "id": 220,
+      "title": "Longest Consecutive Sequence",
+      "description": "Find length of longest consecutive elements sequence.",
+      "points": 25,
+      "options": ["4", "3", "5", "2"],
+      "correct": "4"
+    },
+    {
+      "id": 221,
+      "title": "Single Number",
+      "description": "Find the number that appears once while others appear twice.",
+      "points": 15,
+      "options": ["1", "2", "3", "4"],
+      "correct": "1"
+    },
+    {
+      "id": 222,
+      "title": "Single Number II",
+      "description": "Find number that appears once while others appear thrice.",
+      "points": 25,
+      "options": ["3", "2", "1", "4"],
+      "correct": "3"
+    },
+    {
+      "id": 223,
+      "title": "Copy List Random Pointer",
+      "description": "Deep copy linked list with random pointers.",
+      "points": 30,
+      "options": ["[[7,null],[13,0],[11,4],[10,2],[1,0]]", "[[7,null],[13,7],[11,1],[10,11],[1,7]]", "[[7,null],[13,0],[11,4],[10,2]]", "[[7,null],[13,0],[11,4],[10,2],[1,4]]"],
+      "correct": "[[7,null],[13,0],[11,4],[10,2],[1,0]]"
+    },
+    {
+      "id": 224,
+      "title": "Word Break",
+      "description": "Check if string can be segmented using dictionary words.",
+      "points": 25,
+      "options": ["true", "false"],
+      "correct": "true"
+    },
+    {
+      "id": 225,
+      "title": "Word Break II",
+      "description": "Return all possible sentences from word break.",
+      "points": 35,
+      "options": ["['cats and dog','cat sand dog']", "['cats and dog']", "['cat sand dog']", "[]"],
+      "correct": "['cats and dog','cat sand dog']"
+    },
+    {
+      "id": 226,
+      "title": "Linked List Cycle II",
+      "description": "Find the node where cycle begins in linked list.",
+      "points": 25,
+      "options": ["tail connects to node index 1", "tail connects to node index 0", "no cycle", "tail connects to node index 2"],
+      "correct": "tail connects to node index 1"
+    },
+    {
+      "id": 227,
+      "title": "Sort List",
+      "description": "Sort a linked list in O(n log n) time.",
+      "points": 30,
+      "options": ["[-1,0,3,4,5]", "[5,4,3,0,-1]", "[-1,0,4,3,5]", "[0,-1,3,4,5]"],
+      "correct": "[-1,0,3,4,5]"
+    },
+    {
+      "id": 228,
+      "title": "Maximum Product Subarray",
+      "description": "Find contiguous subarray with largest product.",
+      "points": 25,
+      "options": ["6", "4", "8", "2"],
+      "correct": "6"
+    },
+    {
+      "id": 229,
+      "title": "Find Minimum Rotated Array",
+      "description": "Find minimum element in rotated sorted array.",
+      "points": 20,
+      "options": ["1", "0", "2", "3"],
+      "correct": "1"
+    },
+    {
+      "id": 230,
+      "title": "Find Minimum Rotated Array II",
+      "description": "Find minimum in rotated array with duplicates.",
+      "points": 25,
+      "options": ["1", "0", "2", "3"],
+      "correct": "1"
+    },
+    {
+      "id": 231,
+      "title": "Min Stack",
+      "description": "Design stack that supports push, pop, top, and getMin in O(1).",
+      "points": 20,
+      "options": ["[-3,-2,-2,1]", "[-3,-2,-2,0]", "[-3,-2,-2,2]", "[-3,-2,-2,3]"],
+      "correct": "[-3,-2,-2,1]"
+    },
+    {
+      "id": 232,
+      "title": "Intersection Two Linked Lists",
+      "description": "Find intersection point of two linked lists.",
+      "points": 20,
+      "options": ["8", "4", "2", "1"],
+      "correct": "8"
+    },
+    {
+      "id": 233,
+      "title": "Compare Version Numbers",
+      "description": "Compare two version number strings.",
+      "points": 20,
+      "options": ["0", "-1", "1", "2"],
+      "correct": "0"
+    },
+    {
+      "id": 234,
+      "title": "Fraction to Recurring Decimal",
+      "description": "Return fraction as string with repeating part in parentheses.",
+      "points": 30,
+      "options": ["'0.(6)'", "'0.6666'", "'0.66666'", "'0.6'"],
+      "correct": "'0.(6)'"
+    },
+    {
+      "id": 235,
+      "title": "Two Sum II Sorted Array",
+      "description": "Find two numbers that add up to target in sorted array.",
+      "points": 15,
+      "options": ["[1,2]", "[0,1]", "[2,3]", "[1,3]"],
+      "correct": "[1,2]"
+    },
+    {
+      "id": 236,
+      "title": "Excel Sheet Column Title",
+      "description": "Convert positive integer to Excel column title.",
+      "points": 20,
+      "options": ["'A'", "'B'", "'Z'", "'AA'"],
+      "correct": "'A'"
+    },
+    {
+      "id": 237,
+      "title": "Majority Element",
+      "description": "Find element that appears more than n/2 times.",
+      "points": 15,
+      "options": ["3", "2", "1", "4"],
+      "correct": "3"
+    },
+    {
+      "id": 238,
+      "title": "Majority Element II",
+      "description": "Find all elements that appear more than n/3 times.",
+      "points": 25,
+      "options": ["[3]", "[1,2]", "[3,1]", "[2,3]"],
+      "correct": "[3]"
+    },
+    {
+      "id": 239,
+      "title": "Excel Sheet Column Number",
+      "description": "Convert Excel column title to number.",
+      "points": 15,
+      "options": ["1", "26", "27", "701"],
+      "correct": "1"
+    },
+    {
+      "id": 240,
+      "title": "Factorial Trailing Zeroes",
+      "description": "Count trailing zeroes in n factorial.",
+      "points": 20,
+      "options": ["1", "0", "2", "3"],
+      "correct": "1"
+    },
+    {
+      "id": 241,
+      "title": "Dungeon Game",
+      "description": "Find minimum initial health to rescue princess.",
+      "points": 30,
+      "options": ["7", "6", "8", "5"],
+      "correct": "7"
+    },
+    {
+      "id": 242,
+      "title": "Largest Number",
+      "description": "Arrange numbers to form largest possible number.",
+      "points": 25,
+      "options": ["'210'", "'102'", "'021'", "'201'"],
+      "correct": "'210'"
+    },
+    {
+      "id": 243,
+      "title": "Repeated DNA Sequences",
+      "description": "Find all 10-letter DNA sequences that occur more than once.",
+      "points": 20,
+      "options": ["['AAAAACCCCC','CCCCCAAAAA']", "['AAAAACCCCC']", "['CCCCCAAAAA']", "[]"],
+      "correct": "['AAAAACCCCC','CCCCCAAAAA']"
+    },
+    {
+      "id": 244,
+      "title": "Best Time Buy Sell Stock III",
+      "description": "Maximum profit with at most 2 transactions.",
+      "points": 35,
+      "options": ["4", "3", "5", "6"],
+      "correct": "4"
+    },
+    {
+      "id": 245,
+      "title": "Best Time Buy Sell Stock IV",
+      "description": "Maximum profit with at most k transactions.",
+      "points": 35,
+      "options": ["2", "1", "3", "4"],
+      "correct": "2"
+    },
+    {
+      "id": 246,
+      "title": "House Robber",
+      "description": "Maximum money that can be robbed without robbing adjacent houses.",
+      "points": 20,
+      "options": ["4", "3", "5", "6"],
+      "correct": "4"
+    },
+    {
+      "id": 247,
+      "title": "House Robber II",
+      "description": "Houses arranged in circle - can't rob first and last.",
+      "points": 25,
+      "options": ["3", "2", "4", "5"],
+      "correct": "3"
+    },
+    {
+      "id": 248,
+      "title": "Number of Islands",
+      "description": "Count number of islands in 2D binary grid.",
+      "points": 25,
+      "options": ["1", "2", "3", "4"],
+      "correct": "1"
+    },
+    {
+      "id": 249,
+      "title": "Happy Number",
+      "description": "Determine if number eventually becomes 1 when replaced by sum of squares.",
+      "points": 15,
+      "options": ["true", "false"],
+      "correct": "true"
+    },
+    {
+      "id": 250,
+      "title": "Remove Linked List Elements",
+      "description": "Remove all elements with given value from linked list.",
+      "points": 15,
+      "options": ["[1,2,3,5]", "[1,2,6,3,4,5,6]", "[2,6,3,4,5,6]", "[1,3,4,5]"],
+      "correct": "[1,2,3,5]"
+    },
+    {
+      "id": 251,
+      "title": "Count Primes",
+      "description": "Count prime numbers less than non-negative number n.",
+      "points": 20,
+      "options": ["4", "3", "5", "2"],
+      "correct": "4"
+    },
+    {
+      "id": 252,
+      "title": "Isomorphic Strings",
+      "description": "Check if two strings are isomorphic.",
+      "points": 20,
+      "options": ["true", "false"],
+      "correct": "true"
+    },
+    {
+      "id": 253,
+      "title": "Reverse Linked List",
+      "description": "Reverse singly linked list iteratively or recursively.",
+      "points": 15,
+      "options": ["[5,4,3,2,1]", "[1,2,3,4,5]", "[5,4,3,2]", "[4,3,2,1]"],
+      "correct": "[5,4,3,2,1]"
+    },
+    {
+      "id": 254,
+      "title": "Course Schedule",
+      "description": "Check if all courses can be finished given prerequisites.",
+      "points": 25,
+      "options": ["true", "false"],
+      "correct": "true"
+    },
+    {
+      "id": 255,
+      "title": "Course Schedule II",
+      "description": "Return ordering of courses to finish all courses.",
+      "points": 25,
+      "options": ["[0,1]", "[1,0]", "[]", "[0,1,2,3]"],
+      "correct": "[0,1]"
+    },
+    {
+      "id": 256,
+      "title": "Implement Trie",
+      "description": "Implement prefix tree data structure.",
+      "points": 25,
+      "options": ["[null,null,true,null,true,null,true]", "[null,null,false,null,true,null,false]", "[null,null,true,null,false,null,true]", "[null,null,true,null,true,null,false]"],
+      "correct": "[null,null,true,null,true,null,true]"
+    },
+    {
+      "id": 257,
+      "title": "Minimum Size Subarray Sum",
+      "description": "Find minimal length subarray with sum >= target.",
+      "points": 25,
+      "options": ["2", "1", "3", "4"],
+      "correct": "2"
+    },
+    {
+      "id": 258,
+      "title": "Add and Search Word",
+      "description": "Design data structure supporting addWord and search with '.' wildcard.",
+      "points": 25,
+      "options": ["[null,null,false,true,true,false,true]", "[null,null,true,true,true,false,true]", "[null,null,false,false,true,true,true]", "[null,null,false,true,false,true,true]"],
+      "correct": "[null,null,false,true,true,false,true]"
+    },
+    {
+      "id": 259,
+      "title": "Word Search II",
+      "description": "Find all words from dictionary that exist in 2D board.",
+      "points": 35,
+      "options": ["['eat','oath']", "['eat']", "['oath']", "['eat','oath','pea','tea']"],
+      "correct": "['eat','oath']"
+    },
+    {
+      "id": 260,
+      "title": "House Robber III",
+      "description": "Rob houses arranged in binary tree without alerting police.",
+      "points": 25,
+      "options": ["7", "6", "8", "9"],
+      "correct": "7"
+    },
+    {
+      "id": 261,
+      "title": "Serialize Deserialize Binary Tree",
+      "description": "Design algorithm to serialize and deserialize binary tree.",
+      "points": 30,
+      "options": ["'1,2,3,null,null,4,5'", "'1,2,3,4,5'", "'1,2,null,3,null,4,null,5'", "'1,null,2,null,3,null,4,null,5'"],
+      "correct": "'1,2,3,null,null,4,5'"
+    },
+    {
+      "id": 262,
+      "title": "Find Median Data Stream",
+      "description": "Find median from data stream.",
+      "points": 30,
+      "options": ["[null,null,1.5,null,2.0]", "[null,null,1.0,null,2.0]", "[null,null,1.5,null,1.5]", "[null,null,2.0,null,2.0]"],
+      "correct": "[null,null,1.5,null,2.0]"
+    },
+    {
+      "id": 263,
+      "title": "Longest Increasing Subsequence",
+      "description": "Find length of longest increasing subsequence.",
+      "points": 25,
+      "options": ["4", "3", "5", "6"],
+      "correct": "4"
+    },
+    {
+      "id": 264,
+      "title": "Remove Invalid Parentheses",
+      "description": "Remove minimum parentheses to make string valid.",
+      "points": 35,
+      "options": ["['()()()','(())()']", "['()()()']", "['(())()']", "['((()))']"],
+      "correct": "['()()()','(())()']"
+    },
+    {
+      "id": 265,
+      "title": "Range Sum Query Immutable",
+      "description": "Calculate sum of elements between indices i and j.",
+      "points": 15,
+      "options": ["[null,1,6,2]", "[null,1,5,2]", "[null,0,6,2]", "[null,1,6,1]"],
+      "correct": "[null,1,6,2]"
+    },
+    {
+      "id": 266,
+      "title": "Range Sum Query 2D",
+      "description": "Calculate sum of rectangle region in 2D matrix.",
+      "points": 20,
+      "options": ["[null,8,11,12]", "[null,8,10,12]", "[null,7,11,12]", "[null,8,11,13]"],
+      "correct": "[null,8,11,12]"
+    },
+    {
+      "id": 267,
+      "title": "Perfect Squares",
+      "description": "Find least number of perfect square numbers that sum to n.",
+      "points": 25,
+      "options": ["3", "2", "4", "1"],
+      "correct": "3"
+    },
+    {
+      "id": 268,
+      "title": "Move Zeroes",
+      "description": "Move all zeros to end while maintaining relative order.",
+      "points": 15,
+      "options": ["[1,3,12,0,0]", "[0,1,0,3,12]", "[1,0,3,0,12]", "[1,3,0,0,12]"],
+      "correct": "[1,3,12,0,0]"
+    },
+    {
+      "id": 269,
+      "title": "Find Duplicate Number",
+      "description": "Find duplicate number in array of n+1 integers.",
+      "points": 25,
+      "options": ["2", "1", "3", "4"],
+      "correct": "2"
+    },
+    {
+      "id": 270,
+      "title": "Game of Life",
+      "description": "Apply rules of Conway's Game of Life to 2D board.",
+      "points": 25,
+      "options": ["[[0,0,0],[1,0,1],[0,1,1],[0,1,0]]", "[[0,0,0],[1,1,1],[0,1,1],[0,1,0]]", "[[1,1,1],[1,0,1],[1,1,1],[1,1,1]]", "[[0,0,0],[0,0,0],[0,0,0],[0,0,0]]"],
+      "correct": "[[0,0,0],[1,0,1],[0,1,1],[0,1,0]]"
+    },
+    {
+      "id": 271,
+      "title": "Word Pattern",
+      "description": "Check if string follows same pattern as given pattern.",
+      "points": 15,
+      "options": ["true", "false"],
+      "correct": "true"
+    },
+    {
+      "id": 272,
+      "title": "Nim Game",
+      "description": "Determine if you can win Nim game.",
+      "points": 10,
+      "options": ["false", "true"],
+      "correct": "false"
+    },
+    {
+      "id": 273,
+      "title": "Find Disappeared Numbers",
+      "description": "Find all numbers disappeared in array of length n.",
+      "points": 20,
+      "options": ["[5,6]", "[4,5]", "[5,7]", "[4,6]"],
+      "correct": "[5,6]"
+    },
+    {
+      "id": 274,
+      "title": "Serialize Deserialize BST",
+      "description": "Serialize and deserialize binary search tree.",
+      "points": 25,
+      "options": ["'2,1,3'", "'2,1,null,null,3'", "'1,null,2,null,3'", "'1,2,3'"],
+      "correct": "'2,1,3'"
+    },
+    {
+      "id": 275,
+      "title": "Russian Doll Envelopes",
+      "description": "Find maximum number of nested envelopes.",
+      "points": 30,
+      "options": ["3", "2", "4", "1"],
+      "correct": "3"
     }
+
+  ],
+   
+  "leaderboard": [
+    { "id": 1, "name": "Mayur", "points": 1200, "rank": 1 },
+    { "id": 2, "name": "Aditi", "points": 950, "rank": 2 },
+    { "id": 3, "name": "Rahul", "points": 700, "rank": 3 },
+    { "id": 4, "name": "Priya", "points": 680, "rank": 4 },
+    { "id": 5, "name": "Arjun", "points": 650, "rank": 5 },
+    { "id": 6, "name": "Sneha", "points": 620, "rank": 6 },
+    { "id": 7, "name": "Vikram", "points": 590, "rank": 7 },
+    { "id": 8, "name": "Kavya", "points": 560, "rank": 8 },
+    { "id": 9, "name": "Rohan", "points": 540, "rank": 9 },
+    { "id": 10, "name": "Ananya", "points": 520, "rank": 10 },
+    { "id": 11, "name": "Kiran", "points": 490, "rank": 11 },
+    { "id": 12, "name": "Meera", "points": 470, "rank": 12 },
+    { "id": 13, "name": "Nikhil", "points": 450, "rank": 13 },
+    { "id": 14, "name": "Pooja", "points": 430, "rank": 14 },
+    { "id": 15, "name": "Sanjay", "points": 410, "rank": 15 },
+    { "id": 16, "name": "Riya", "points": 390, "rank": 16 },
+    { "id": 17, "name": "Amit", "points": 370, "rank": 17 },
+    { "id": 18, "name": "Divya", "points": 350, "rank": 18 },
+    { "id": 19, "name": "Harsh", "points": 330, "rank": 19 },
+    { "id": 20, "name": "Nisha", "points": 310, "rank": 20 },
+    { "id": 21, "name": "Deepak", "points": 290, "rank": 21 },
+    { "id": 22, "name": "Shruti", "points": 275, "rank": 22 },
+    { "id": 23, "name": "Rajesh", "points": 260, "rank": 23 },
+    { "id": 24, "name": "Aarti", "points": 245, "rank": 24 },
+    { "id": 25, "name": "Manish", "points": 230, "rank": 25 },
+    { "id": 26, "name": "Kriti", "points": 220, "rank": 26 },
+    { "id": 27, "name": "Gaurav", "points": 210, "rank": 27 },
+    { "id": 28, "name": "Tanya", "points": 200, "rank": 28 },
+    { "id": 29, "name": "Suresh", "points": 190, "rank": 29 },
+    { "id": 30, "name": "Vaishali", "points": 180, "rank": 30 },
+    { "id": 31, "name": "Abhishek", "points": 170, "rank": 31 },
+    { "id": 32, "name": "Swati", "points": 160, "rank": 32 },
+    { "id": 33, "name": "Vivek", "points": 150, "rank": 33 },
+    { "id": 34, "name": "Pallavi", "points": 140, "rank": 34 },
+    { "id": 35, "name": "Akash", "points": 130, "rank": 35 },
+    { "id": 36, "name": "Rashika", "points": 125, "rank": 36 },
+    { "id": 37, "name": "Sachin", "points": 120, "rank": 37 },
+    { "id": 38, "name": "Anjali", "points": 115, "rank": 38 },
+    { "id": 39, "name": "Rohit", "points": 110, "rank": 39 },
+    { "id": 40, "name": "Neha", "points": 105, "rank": 40 },
+    { "id": 41, "name": "Ajay", "points": 100, "rank": 41 },
+    { "id": 42, "name": "Simran", "points": 95, "rank": 42 },
+    { "id": 43, "name": "Vinay", "points": 90, "rank": 43 },
+    { "id": 44, "name": "Preeti", "points": 85, "rank": 44 },
+    { "id": 45, "name": "Saurabh", "points": 80, "rank": 45 },
+    { "id": 46, "name": "Priyanka", "points": 75, "rank": 46 },
+    { "id": 47, "name": "Manoj", "points": 70, "rank": 47 },
+    { "id": 48, "name": "Shweta", "points": 65, "rank": 48 },
+    { "id": 49, "name": "Ravi", "points": 60, "rank": 49 },
+    { "id": 50, "name": "Sunita", "points": 55, "rank": 50 }
   ]
 }
+
+
+
     
