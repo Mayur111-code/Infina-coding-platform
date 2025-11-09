@@ -80,6 +80,7 @@ import Referrals from "./Pages/Referrals";
 import Settings from "./Pages/Settings";
 import Register from "./Pages/Register";
 import SignIn from "./Pages/Signin";
+import NotFound from "./Pages/Notfound";
 
 const ProtectedRoute = ({ user, loading, children }) => {
   if (loading) return <div className="flex items-center justify-center h-screen">Loading...</div>;
@@ -122,6 +123,7 @@ function App() {
                     <Route path="/history" element={<History />} />
                     <Route path="/referrals" element={<Referrals />} />
                     <Route path="/settings" element={<Settings />} />
+                    <Route path="*" element={<NotFound/>}/>
                   </Routes>
                 </main>
               </div>
