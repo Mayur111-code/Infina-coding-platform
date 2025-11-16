@@ -72,7 +72,7 @@ const Settings = () => {
       formDataToSend.append("userbirthdate", formData.userbirthdate);
       if (formData.userprofile) formDataToSend.append("userprofile", formData.userprofile);
 
-      const res = await fetch(`http://127.0.0.1:3000/api/users/update/${user._id}`, {
+      const res = await fetch(`http://127.0.0.1:3000/api/users/update/${user.id}`, {
         method: "PUT",
         headers: { Authorization: `Bearer ${token}` },
         body: formDataToSend,
