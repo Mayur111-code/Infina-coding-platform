@@ -245,48 +245,47 @@ export default function RegistrationForm() {
 
   // ⭐ Submit Registration (LOCAL ONLY)
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
+  e.preventDefault();
+  setLoading(true);
 
-    try {
-      const submitData = new FormData();
-      Object.entries(formData).forEach(([key, value]) => {
-        submitData.append(key, value);
-      });
-
-      // ⭐ LOCAL backend URL ONLY
-      const res = await fetch(
-  "https://infina-coding-platform-2.onrender.com/api/users/register",
-  {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(formData),
-  }
-);
-
-
-      const data = await res.json();
-      setLoading(false);
-
-      if (res.ok) {
-        toast.success("✅ Registration Successful!", { position: "top-right" });
-        console.log("User registered:", data);
-
-        // store user in local storage
-        localStorage.setItem("user", JSON.stringify(data.user));
-
-        setTimeout(() => {
-          window.location.href = "/signin";
-        }, 1500);
-      } else {
-        toast.error(data.message || "Registration failed!");
-      }
-    } catch (error) {
-      console.error("Error:", error);
-      toast.error("Something went wrong!");
-      setLoading(false);
+  try {
+    const submitData = new FormData();
+    submitData.append("username", formData.username);
+    submitData.append("useremail", formData.useremail);
+    submitData.append("userpass", formData.userpass);
+    submitData.append("userbirthdate", formData.userbirthdate);
+    if (formData.userprofile) {
+      submitData.append("userprofile", formData.userprofile);
     }
-  };
+
+    const res = await fetch(
+      "https://infina-coding-platform-2.onrender.com/api/users/register",
+      {
+        method: "POST",
+        body: submitData,   // ❗ Use FormData
+      }
+    );
+
+    const data = await res.json();
+    setLoading(false);
+
+    if (res.ok) {
+      toast.success("✅ Registration Successful!", { position: "top-right" });
+
+      localStorage.setItem("user", JSON.stringify(data.user));
+
+      setTimeout(() => {
+        window.location.href = "/signin";
+      }, 1500);
+    } else {
+      toast.error(data.message || "Registration failed!");
+    }
+  } catch (error) {
+    console.error("Error:", error);
+    toast.error("Something went wrong!");
+    setLoading(false);
+  }
+};
 
   
 
