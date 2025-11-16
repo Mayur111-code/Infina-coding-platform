@@ -255,10 +255,15 @@ export default function RegistrationForm() {
       });
 
       // ⭐ LOCAL backend URL ONLY
-      const res = await fetch("https://infina-coding-platform-1.onrender.com/api/users/register", {
-        method: "POST",
-        body: submitData,
-      });
+      const res = await fetch(
+  "https://infina-coding-platform-2.onrender.com/api/users/register",
+  {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(formData),
+  }
+);
+
 
       const data = await res.json();
       setLoading(false);
