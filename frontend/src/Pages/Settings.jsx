@@ -53,46 +53,104 @@ const Settings = () => {
   };
 
   // 🚀 Handle form submit (UNCHANGED)
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   if (!user) return toast.error("User not found!");
+
+  //   const token = localStorage.getItem("token");
+  //   if (!token) {
+  //     toast.error("Unauthorized! Please sign in again.");
+  //     navigate("/signin");
+  //     return;
+  //   }
+
+  //   try {
+  //     setLoading(true);
+  //     const formDataToSend = new FormData();
+  //     formDataToSend.append("username", formData.username);
+  //     formDataToSend.append("useremail", formData.useremail);
+  //     formDataToSend.append("userbirthdate", formData.userbirthdate);
+  //     if (formData.userprofile) formDataToSend.append("userprofile", formData.userprofile);
+
+  //     const res = await fetch(`http://127.0.0.1:3000/api/users/update/${user.id}`, {
+  //       method: "PUT",
+  //       headers: { Authorization: `Bearer ${token}` },
+  //       body: formDataToSend,
+  //     });
+
+  //     const data = await res.json();
+
+  //     if (!res.ok) throw new Error(data.message || "Update failed");
+
+  //     toast.success("✅ Profile updated successfully!");
+  //     localStorage.setItem("user", JSON.stringify(data.user));
+  //     setUser(data.user);
+
+  //     setTimeout(() => navigate("/"), 1500);
+  //   } catch (err) {
+  //     toast.error(err.message || "Something went wrong");
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
+
+
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (!user) return toast.error("User not found!");
+  e.preventDefault();
+  if (!user) return toast.error("User not found!");
 
-    const token = localStorage.getItem("token");
-    if (!token) {
-      toast.error("Unauthorized! Please sign in again.");
-      navigate("/signin");
-      return;
-    }
+  const token = localStorage.getItem("token");
+  if (!token) {
+    toast.error("Unauthorized! Please sign in again.");
+    navigate("/signin");
+    return;
+  }
 
-    try {
-      setLoading(true);
-      const formDataToSend = new FormData();
-      formDataToSend.append("username", formData.username);
-      formDataToSend.append("useremail", formData.useremail);
-      formDataToSend.append("userbirthdate", formData.userbirthdate);
-      if (formData.userprofile) formDataToSend.append("userprofile", formData.userprofile);
+  try {
+    setLoading(true);
 
-      const res = await fetch(`http://127.0.0.1:3000/api/users/update/${user.id}`, {
+    const formDataToSend = new FormData();
+    formDataToSend.append("username", formData.username);
+    formDataToSend.append("useremail", formData.useremail);
+    formDataToSend.append("userbirthdate", formData.userbirthdate);
+    if (formData.userprofile)
+      formDataToSend.append("userprofile", formData.userprofile);
+
+    // ❌ OLD (localhost)
+    // const res = await fetch(`http://127.0.0.1:3000/api/users/update/${user.id}`, {
+    //   method: "PUT",
+    //   headers: { Authorization: `Bearer ${token}` },
+    //   body: formDataToSend,
+    // });
+
+    // ✅ NEW (Vercel + Local both)
+    const res = await fetch(
+      `${import.meta.env.VITE_API_URL}/users/update/${user.id}`,
+      {
         method: "PUT",
         headers: { Authorization: `Bearer ${token}` },
         body: formDataToSend,
-      });
+      }
+    );
 
-      const data = await res.json();
+    const data = await res.json();
 
-      if (!res.ok) throw new Error(data.message || "Update failed");
+    if (!res.ok) throw new Error(data.message || "Update failed");
 
-      toast.success("✅ Profile updated successfully!");
-      localStorage.setItem("user", JSON.stringify(data.user));
-      setUser(data.user);
+    toast.success("✅ Profile updated successfully!");
+    localStorage.setItem("user", JSON.stringify(data.user));
+    setUser(data.user);
 
-      setTimeout(() => navigate("/"), 1500);
-    } catch (err) {
-      toast.error(err.message || "Something went wrong");
-    } finally {
-      setLoading(false);
-    }
-  };
+    setTimeout(() => navigate("/"), 1500);
+  } catch (err) {
+    toast.error(err.message || "Something went wrong");
+  } finally {
+    setLoading(false);
+  }
+};
+
+
+
 
   if (!user)
     return (

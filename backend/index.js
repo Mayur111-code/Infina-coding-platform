@@ -90,6 +90,7 @@
 
 
 
+//  vercel deployement  
 
 const dotenv = require('dotenv');
 const express = require('express');
@@ -103,10 +104,8 @@ const rewardRoutes = require("./routes/rewardRoutes");
 
 dotenv.config();
 
-// Initialize app
 const app = express();
 
-// Enable CORS for all origins (Vercel frontend)
 app.use(
   cors({
     origin: "*",
@@ -116,22 +115,17 @@ app.use(
 
 app.use(express.json());
 
-// Connect Database
 connection();
 
-// Routes
 app.use('/api/users', userRoutes);
 app.use('/api/challenges', challengeRoutes);
 app.use("/api/solve", solveRoutes);
 app.use("/api/leaderboard", leaderboardRoutes);
 app.use("/api/rewards", rewardRoutes);
 
-// Default Route
 app.get('/', (req, res) => {
   res.send('🚀 Backend running on Vercel successfully!');
 });
 
-// ❗ IMPORTANT ❗
-// NO app.listen()
-// Instead, export the app for Vercel serverless function
+// 👉 MOST IMPORTANT
 module.exports = app;

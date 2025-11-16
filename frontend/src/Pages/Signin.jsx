@@ -75,53 +75,117 @@ export default function Signin() {
   };
 
   // 🧩 Handle form submit
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
+//   const handleSubmit = async (e) => {
+//     e.preventDefault();
+//     setLoading(true);
 
-    try {
-      const res = await fetch("http://127.0.0.1:3000/api/users/signin", {
+//     try {
+//       const res = await fetch("http://127.0.0.1:3000/api/users/signin", {
+//         method: "POST",
+//         headers: {
+//           "Content-Type": "application/json",
+//         },
+//         body: JSON.stringify(formData),
+//       });
+
+//       const data = await res.json();
+//       setLoading(false);
+
+//       if (res.ok) {
+//   toast.success("✅ Login successful!", { position: "top-right" });
+
+//   // Save token + user info
+//   localStorage.setItem("token", data.token);
+//   localStorage.setItem("user", JSON.stringify(data.user));
+
+//   // ✅ Detect admin role safely (case-insensitive)
+//   const role = data?.user?.role?.toLowerCase();
+
+//   if (role === "admin") {
+//     localStorage.setItem("isAdmin", "true");
+//     setTimeout(() => {
+//       window.location.href = "/admin/dashboard";
+//     }, 1200);
+//   } else {
+//     localStorage.removeItem("isAdmin");
+//     setTimeout(() => {
+//       window.location.href = "/";
+//     }, 1200);
+//   }
+// }
+//  else {
+//         toast.error(data.message || "Invalid email or password!");
+//       }
+//     } catch (error) {
+//       console.error("Error during login:", error);
+//       toast.error("Something went wrong!");
+//       setLoading(false);
+//     }
+//   };
+
+
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  setLoading(true);
+
+  try {
+
+    // ❌ OLD (localhost)
+    // const res = await fetch("http://127.0.0.1:3000/api/users/signin", {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    //   body: JSON.stringify(formData),
+    // });
+
+    // ✅ NEW (Vercel + Local)
+    const res = await fetch(
+      `${import.meta.env.VITE_API_URL}/users/signin`,
+      {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(formData),
-      });
-
-      const data = await res.json();
-      setLoading(false);
-
-      if (res.ok) {
-  toast.success("✅ Login successful!", { position: "top-right" });
-
-  // Save token + user info
-  localStorage.setItem("token", data.token);
-  localStorage.setItem("user", JSON.stringify(data.user));
-
-  // ✅ Detect admin role safely (case-insensitive)
-  const role = data?.user?.role?.toLowerCase();
-
-  if (role === "admin") {
-    localStorage.setItem("isAdmin", "true");
-    setTimeout(() => {
-      window.location.href = "/admin/dashboard";
-    }, 1200);
-  } else {
-    localStorage.removeItem("isAdmin");
-    setTimeout(() => {
-      window.location.href = "/";
-    }, 1200);
-  }
-}
- else {
-        toast.error(data.message || "Invalid email or password!");
       }
-    } catch (error) {
-      console.error("Error during login:", error);
-      toast.error("Something went wrong!");
-      setLoading(false);
+    );
+
+    const data = await res.json();
+    setLoading(false);
+
+    if (res.ok) {
+      toast.success("✅ Login successful!", { position: "top-right" });
+
+      // Save token + user
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("user", JSON.stringify(data.user));
+
+      // Detect admin
+      const role = data?.user?.role?.toLowerCase();
+
+      if (role === "admin") {
+        localStorage.setItem("isAdmin", "true");
+        setTimeout(() => {
+          window.location.href = "/admin/dashboard";
+        }, 1200);
+      } else {
+        localStorage.removeItem("isAdmin");
+        setTimeout(() => {
+          window.location.href = "/";
+        }, 1200);
+      }
+
+    } else {
+      toast.error(data.message || "Invalid email or password!");
     }
-  };
+
+  } catch (error) {
+    console.error("Error during login:", error);
+    toast.error("Something went wrong!");
+    setLoading(false);
+  }
+};
 
 
 

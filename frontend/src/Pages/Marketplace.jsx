@@ -15,70 +15,170 @@ export default function Marketplace() {
     setUserPoints(storedUser.points || storedUser.totalPoints || 0);
   }, []);
 
+  // const fetchData = async () => {
+  //   setLoading(true);
+  //   try {
+  //     const res = await fetch("http://127.0.0.1:3000/api/rewards");
+  //     const json = await res.json();
+  //     if (!res.ok) throw new Error(json.message || "Failed to load rewards");
+  //     setRewards(json.rewards || []);
+  //   } catch (err) {
+  //     console.error("Rewards fetch error:", err);
+  //     toast.error(err.message || "Failed to load marketplace");
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
+
+
+
   const fetchData = async () => {
-    setLoading(true);
-    try {
-      const res = await fetch("http://127.0.0.1:3000/api/rewards");
-      const json = await res.json();
-      if (!res.ok) throw new Error(json.message || "Failed to load rewards");
-      setRewards(json.rewards || []);
-    } catch (err) {
-      console.error("Rewards fetch error:", err);
-      toast.error(err.message || "Failed to load marketplace");
-    } finally {
-      setLoading(false);
-    }
-  };
+  setLoading(true);
+  try {
+
+    // ❌ OLD (localhost)
+    // const res = await fetch("http://127.0.0.1:3000/api/rewards");
+
+    // ✅ NEW (Vercel + Local)
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/rewards`);
+
+    const json = await res.json();
+    if (!res.ok) throw new Error(json.message || "Failed to load rewards");
+    setRewards(json.rewards || []);
+  } catch (err) {
+    console.error("Rewards fetch error:", err);
+    toast.error(err.message || "Failed to load marketplace");
+  } finally {
+    setLoading(false);
+  }
+};
+
+
+  // const handleRedeem = async (rewardId) => {
+  //   const token = localStorage.getItem("token");
+  //   if (!token) {
+  //     toast.error("Please sign in to redeem");
+  //     return;
+  //   }
+
+  //   // find reward to show quick check
+  //   const reward = rewards.find((r) => r._id === rewardId);
+  //   if (!reward) return;
+
+  //   if ((userPoints || 0) < reward.pointsRequired) {
+  //     toast.info("You don't have enough points to redeem this reward");
+  //     return;
+  //   }
+
+  //   setRedeeming((s) => ({ ...s, [rewardId]: true }));
+  //   try {
+  //     const res = await fetch(
+  //       `http://127.0.0.1:3000/api/rewards/redeem/${rewardId}`,
+  //       {
+  //         method: "POST",
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //           Authorization: `Bearer ${token}`,
+  //         },
+  //       }
+  //     );
+  //     const json = await res.json();
+  //     if (!res.ok) throw new Error(json.message || "Redeem failed");
+
+  //     toast.success(json.message || "Redeemed successfully!");
+  //     // update local user points & localStorage
+  //     const updatedPoints = json.remainingPoints ?? json.remainingPoints;
+  //     setUserPoints((prev) => (typeof updatedPoints === "number" ? updatedPoints : prev - reward.pointsRequired));
+  //     const storedUser = JSON.parse(localStorage.getItem("user") || "{}");
+  //     if (storedUser) {
+  //       storedUser.points = typeof updatedPoints === "number" ? updatedPoints : (storedUser.points || 0) - reward.pointsRequired;
+  //       localStorage.setItem("user", JSON.stringify(storedUser));
+  //     }
+  //     // Optionally re-fetch rewards or user data
+  //     // fetchData();
+  //   } catch (err) {
+  //     console.error("Redeem error:", err);
+  //     toast.error(err.message || "Redeem failed");
+  //   } finally {
+  //     setRedeeming((s) => ({ ...s, [rewardId]: false }));
+  //   }
+  // };
+
 
   const handleRedeem = async (rewardId) => {
-    const token = localStorage.getItem("token");
-    if (!token) {
-      toast.error("Please sign in to redeem");
-      return;
-    }
+  const token = localStorage.getItem("token");
+  if (!token) {
+    toast.error("Please sign in to redeem");
+    return;
+  }
 
-    // find reward to show quick check
-    const reward = rewards.find((r) => r._id === rewardId);
-    if (!reward) return;
+  const reward = rewards.find((r) => r._id === rewardId);
+  if (!reward) return;
 
-    if ((userPoints || 0) < reward.pointsRequired) {
-      toast.info("You don't have enough points to redeem this reward");
-      return;
-    }
+  if ((userPoints || 0) < reward.pointsRequired) {
+    toast.info("You don't have enough points to redeem this reward");
+    return;
+  }
 
-    setRedeeming((s) => ({ ...s, [rewardId]: true }));
-    try {
-      const res = await fetch(
-        `http://127.0.0.1:3000/api/rewards/redeem/${rewardId}`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      const json = await res.json();
-      if (!res.ok) throw new Error(json.message || "Redeem failed");
+  setRedeeming((s) => ({ ...s, [rewardId]: true }));
 
-      toast.success(json.message || "Redeemed successfully!");
-      // update local user points & localStorage
-      const updatedPoints = json.remainingPoints ?? json.remainingPoints;
-      setUserPoints((prev) => (typeof updatedPoints === "number" ? updatedPoints : prev - reward.pointsRequired));
-      const storedUser = JSON.parse(localStorage.getItem("user") || "{}");
-      if (storedUser) {
-        storedUser.points = typeof updatedPoints === "number" ? updatedPoints : (storedUser.points || 0) - reward.pointsRequired;
-        localStorage.setItem("user", JSON.stringify(storedUser));
+  try {
+
+    // ❌ OLD (localhost)
+    // const res = await fetch(
+    //   `http://127.0.0.1:3000/api/rewards/redeem/${rewardId}`,
+    //   {
+    //     method: "POST",
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //       Authorization: `Bearer ${token}`,
+    //     },
+    //   }
+    // );
+
+    // ✅ NEW (Vercel + Local)
+    const res = await fetch(
+      `${import.meta.env.VITE_API_URL}/rewards/redeem/${rewardId}`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
       }
-      // Optionally re-fetch rewards or user data
-      // fetchData();
-    } catch (err) {
-      console.error("Redeem error:", err);
-      toast.error(err.message || "Redeem failed");
-    } finally {
-      setRedeeming((s) => ({ ...s, [rewardId]: false }));
+    );
+
+    const json = await res.json();
+    if (!res.ok) throw new Error(json.message || "Redeem failed");
+
+    toast.success(json.message || "Redeemed successfully!");
+
+    const updatedPoints = json.remainingPoints ?? json.remainingPoints;
+
+    setUserPoints((prev) =>
+      typeof updatedPoints === "number"
+        ? updatedPoints
+        : prev - reward.pointsRequired
+    );
+
+    const storedUser = JSON.parse(localStorage.getItem("user") || "{}");
+    if (storedUser) {
+      storedUser.points =
+        typeof updatedPoints === "number"
+          ? updatedPoints
+          : (storedUser.points || 0) - reward.pointsRequired;
+
+      localStorage.setItem("user", JSON.stringify(storedUser));
     }
-  };
+
+  } catch (err) {
+    console.error("Redeem error:", err);
+    toast.error(err.message || "Redeem failed");
+  } finally {
+    setRedeeming((s) => ({ ...s, [rewardId]: false }));
+  }
+};
+
 
   if (loading)
     return (

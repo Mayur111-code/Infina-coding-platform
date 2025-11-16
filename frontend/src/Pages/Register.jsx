@@ -245,40 +245,87 @@ export default function RegistrationForm() {
   };
 
   // 🧩 Submit Registration (connect backend)
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   setLoading(true);
+
+  //   try {
+  //     const submitData = new FormData();
+  //     Object.entries(formData).forEach(([key, value]) => {
+  //       submitData.append(key, value);
+  //     });
+
+  //     const res = await fetch("http://127.0.0.1:3000/api/users/register", {
+  //       method: "POST",
+  //       body: submitData,
+  //     });
+
+  //     const data = await res.json();
+  //     setLoading(false);
+
+  //     if (res.ok) {
+  //       toast.success("✅ Registration Successful!", { position: "top-right" });
+  //       console.log("User registered:", data);
+  //       localStorage.setItem("user", JSON.stringify(data.user));
+  //       setTimeout(() => {
+  //         window.location.href = "/signin"; // redirect to login page
+  //       }, 1500);
+  //     } else {
+  //       toast.error(data.message || "Registration failed!");
+  //     }
+  //   } catch (error) {
+  //     console.error("Error:", error);
+  //     toast.error("Something went wrong!");
+  //     setLoading(false);
+  //   }
+  // };
+
+
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
+  e.preventDefault();
+  setLoading(true);
 
-    try {
-      const submitData = new FormData();
-      Object.entries(formData).forEach(([key, value]) => {
-        submitData.append(key, value);
-      });
+  try {
+    const submitData = new FormData();
+    Object.entries(formData).forEach(([key, value]) => {
+      submitData.append(key, value);
+    });
 
-      const res = await fetch("http://127.0.0.1:3000/api/users/register", {
+    // ❌ OLD (localhost)
+    // const res = await fetch("http://127.0.0.1:3000/api/users/register", {
+    //   method: "POST",
+    //   body: submitData,
+    // });
+
+    // ✅ NEW (Vercel + Local both)
+    const res = await fetch(
+      `${import.meta.env.VITE_API_URL}/users/register`,
+      {
         method: "POST",
         body: submitData,
-      });
-
-      const data = await res.json();
-      setLoading(false);
-
-      if (res.ok) {
-        toast.success("✅ Registration Successful!", { position: "top-right" });
-        console.log("User registered:", data);
-        localStorage.setItem("user", JSON.stringify(data.user));
-        setTimeout(() => {
-          window.location.href = "/signin"; // redirect to login page
-        }, 1500);
-      } else {
-        toast.error(data.message || "Registration failed!");
       }
-    } catch (error) {
-      console.error("Error:", error);
-      toast.error("Something went wrong!");
-      setLoading(false);
+    );
+
+    const data = await res.json();
+    setLoading(false);
+
+    if (res.ok) {
+      toast.success("✅ Registration Successful!", { position: "top-right" });
+      console.log("User registered:", data);
+      localStorage.setItem("user", JSON.stringify(data.user));
+      setTimeout(() => {
+        window.location.href = "/signin";
+      }, 1500);
+    } else {
+      toast.error(data.message || "Registration failed!");
     }
-  };
+  } catch (error) {
+    console.error("Error:", error);
+    toast.error("Something went wrong!");
+    setLoading(false);
+  }
+};
+
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">

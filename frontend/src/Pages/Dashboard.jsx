@@ -12,49 +12,121 @@ function Dashboard() {
   const navigate = useNavigate();
 
   // ✅ Fetch real user data + rank from backend (unchanged)
-  useEffect(() => {
-    const fetchDashboardData = async () => {
-      const token = localStorage.getItem("token");
-      if (!token) {
+  // useEffect(() => {
+  //   const fetchDashboardData = async () => {
+  //     const token = localStorage.getItem("token");
+  //     if (!token) {
+  //       navigate("/signin");
+  //       return;
+  //     }
+
+  //     try {
+  //       // Fetch user data
+  //       const res = await fetch("http://127.0.0.1:3000/api/users/dashboard", {
+  //         headers: { Authorization: `Bearer ${token}` },
+  //       });
+  //       const data = await res.json();
+
+  //       if (!res.ok) {
+  //         toast.error(data.message || "Failed to fetch user data");
+  //         navigate("/signin");
+  //         return;
+  //       }
+
+  //       setUser(data.user);
+
+  //       // Fetch leaderboard for rank
+  //       const leaderboardRes = await fetch("http://127.0.0.1:3000/api/leaderboard");
+  //       const leaderboardData = await leaderboardRes.json();
+
+  //       if (leaderboardRes.ok && leaderboardData.success) {
+  //         const users = leaderboardData.users;
+  //         const position = users.findIndex((u) => u._id === data.user.id);
+  //         setRank(position !== -1 ? position + 1 : "N/A");
+  //       }
+  //     } catch (err) {
+  //       console.error(err);
+  //       setError("Failed to load dashboard");
+  //       toast.error("Server error, please try again!");
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
+
+  //   fetchDashboardData();
+  // }, [navigate]);
+
+
+
+
+
+
+
+   /# Vercel api #/
+
+
+
+
+   useEffect(() => {
+  const fetchDashboardData = async () => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      navigate("/signin");
+      return;
+    }
+
+    try {
+      // OLD ❌ (localhost)
+      // const res = await fetch("http://127.0.0.1:3000/api/users/dashboard", {
+      //   headers: { Authorization: `Bearer ${token}` },
+      // });
+
+      // NEW ✔ (Vercel + Local both work)
+      const res = await fetch(
+        `${import.meta.env.VITE_API_URL}/users/dashboard`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        toast.error(data.message || "Failed to fetch user data");
         navigate("/signin");
         return;
       }
 
-      try {
-        // Fetch user data
-        const res = await fetch("http://127.0.0.1:3000/api/users/dashboard", {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-        const data = await res.json();
+      setUser(data.user);
 
-        if (!res.ok) {
-          toast.error(data.message || "Failed to fetch user data");
-          navigate("/signin");
-          return;
-        }
+      // OLD ❌
+      // const leaderboardRes = await fetch("http://127.0.0.1:3000/api/leaderboard");
 
-        setUser(data.user);
+      // NEW ✔
+      const leaderboardRes = await fetch(
+        `${import.meta.env.VITE_API_URL}/leaderboard`
+      );
 
-        // Fetch leaderboard for rank
-        const leaderboardRes = await fetch("http://127.0.0.1:3000/api/leaderboard");
-        const leaderboardData = await leaderboardRes.json();
+      const leaderboardData = await leaderboardRes.json();
 
-        if (leaderboardRes.ok && leaderboardData.success) {
-          const users = leaderboardData.users;
-          const position = users.findIndex((u) => u._id === data.user.id);
-          setRank(position !== -1 ? position + 1 : "N/A");
-        }
-      } catch (err) {
-        console.error(err);
-        setError("Failed to load dashboard");
-        toast.error("Server error, please try again!");
-      } finally {
-        setLoading(false);
+      if (leaderboardRes.ok && leaderboardData.success) {
+        const users = leaderboardData.users;
+        const position = users.findIndex((u) => u._id === data.user.id);
+        setRank(position !== -1 ? position + 1 : "N/A");
       }
-    };
+    } catch (err) {
+      console.error(err);
+      setError("Failed to load dashboard");
+      toast.error("Server error, please try again!");
+    } finally {
+      setLoading(false);
+    }
+  };
 
-    fetchDashboardData();
-  }, [navigate]);
+  fetchDashboardData();
+}, [navigate]);
+
+
 
   if (loading)
     return (

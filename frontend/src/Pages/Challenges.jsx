@@ -16,16 +16,37 @@ export default function Challenges() {
         if (!token) return toast.error("Please login first!");
 
         // 1️⃣ Fetch challenges
-        const res = await fetch("http://127.0.0.1:3000/api/challenges");
-        const data = await res.json();
+        // const res = await fetch("http://127.0.0.1:3000/api/challenges");
+        // const data = await res.json();
 
-        // 2️⃣ Fetch user dashboard data → including solved challenges
-        const solvedRes = await fetch("http://127.0.0.1:3000/api/users/dashboard", {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-        const solvedData = await solvedRes.json();
+        // // 2️⃣ Fetch user dashboard data → including solved challenges
+        // const solvedRes = await fetch("http://127.0.0.1:3000/api/users/dashboard", {
+        //   headers: { Authorization: `Bearer ${token}` },
+        // });
+        // const solvedData = await solvedRes.json();
 
-        // ⭐ FIX HERE — extract ONLY challengeId
+
+        // 1️⃣ Fetch challenges
+// const res = await fetch("http://127.0.0.1:3000/api/challenges");  // ❌ OLD
+const res = await fetch(`${import.meta.env.VITE_API_URL}/challenges`); // ✔ NEW
+const data = await res.json();
+
+// 2️⃣ Fetch user solved challenge data
+// const solvedRes = await fetch("http://127.0.0.1:3000/api/users/dashboard", {  // ❌ OLD
+//   headers: { Authorization: `Bearer ${token}` },
+// });
+
+const solvedRes = await fetch(
+  `${import.meta.env.VITE_API_URL}/users/dashboard`,
+  {
+    headers: { Authorization: `Bearer ${token}` },
+  }
+);
+
+const solvedData = await solvedRes.json();
+
+
+
         const userSolvedIds =
           solvedData?.user?.solvedChallenges?.map((c) =>
             c.challengeId?._id ? c.challengeId._id : c.challengeId
@@ -55,19 +76,50 @@ export default function Challenges() {
     setSolving((prev) => ({ ...prev, [challengeId]: true }));
 
     try {
-      const res = await fetch(
-        `http://127.0.0.1:3000/api/challenges/solve/${challengeId}`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify({ selectedOption }),
-        }
-      );
+      // const res = await fetch(
+      //   `http://127.0.0.1:3000/api/challenges/solve/${challengeId}`,
+      //   {
+      //     method: "POST",
+      //     headers: {
+      //       "Content-Type": "application/json",
+      //       Authorization: `Bearer ${token}`,
+      //     },
+      //     body: JSON.stringify({ selectedOption }),
+      //   }
+      // );
 
-      const data = await res.json();
+      // const data = await res.json();
+
+
+      // OLD ❌
+// const res = await fetch(
+//   `http://127.0.0.1:3000/api/challenges/solve/${challengeId}`,
+//   {
+//     method: "POST",
+//     headers: {
+//       "Content-Type": "application/json",
+//       Authorization: `Bearer ${token}`,
+//     },
+//     body: JSON.stringify({ selectedOption }),
+//   }
+// );
+
+
+// NEW ✔ Vercel + Local both
+const res = await fetch(
+  `${import.meta.env.VITE_API_URL}/challenges/solve/${challengeId}`,
+  {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({ selectedOption }),
+  }
+);
+
+const data = await res.json();
+
 
       if (res.ok) {
         if (data.isCorrect) {
