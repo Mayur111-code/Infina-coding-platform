@@ -8,57 +8,85 @@ export default function AdminEditChallenge() {
   const [formData, setFormData] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  const fetchChallenge = async () => {
-    try {
-      const res = await fetch("http://127.0.0.1:3000/api/challenges");
-      const data = await res.json();
+  // const fetchChallenge = async () => {
+  //   try {
+  //     const res = await fetch("http://127.0.0.1:3000/api/challenges");
+  //     const data = await res.json();
 
-      const challenge = data.challenges.find((c) => c._id === id);
-      setFormData(challenge);
-    } catch (err) {
-      toast.error("Failed to load challenge");
-    } finally {
-      setLoading(false);
-    }
-  };
+  //     const challenge = data.challenges.find((c) => c._id === id);
+  //     setFormData(challenge);
+  //   } catch (err) {
+  //     toast.error("Failed to load challenge");
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
+
+
+  const fetchChallenge = async () => {
+  try {
+
+    // ❌ OLD LOCALHOST
+    // const res = await fetch("http://127.0.0.1:3000/api/challenges");
+
+    // ✅ NEW VERCEL + LOCAL
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/challenges`);
+
+    const data = await res.json();
+
+    const challenge = data.challenges.find((c) => c._id === id);
+    setFormData(challenge);
+
+  } catch (err) {
+    toast.error("Failed to load challenge");
+  } finally {
+    setLoading(false);
+  }
+};
+
 
   useEffect(() => {
     fetchChallenge();
   }, []);
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  const token = localStorage.getItem("token");
 
-  const handleChange = (e) => {
-    setFormData((f) => ({ ...f, [e.target.name]: e.target.value }));
-  };
+  try {
 
-  const handleOptionChange = (index, value) => {
-    const updated = [...formData.options];
-    updated[index] = value;
-    setFormData({ ...formData, options: updated });
-  };
+    // ❌ OLD LOCALHOST
+    // const res = await fetch(`http://127.0.0.1:3000/api/challenges/${id}`, {
+    //   method: "PUT",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //     Authorization: `Bearer ${token}`,
+    //   },
+    //   body: JSON.stringify(formData),
+    // });
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const token = localStorage.getItem("token");
-
-    try {
-      const res = await fetch(`http://127.0.0.1:3000/api/challenges/${id}`, {
+    // ✅ NEW VERCEL + LOCAL
+    const res = await fetch(
+      `${import.meta.env.VITE_API_URL}/challenges/${id}`,
+      {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(formData),
-      });
+      }
+    );
 
-      const json = await res.json();
-      if (!res.ok) throw new Error(json.message);
+    const json = await res.json();
+    if (!res.ok) throw new Error(json.message);
 
-      toast.success("Challenge updated!");
-      navigate("/admin/manage-challenges");
-    } catch (err) {
-      toast.error(err.message || "Update failed!");
-    }
-  };
+    toast.success("Challenge updated!");
+    navigate("/admin/manage-challenges");
+
+  } catch (err) {
+    toast.error(err.message || "Update failed!");
+  }
+};
 
   if (loading || !formData) return <div className="p-6">Loading...</div>;
 

@@ -30,29 +30,72 @@ export default function AdminEditReward() {
     setForm((f) => ({ ...f, [name]: value }));
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const token = localStorage.getItem("token");
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   const token = localStorage.getItem("token");
 
-    try {
-      const res = await fetch(`http://127.0.0.1:3000/api/rewards/${id}`, {
+  //   try {
+  //     const res = await fetch(`http://127.0.0.1:3000/api/rewards/${id}`, {
+  //       method: "PUT",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //         Authorization: `Bearer ${token}`,
+  //       },
+  //       body: JSON.stringify(form),
+  //     });
+
+  //     const json = await res.json();
+  //     if (!res.ok) throw new Error(json.message);
+
+  //     toast.success("Reward updated");
+  //     navigate("/admin/manage-rewards");
+  //   } catch (err) {
+  //     toast.error(err.message || "Update failed");
+  //   }
+  // };
+
+
+
+  const handleSubmit = async (e) => {
+  e.preventDefault();
+  const token = localStorage.getItem("token");
+
+  try {
+
+    // ❌ OLD LOCALHOST API
+    // const res = await fetch(`http://127.0.0.1:3000/api/rewards/${id}`, {
+    //   method: "PUT",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //     Authorization: `Bearer ${token}`,
+    //   },
+    //   body: JSON.stringify(form),
+    // });
+
+    // ✅ NEW VERCEL + LOCAL API
+    const res = await fetch(
+      `${import.meta.env.VITE_API_URL}/rewards/${id}`,
+      {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(form),
-      });
+      }
+    );
 
-      const json = await res.json();
-      if (!res.ok) throw new Error(json.message);
+    const json = await res.json();
+    if (!res.ok) throw new Error(json.message);
 
-      toast.success("Reward updated");
-      navigate("/admin/manage-rewards");
-    } catch (err) {
-      toast.error(err.message || "Update failed");
-    }
-  };
+    toast.success("Reward updated");
+    navigate("/admin/manage-rewards");
+
+  } catch (err) {
+    toast.error(err.message || "Update failed");
+  }
+};
+
 
   if (loading || !form) return <div className="p-6">Loading...</div>;
 
