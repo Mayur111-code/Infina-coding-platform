@@ -5,57 +5,27 @@ export default function Leaderboard() {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // useEffect(() => {
-  //   const fetchLeaderboard = async () => {
-  //     try {
-  //       const res = await fetch("http://127.0.0.1:3000/api/leaderboard");
-  //       const data = await res.json();
-
-  //       if (res.ok && data.success) {
-  //         setUsers(data.users);
-  //       } else {
-  //         toast.error(data.message || "Failed to load leaderboard");
-  //       }
-  //     } catch (error) {
-  //       console.error("Error fetching leaderboard:", error);
-  //       toast.error("Network error while fetching leaderboard");
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   };
-
-  //   fetchLeaderboard();
-  // }, []);
-
-
   useEffect(() => {
-  const fetchLeaderboard = async () => {
-    try {
+    const fetchLeaderboard = async () => {
+      try {
+        const res = await fetch("http://127.0.0.1:3000/api/leaderboard");
+        const data = await res.json();
 
-      // ❌ OLD (localhost)
-      // const res = await fetch("http://127.0.0.1:3000/api/leaderboard");
-
-      // ✅ NEW (Vercel + Local both work)
-      const res = await fetch(`${import.meta.env.VITE_API_URL}/leaderboard`);
-
-      const data = await res.json();
-
-      if (res.ok && data.success) {
-        setUsers(data.users);
-      } else {
-        toast.error(data.message || "Failed to load leaderboard");
+        if (res.ok && data.success) {
+          setUsers(data.users);
+        } else {
+          toast.error(data.message || "Failed to load leaderboard");
+        }
+      } catch (error) {
+        console.error("Error fetching leaderboard:", error);
+        toast.error("Network error while fetching leaderboard");
+      } finally {
+        setLoading(false);
       }
-    } catch (error) {
-      console.error("Error fetching leaderboard:", error);
-      toast.error("Network error while fetching leaderboard");
-    } finally {
-      setLoading(false);
-    }
-  };
+    };
 
-  fetchLeaderboard();
-}, []);
-
+    fetchLeaderboard();
+  }, []);
 
 
 

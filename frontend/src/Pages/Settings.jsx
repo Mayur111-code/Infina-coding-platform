@@ -3,7 +3,7 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { Upload, X, Settings as SettingsIcon, User, Mail, Calendar } from "lucide-react";
 
-const Settings = () => {
+export default function Settings() {
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
   const [preview, setPreview] = useState(null);
@@ -15,140 +15,103 @@ const Settings = () => {
   });
   const [loading, setLoading] = useState(false);
 
-  // 🧠 Load user data from localStorage (UNCHANGED)
+  const API = "http://127.0.0.1:3000/api";  // ⭐ LOCAL ONLY
+
+  // Load user data
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
     if (storedUser) {
       const parsed = JSON.parse(storedUser);
       setUser(parsed);
+
       setFormData({
         username: parsed.username || "",
         useremail: parsed.useremail || "",
-        userbirthdate: parsed.userbirthdate ? parsed.userbirthdate.split("T")[0] : "",
+        userbirthdate: parsed.userbirthdate
+          ? parsed.userbirthdate.split("T")[0]
+          : "",
         userprofile: null,
       });
+
       setPreview(parsed.userprofile || null);
     }
   }, []);
 
-  // 🧾 Handle input changes (UNCHANGED)
+  // Handle input
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  // 🖼 Handle profile image (UNCHANGED)
+  // Handle image upload
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (file) {
       setFormData({ ...formData, userprofile: file });
+
       const reader = new FileReader();
       reader.onloadend = () => setPreview(reader.result);
       reader.readAsDataURL(file);
     }
   };
 
+  // Remove image
   const removeImage = () => {
     setFormData({ ...formData, userprofile: null });
     setPreview(null);
   };
 
-  // 🚀 Handle form submit (UNCHANGED)
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  //   if (!user) return toast.error("User not found!");
-
-  //   const token = localStorage.getItem("token");
-  //   if (!token) {
-  //     toast.error("Unauthorized! Please sign in again.");
-  //     navigate("/signin");
-  //     return;
-  //   }
-
-  //   try {
-  //     setLoading(true);
-  //     const formDataToSend = new FormData();
-  //     formDataToSend.append("username", formData.username);
-  //     formDataToSend.append("useremail", formData.useremail);
-  //     formDataToSend.append("userbirthdate", formData.userbirthdate);
-  //     if (formData.userprofile) formDataToSend.append("userprofile", formData.userprofile);
-
-  //     const res = await fetch(`http://127.0.0.1:3000/api/users/update/${user.id}`, {
-  //       method: "PUT",
-  //       headers: { Authorization: `Bearer ${token}` },
-  //       body: formDataToSend,
-  //     });
-
-  //     const data = await res.json();
-
-  //     if (!res.ok) throw new Error(data.message || "Update failed");
-
-  //     toast.success("✅ Profile updated successfully!");
-  //     localStorage.setItem("user", JSON.stringify(data.user));
-  //     setUser(data.user);
-
-  //     setTimeout(() => navigate("/"), 1500);
-  //   } catch (err) {
-  //     toast.error(err.message || "Something went wrong");
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
-
-
+  // ⭐ Submit Profile Update (LOCAL API)
   const handleSubmit = async (e) => {
-  e.preventDefault();
-  if (!user) return toast.error("User not found!");
+    e.preventDefault();
+    if (!user) return toast.error("User not found!");
 
-  const token = localStorage.getItem("token");
-  if (!token) {
-    toast.error("Unauthorized! Please sign in again.");
-    navigate("/signin");
-    return;
-  }
+    const token = localStorage.getItem("token");
+    if (!token) {
+      toast.error("Unauthorized! Please sign in again.");
+      navigate("/signin");
+      return;
+    }
 
-  try {
-    setLoading(true);
+    try {
+      setLoading(true);
 
-    const formDataToSend = new FormData();
-    formDataToSend.append("username", formData.username);
-    formDataToSend.append("useremail", formData.useremail);
-    formDataToSend.append("userbirthdate", formData.userbirthdate);
-    if (formData.userprofile)
-      formDataToSend.append("userprofile", formData.userprofile);
+      const formDataToSend = new FormData();
+      formDataToSend.append("username", formData.username);
+      formDataToSend.append("useremail", formData.useremail);
+      formDataToSend.append("userbirthdate", formData.userbirthdate);
+      if (formData.userprofile)
+        formDataToSend.append("userprofile", formData.userprofile);
 
-    // ❌ OLD (localhost)
-    // const res = await fetch(`http://127.0.0.1:3000/api/users/update/${user.id}`, {
-    //   method: "PUT",
-    //   headers: { Authorization: `Bearer ${token}` },
-    //   body: formDataToSend,
-    // });
+      // ⭐ PURE LOCAL URL
+      const res = await fetch(
+        `${API}/users/update/${user.id}`,
+        {
+          method: "PUT",
+          headers: { Authorization: `Bearer ${token}` },
+          body: formDataToSend,
+        }
+      );
 
-    // ✅ NEW (Vercel + Local both)
-    const res = await fetch(
-      `${import.meta.env.VITE_API_URL}/users/update/${user.id}`,
-      {
-        method: "PUT",
-        headers: { Authorization: `Bearer ${token}` },
-        body: formDataToSend,
-      }
-    );
+      const data = await res.json();
 
-    const data = await res.json();
+      if (!res.ok) throw new Error(data.message || "Update failed");
 
-    if (!res.ok) throw new Error(data.message || "Update failed");
+      toast.success("✅ Profile updated successfully!");
 
-    toast.success("✅ Profile updated successfully!");
-    localStorage.setItem("user", JSON.stringify(data.user));
-    setUser(data.user);
+      // Update localStorage
+      localStorage.setItem("user", JSON.stringify(data.user));
+      setUser(data.user);
 
-    setTimeout(() => navigate("/"), 1500);
-  } catch (err) {
-    toast.error(err.message || "Something went wrong");
-  } finally {
-    setLoading(false);
-  }
-};
+      setTimeout(() => navigate("/"), 1500);
 
+    } catch (err) {
+      toast.error(err.message || "Something went wrong");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  
 
 
 
@@ -370,4 +333,3 @@ const Settings = () => {
   );
 };
 
-export default Settings;

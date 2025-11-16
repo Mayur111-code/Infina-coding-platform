@@ -6,46 +6,28 @@ export default function Challenges() {
   const [loading, setLoading] = useState(true);
   const [solving, setSolving] = useState({});
   const [solvedIds, setSolvedIds] = useState([]);
-  const [activeFilter, setActiveFilter] = useState("all"); // all, unsolved, solved
+  const [activeFilter, setActiveFilter] = useState("all");
 
-  // ⭐ Fetch all challenges + solved list (UNCHANGED BACKEND LOGIC)
+  // LOCAL backend only
+  const API = "http://127.0.0.1:3000/api";
+
+  // ⭐ Fetch challenges + solved list
   useEffect(() => {
     const fetchData = async () => {
       try {
         const token = localStorage.getItem("token");
         if (!token) return toast.error("Please login first!");
 
-        // 1️⃣ Fetch challenges
-        // const res = await fetch("http://127.0.0.1:3000/api/challenges");
-        // const data = await res.json();
+        // 1️⃣ Fetch all challenges
+        const res = await fetch(`${API}/challenges`);
+        const data = await res.json();
 
-        // // 2️⃣ Fetch user dashboard data → including solved challenges
-        // const solvedRes = await fetch("http://127.0.0.1:3000/api/users/dashboard", {
-        //   headers: { Authorization: `Bearer ${token}` },
-        // });
-        // const solvedData = await solvedRes.json();
+        // 2️⃣ Fetch user dashboard (includes solved challenges)
+        const solvedRes = await fetch(`${API}/users/dashboard`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
 
-
-        // 1️⃣ Fetch challenges
-// const res = await fetch("http://127.0.0.1:3000/api/challenges");  // ❌ OLD
-const res = await fetch(`${import.meta.env.VITE_API_URL}/challenges`); // ✔ NEW
-const data = await res.json();
-
-// 2️⃣ Fetch user solved challenge data
-// const solvedRes = await fetch("http://127.0.0.1:3000/api/users/dashboard", {  // ❌ OLD
-//   headers: { Authorization: `Bearer ${token}` },
-// });
-
-const solvedRes = await fetch(
-  `${import.meta.env.VITE_API_URL}/users/dashboard`,
-  {
-    headers: { Authorization: `Bearer ${token}` },
-  }
-);
-
-const solvedData = await solvedRes.json();
-
-
+        const solvedData = await solvedRes.json();
 
         const userSolvedIds =
           solvedData?.user?.solvedChallenges?.map((c) =>
@@ -54,6 +36,7 @@ const solvedData = await solvedRes.json();
 
         setChallenges(data.challenges || []);
         setSolvedIds(userSolvedIds);
+
       } catch (error) {
         console.error("Fetch error:", error);
         toast.error("Failed to load challenges!");
@@ -65,7 +48,7 @@ const solvedData = await solvedRes.json();
     fetchData();
   }, []);
 
-  // ⭐ Solve challenge (UNCHANGED BACKEND LOGIC)
+  // ⭐ Solve challenge logic
   const handleAnswer = async (challengeId, selectedOption) => {
     const token = localStorage.getItem("token");
     if (!token) return toast.error("Please login first!");
@@ -76,50 +59,19 @@ const solvedData = await solvedRes.json();
     setSolving((prev) => ({ ...prev, [challengeId]: true }));
 
     try {
-      // const res = await fetch(
-      //   `http://127.0.0.1:3000/api/challenges/solve/${challengeId}`,
-      //   {
-      //     method: "POST",
-      //     headers: {
-      //       "Content-Type": "application/json",
-      //       Authorization: `Bearer ${token}`,
-      //     },
-      //     body: JSON.stringify({ selectedOption }),
-      //   }
-      // );
+      const res = await fetch(
+        `${API}/challenges/solve/${challengeId}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({ selectedOption }),
+        }
+      );
 
-      // const data = await res.json();
-
-
-      // OLD ❌
-// const res = await fetch(
-//   `http://127.0.0.1:3000/api/challenges/solve/${challengeId}`,
-//   {
-//     method: "POST",
-//     headers: {
-//       "Content-Type": "application/json",
-//       Authorization: `Bearer ${token}`,
-//     },
-//     body: JSON.stringify({ selectedOption }),
-//   }
-// );
-
-
-// NEW ✔ Vercel + Local both
-const res = await fetch(
-  `${import.meta.env.VITE_API_URL}/challenges/solve/${challengeId}`,
-  {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-    body: JSON.stringify({ selectedOption }),
-  }
-);
-
-const data = await res.json();
-
+      const data = await res.json();
 
       if (res.ok) {
         if (data.isCorrect) {
@@ -128,11 +80,12 @@ const data = await res.json();
           toast.error("💥 Wrong answer! Try again!");
         }
 
-        // ⭐ Add solved challenge ID
+        // ⭐ Add solved challenge locally
         setSolvedIds((prev) => [...prev, challengeId]);
       } else {
         toast.error(data.message || "Something went wrong!");
       }
+
     } catch (error) {
       console.error("Solve error:", error);
       toast.error("Network error!");
@@ -141,13 +94,15 @@ const data = await res.json();
     }
   };
 
-  // Filter challenges based on active filter
-  const filteredChallenges = challenges.filter(challenge => {
+  // ⭐ Filter logic (unchanged)
+  const filteredChallenges = challenges.filter((challenge) => {
     const isSolved = solvedIds.includes(challenge._id);
     if (activeFilter === "solved") return isSolved;
     if (activeFilter === "unsolved") return !isSolved;
-    return true; // "all"
+    return true;
   });
+
+
 
   if (loading)
     return (

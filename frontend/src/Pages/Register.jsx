@@ -199,7 +199,6 @@ import { useState } from "react";
 import { Upload, X } from "lucide-react";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
 export default function RegistrationForm() {
   const [formData, setFormData] = useState({
     username: "",
@@ -212,7 +211,7 @@ export default function RegistrationForm() {
   const [previewUrl, setPreviewUrl] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  // 🧩 Input change
+  // Handle text inputs
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -220,7 +219,7 @@ export default function RegistrationForm() {
     });
   };
 
-  // 🧩 File change (preview + store)
+  // Handle file upload + preview
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -235,7 +234,7 @@ export default function RegistrationForm() {
     }
   };
 
-  // 🧩 Remove profile image
+  // Remove profile image
   const removeImage = () => {
     setFormData({
       ...formData,
@@ -244,88 +243,47 @@ export default function RegistrationForm() {
     setPreviewUrl(null);
   };
 
-  // 🧩 Submit Registration (connect backend)
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  //   setLoading(true);
-
-  //   try {
-  //     const submitData = new FormData();
-  //     Object.entries(formData).forEach(([key, value]) => {
-  //       submitData.append(key, value);
-  //     });
-
-  //     const res = await fetch("http://127.0.0.1:3000/api/users/register", {
-  //       method: "POST",
-  //       body: submitData,
-  //     });
-
-  //     const data = await res.json();
-  //     setLoading(false);
-
-  //     if (res.ok) {
-  //       toast.success("✅ Registration Successful!", { position: "top-right" });
-  //       console.log("User registered:", data);
-  //       localStorage.setItem("user", JSON.stringify(data.user));
-  //       setTimeout(() => {
-  //         window.location.href = "/signin"; // redirect to login page
-  //       }, 1500);
-  //     } else {
-  //       toast.error(data.message || "Registration failed!");
-  //     }
-  //   } catch (error) {
-  //     console.error("Error:", error);
-  //     toast.error("Something went wrong!");
-  //     setLoading(false);
-  //   }
-  // };
-
-
+  // ⭐ Submit Registration (LOCAL ONLY)
   const handleSubmit = async (e) => {
-  e.preventDefault();
-  setLoading(true);
+    e.preventDefault();
+    setLoading(true);
 
-  try {
-    const submitData = new FormData();
-    Object.entries(formData).forEach(([key, value]) => {
-      submitData.append(key, value);
-    });
+    try {
+      const submitData = new FormData();
+      Object.entries(formData).forEach(([key, value]) => {
+        submitData.append(key, value);
+      });
 
-    // ❌ OLD (localhost)
-    // const res = await fetch("http://127.0.0.1:3000/api/users/register", {
-    //   method: "POST",
-    //   body: submitData,
-    // });
-
-    // ✅ NEW (Vercel + Local both)
-    const res = await fetch(
-      `${import.meta.env.VITE_API_URL}/users/register`,
-      {
+      // ⭐ LOCAL backend URL ONLY
+      const res = await fetch("http://127.0.0.1:3000/api/users/register", {
         method: "POST",
         body: submitData,
+      });
+
+      const data = await res.json();
+      setLoading(false);
+
+      if (res.ok) {
+        toast.success("✅ Registration Successful!", { position: "top-right" });
+        console.log("User registered:", data);
+
+        // store user in local storage
+        localStorage.setItem("user", JSON.stringify(data.user));
+
+        setTimeout(() => {
+          window.location.href = "/signin";
+        }, 1500);
+      } else {
+        toast.error(data.message || "Registration failed!");
       }
-    );
-
-    const data = await res.json();
-    setLoading(false);
-
-    if (res.ok) {
-      toast.success("✅ Registration Successful!", { position: "top-right" });
-      console.log("User registered:", data);
-      localStorage.setItem("user", JSON.stringify(data.user));
-      setTimeout(() => {
-        window.location.href = "/signin";
-      }, 1500);
-    } else {
-      toast.error(data.message || "Registration failed!");
+    } catch (error) {
+      console.error("Error:", error);
+      toast.error("Something went wrong!");
+      setLoading(false);
     }
-  } catch (error) {
-    console.error("Error:", error);
-    toast.error("Something went wrong!");
-    setLoading(false);
-  }
-};
+  };
 
+  
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">

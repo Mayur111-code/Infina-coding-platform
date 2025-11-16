@@ -15,146 +15,83 @@ export default function AdminAddReward() {
     image: "",
     isPopular: false,
   });
+
   const [loading, setLoading] = useState(false);
+
+  const API = "http://127.0.0.1:3000/api"; // ⭐ LOCAL ONLY
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
-    setForm((f) => ({ ...f, [name]: type === "checkbox" ? checked : value }));
+    setForm((prev) => ({
+      ...prev,
+      [name]: type === "checkbox" ? checked : value,
+    }));
   };
 
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  //   const token = localStorage.getItem("token");
-  //   if (!token) return toast.error("Admin token required");
-
-  //   // Basic validation
-  //   if (!form.title || !form.pointsRequired || !form.image) {
-  //     return toast.error("Title, image and points are required");
-  //   }
-
-  //   setLoading(true);
-  //   try {
-  //     const body = {
-  //       title: form.title,
-  //       description: form.description,
-  //       pointsRequired: Number(form.pointsRequired),
-  //       price: Number(form.price || 0),
-  //       originalPrice: Number(form.originalPrice || 0),
-  //       validity: form.validity,
-  //       rating: Number(form.rating),
-  //       category: form.category,
-  //       image: form.image,
-  //       isPopular: form.isPopular,
-  //     };
-
-  //     const res = await fetch("http://127.0.0.1:3000/api/rewards", {
-  //       method: "POST",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //         Authorization: `Bearer ${token}`,
-  //       },
-  //       body: JSON.stringify(body),
-  //     });
-
-  //     const json = await res.json();
-  //     if (!res.ok) throw new Error(json.message || "Failed to create reward");
-
-  //     toast.success("Reward created!");
-  //     setForm({
-  //       title: "",
-  //       description: "",
-  //       pointsRequired: "",
-  //       price: "",
-  //       originalPrice: "",
-  //       validity: "1 Month",
-  //       rating: 4.5,
-  //       category: "",
-  //       image: "",
-  //       isPopular: false,
-  //     });
-  //   } catch (err) {
-  //     console.error("Create reward error:", err);
-  //     toast.error(err.message || "Creation failed");
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
-
-
-
   const handleSubmit = async (e) => {
-  e.preventDefault();
-  const token = localStorage.getItem("token");
-  if (!token) return toast.error("Admin token required");
+    e.preventDefault();
 
-  // Basic validation
-  if (!form.title || !form.pointsRequired || !form.image) {
-    return toast.error("Title, image and points are required");
-  }
+    const token = localStorage.getItem("token");
+    if (!token) return toast.error("Admin token required");
 
-  setLoading(true);
-  try {
-    const body = {
-      title: form.title,
-      description: form.description,
-      pointsRequired: Number(form.pointsRequired),
-      price: Number(form.price || 0),
-      originalPrice: Number(form.originalPrice || 0),
-      validity: form.validity,
-      rating: Number(form.rating),
-      category: form.category,
-      image: form.image,
-      isPopular: form.isPopular,
-    };
+    // Basic validation
+    if (!form.title || !form.pointsRequired || !form.image) {
+      return toast.error("Title, image and points are required");
+    }
 
-    // ❌ OLD LOCALHOST
-    // const res = await fetch("http://127.0.0.1:3000/api/rewards", {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //     Authorization: `Bearer ${token}`,
-    //   },
-    //   body: JSON.stringify(body),
-    // });
+    setLoading(true);
 
-    // ✅ NEW VERCEL + LOCAL
-    const res = await fetch(
-      `${import.meta.env.VITE_API_URL}/rewards`,
-      {
+    try {
+      const body = {
+        title: form.title,
+        description: form.description,
+        pointsRequired: Number(form.pointsRequired),
+        price: Number(form.price || 0),
+        originalPrice: Number(form.originalPrice || 0),
+        validity: form.validity,
+        rating: Number(form.rating),
+        category: form.category,
+        image: form.image,
+        isPopular: form.isPopular,
+      };
+
+      const res = await fetch(`${API}/rewards`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(body),
-      }
-    );
+      });
 
-    const json = await res.json();
-    if (!res.ok) throw new Error(json.message || "Failed to create reward");
+      const json = await res.json();
 
-    toast.success("Reward created!");
+      if (!res.ok) throw new Error(json.message || "Failed to create reward");
 
-    setForm({
-      title: "",
-      description: "",
-      pointsRequired: "",
-      price: "",
-      originalPrice: "",
-      validity: "1 Month",
-      rating: 4.5,
-      category: "",
-      image: "",
-      isPopular: false,
-    });
+      toast.success("🎉 Reward created successfully!");
 
-  } catch (err) {
-    console.error("Create reward error:", err);
-    toast.error(err.message || "Creation failed");
-  } finally {
-    setLoading(false);
-  }
-};
+      // Reset form
+      setForm({
+        title: "",
+        description: "",
+        pointsRequired: "",
+        price: "",
+        originalPrice: "",
+        validity: "1 Month",
+        rating: 4.5,
+        category: "",
+        image: "",
+        isPopular: false,
+      });
+    } catch (err) {
+      console.error("Create reward error:", err);
+      toast.error(err.message || "Creation failed");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  
 
 
   return (

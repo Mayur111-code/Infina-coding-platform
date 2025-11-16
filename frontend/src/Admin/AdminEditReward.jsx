@@ -1,19 +1,24 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-
 export default function AdminEditReward() {
   const { id } = useParams();
   const navigate = useNavigate();
+
   const [form, setForm] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  const API = "http://127.0.0.1:3000/api"; // ⭐ LOCAL ONLY
+
+  // Fetch one reward
   const fetchReward = async () => {
     try {
-      const res = await fetch("http://127.0.0.1:3000/api/rewards");
+      const res = await fetch(`${API}/rewards`);
       const data = await res.json();
+
       const one = data.rewards.find((r) => r._id === id);
       setForm(one);
+
     } catch (err) {
       toast.error("Failed to load reward");
     } finally {
@@ -25,76 +30,37 @@ export default function AdminEditReward() {
     fetchReward();
   }, []);
 
+  // Input change
   const handleChange = (e) => {
     const { name, value } = e.target;
     setForm((f) => ({ ...f, [name]: value }));
   };
 
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  //   const token = localStorage.getItem("token");
-
-  //   try {
-  //     const res = await fetch(`http://127.0.0.1:3000/api/rewards/${id}`, {
-  //       method: "PUT",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //         Authorization: `Bearer ${token}`,
-  //       },
-  //       body: JSON.stringify(form),
-  //     });
-
-  //     const json = await res.json();
-  //     if (!res.ok) throw new Error(json.message);
-
-  //     toast.success("Reward updated");
-  //     navigate("/admin/manage-rewards");
-  //   } catch (err) {
-  //     toast.error(err.message || "Update failed");
-  //   }
-  // };
-
-
-
+  // Submit updated reward
   const handleSubmit = async (e) => {
-  e.preventDefault();
-  const token = localStorage.getItem("token");
+    e.preventDefault();
+    const token = localStorage.getItem("token");
 
-  try {
-
-    // ❌ OLD LOCALHOST API
-    // const res = await fetch(`http://127.0.0.1:3000/api/rewards/${id}`, {
-    //   method: "PUT",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //     Authorization: `Bearer ${token}`,
-    //   },
-    //   body: JSON.stringify(form),
-    // });
-
-    // ✅ NEW VERCEL + LOCAL API
-    const res = await fetch(
-      `${import.meta.env.VITE_API_URL}/rewards/${id}`,
-      {
+    try {
+      const res = await fetch(`${API}/rewards/${id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(form),
-      }
-    );
+      });
 
-    const json = await res.json();
-    if (!res.ok) throw new Error(json.message);
+      const json = await res.json();
+      if (!res.ok) throw new Error(json.message);
 
-    toast.success("Reward updated");
-    navigate("/admin/manage-rewards");
+      toast.success("Reward updated!");
+      navigate("/admin/manage-rewards");
 
-  } catch (err) {
-    toast.error(err.message || "Update failed");
-  }
-};
+    } catch (err) {
+      toast.error(err.message || "Update failed");
+    }
+  };
 
 
   if (loading || !form) return <div className="p-6">Loading...</div>;

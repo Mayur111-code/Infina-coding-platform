@@ -2,21 +2,23 @@ import React, { useEffect, useState } from "react";
 import { Edit, Trash2 } from "lucide-react";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-
 export default function AdminManageChallenges() {
   const [challenges, setChallenges] = useState([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
+  const API = "http://127.0.0.1:3000/api"; // ⭐ LOCAL ONLY
+
   const fetchChallenges = async () => {
     try {
-      const res = await fetch("http://127.0.0.1:3000/api/challenges");
+      const res = await fetch(`${API}/challenges`);
       const data = await res.json();
 
       if (!res.ok) throw new Error(data.message);
-      setChallenges(data.challenges);
+
+      setChallenges(data.challenges || []);
     } catch (err) {
-      toast.error("Failed to load challenges");
+      toast.error("Failed to load challenges!");
     } finally {
       setLoading(false);
     }
@@ -32,20 +34,26 @@ export default function AdminManageChallenges() {
     const token = localStorage.getItem("token");
 
     try {
-      const res = await fetch(`http://127.0.0.1:3000/api/challenges/${id}`, {
+      const res = await fetch(`${API}/challenges/${id}`, {
         method: "DELETE",
-        headers: { Authorization: `Bearer ${token}` },
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       });
 
       const data = await res.json();
       if (!res.ok) throw new Error(data.message);
 
       toast.success("Challenge deleted!");
+
+      // Remove from UI instantly
       setChallenges((prev) => prev.filter((c) => c._id !== id));
     } catch (err) {
       toast.error(err.message || "Delete failed!");
     }
   };
+
+  
 
   if (loading)
     return <div className="p-6 text-center text-xl font-semibold">Loading challenges...</div>;

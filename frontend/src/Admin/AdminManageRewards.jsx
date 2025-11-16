@@ -2,18 +2,21 @@ import React, { useEffect, useState } from "react";
 import { Edit, Trash2, PlusCircle } from "lucide-react";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-
 export default function AdminManageRewards() {
   const [rewards, setRewards] = useState([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
+  const API = "http://127.0.0.1:3000/api"; // ⭐ LOCAL API ONLY
+
   const fetchRewards = async () => {
     try {
-      const res = await fetch("http://127.0.0.1:3000/api/rewards");
+      const res = await fetch(`${API}/rewards`);
       const data = await res.json();
+
       if (!res.ok) throw new Error(data.message);
-      setRewards(data.rewards);
+
+      setRewards(data.rewards || []);
     } catch (err) {
       toast.error("Failed to load rewards");
     } finally {
@@ -31,7 +34,7 @@ export default function AdminManageRewards() {
     const token = localStorage.getItem("token");
 
     try {
-      const res = await fetch(`http://127.0.0.1:3000/api/rewards/${id}`, {
+      const res = await fetch(`${API}/rewards/${id}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -41,12 +44,15 @@ export default function AdminManageRewards() {
       const data = await res.json();
       if (!res.ok) throw new Error(data.message);
 
-      toast.success("Reward deleted");
+      toast.success("Reward deleted!");
+
+      // Remove from UI
       setRewards((prev) => prev.filter((r) => r._id !== id));
     } catch (err) {
       toast.error(err.message || "Delete failed");
     }
   };
+
 
   if (loading)
     return (

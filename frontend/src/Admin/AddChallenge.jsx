@@ -15,7 +15,9 @@ export default function AddChallenge() {
 
   const [loading, setLoading] = useState(false);
 
-  // Handle normal input
+  const API = "http://127.0.0.1:3000/api"; // ⭐ LOCAL ONLY
+
+  // Input for title, description, points, correct
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -23,134 +25,70 @@ export default function AddChallenge() {
     });
   };
 
-  // Handle option change
+  // Handle MCQ options
   const handleOptionChange = (index, value) => {
     const updated = [...formData.options];
     updated[index] = value;
     setFormData({ ...formData, options: updated });
   };
 
-  // Submit handler
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  //   setLoading(true);
-
-  //   // Basic validation
-  //   if (
-  //     !formData.title ||
-  //     !formData.description ||
-  //     !formData.points ||
-  //     !formData.correct ||
-  //     formData.options.some((opt) => !opt)
-  //   ) {
-  //     toast.error("Please fill all fields!");
-  //     setLoading(false);
-  //     return;
-  //   }
-
-  //   try {
-  //     const token = localStorage.getItem("token");
-
-  //     const res = await fetch("http://127.0.0.1:3000/api/challenges", {
-
-  //       method: "POST",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //         Authorization: `Bearer ${token}`,
-  //       },
-  //       body: JSON.stringify(formData),
-  //     });
-
-  //     const data = await res.json();
-  //     setLoading(false);
-
-  //     if (res.ok) {
-  //       toast.success("✅ Challenge added successfully!");
-  //       setFormData({
-  //         title: "",
-  //         description: "",
-  //         points: "",
-  //         options: ["", "", "", ""],
-  //         correct: "",
-  //       });
-  //       setTimeout(() => navigate("/admin/dashboard"), 1000);
-  //     } else {
-  //       toast.error(data.message || "Failed to add challenge!");
-  //     }
-  //   } catch (error) {
-  //     console.error("Error adding challenge:", error);
-  //     toast.error("Something went wrong!");
-  //     setLoading(false);
-  //   }
-  // };
-
-
+  // Submit handler (LOCAL API)
   const handleSubmit = async (e) => {
-  e.preventDefault();
-  setLoading(true);
+    e.preventDefault();
+    setLoading(true);
 
-  // Basic validation
-  if (
-    !formData.title ||
-    !formData.description ||
-    !formData.points ||
-    !formData.correct ||
-    formData.options.some((opt) => !opt)
-  ) {
-    toast.error("Please fill all fields!");
-    setLoading(false);
-    return;
-  }
+    // Basic validation
+    if (
+      !formData.title ||
+      !formData.description ||
+      !formData.points ||
+      !formData.correct ||
+      formData.options.some((opt) => !opt)
+    ) {
+      toast.error("Please fill all fields!");
+      setLoading(false);
+      return;
+    }
 
-  try {
-    const token = localStorage.getItem("token");
+    try {
+      const token = localStorage.getItem("token");
 
-    // ❌ OLD (localhost)
-    // const res = await fetch("http://127.0.0.1:3000/api/challenges", {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //     Authorization: `Bearer ${token}`,
-    //   },
-    //   body: JSON.stringify(formData),
-    // });
-
-    // ✅ NEW (Vercel + Local both)
-    const res = await fetch(
-      `${import.meta.env.VITE_API_URL}/challenges`,
-      {
+      const res = await fetch(`${API}/challenges`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(formData),
-      }
-    );
-
-    const data = await res.json();
-    setLoading(false);
-
-    if (res.ok) {
-      toast.success("✅ Challenge added successfully!");
-      setFormData({
-        title: "",
-        description: "",
-        points: "",
-        options: ["", "", "", ""],
-        correct: "",
       });
-      setTimeout(() => navigate("/admin/dashboard"), 1000);
-    } else {
-      toast.error(data.message || "Failed to add challenge!");
-    }
-  } catch (error) {
-    console.error("Error adding challenge:", error);
-    toast.error("Something went wrong!");
-    setLoading(false);
-  }
-};
 
+      const data = await res.json();
+      setLoading(false);
+
+      if (res.ok) {
+        toast.success("✅ Challenge added successfully!");
+
+        // Reset form
+        setFormData({
+          title: "",
+          description: "",
+          points: "",
+          options: ["", "", "", ""],
+          correct: "",
+        });
+
+        // Redirect
+        setTimeout(() => navigate("/admin/dashboard"), 1000);
+      } else {
+        toast.error(data.message || "Failed to add challenge!");
+      }
+
+    } catch (error) {
+      console.error("Error adding challenge:", error);
+      toast.error("Something went wrong!");
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-100 flex items-center justify-center p-6">
