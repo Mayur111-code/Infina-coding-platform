@@ -22,7 +22,7 @@ function Dashboard() {
 
       try {
         // Fetch user data
-        const res = await fetch("http://127.0.0.1:3000/api/users/dashboard", {
+        const res = await fetch("https://infina-coding-platform-1.onrender.com/api/users/dashboard", {
           headers: { Authorization: `Bearer ${token}` },
         });
         const data = await res.json();
@@ -36,7 +36,7 @@ function Dashboard() {
         setUser(data.user);
 
         // Fetch leaderboard for rank
-        const leaderboardRes = await fetch("http://127.0.0.1:3000/api/leaderboard");
+        const leaderboardRes = await fetch("https://infina-coding-platform-1.onrender.com/api/leaderboard");
         const leaderboardData = await leaderboardRes.json();
 
         if (leaderboardRes.ok && leaderboardData.success) {

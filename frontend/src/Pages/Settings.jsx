@@ -84,7 +84,7 @@ export default function Settings() {
 
       // ⭐ PURE LOCAL URL
       const res = await fetch(
-        `${API}/users/update/${user.id}`,
+        `https://infina-coding-platform-1.onrender.com/api/users/update/${user.id}`,
         {
           method: "PUT",
           headers: { Authorization: `Bearer ${token}` },

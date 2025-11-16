@@ -22,7 +22,7 @@ export default function Marketplace() {
   const fetchData = async () => {
     setLoading(true);
     try {
-      const res = await fetch(`${API}/rewards`);
+      const res = await fetch(`https://infina-coding-platform-1.onrender.com/api/rewards`);
       const json = await res.json();
 
       if (!res.ok) throw new Error(json.message || "Failed to load rewards");
@@ -55,7 +55,7 @@ export default function Marketplace() {
     setRedeeming((prev) => ({ ...prev, [rewardId]: true }));
 
     try {
-      const res = await fetch(`${API}/rewards/redeem/${rewardId}`, {
+      const res = await fetch(`https://infina-coding-platform-1.onrender.com/api/rewards/redeem/${rewardId}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

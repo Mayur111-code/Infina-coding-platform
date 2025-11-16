@@ -255,7 +255,7 @@ export default function RegistrationForm() {
       });
 
       // ⭐ LOCAL backend URL ONLY
-      const res = await fetch("http://127.0.0.1:3000/api/users/register", {
+      const res = await fetch("https://infina-coding-platform-1.onrender.com/api/users/register", {
         method: "POST",
         body: submitData,
       });

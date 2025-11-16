@@ -25,7 +25,7 @@ export default function Signin() {
     setLoading(true);
 
     try {
-      const res = await fetch(`${API}/users/signin`, {
+      const res = await fetch(`https://infina-coding-platform-1.onrender.com/api/users/signin`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

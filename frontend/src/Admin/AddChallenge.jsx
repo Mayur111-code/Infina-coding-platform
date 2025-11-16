@@ -53,7 +53,7 @@ export default function AddChallenge() {
     try {
       const token = localStorage.getItem("token");
 
-      const res = await fetch(`${API}/challenges`, {
+      const res = await fetch(`https://infina-coding-platform-1.onrender.com/api/challenges`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

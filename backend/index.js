@@ -16,7 +16,7 @@ dotenv.config();
 const app = express();
 
 // ✅ Enable CORS (allow frontend requests)
-app.use(cors({ origin: "http://localhost:5173", credentials: true }));
+app.use(cors({ origin:[ "http://localhost:5173", ], credentials: true }));
 
 // ✅ Middleware
 app.use(express.json());

@@ -14,7 +14,7 @@ export default function AdminEditChallenge() {
   // Fetch specific challenge
   const fetchChallenge = async () => {
     try {
-      const res = await fetch(`${API}/challenges`);
+      const res = await fetch(`https://infina-coding-platform-1.onrender.com/api/challenges`);
       const data = await res.json();
 
       const challenge = data.challenges.find((c) => c._id === id);
@@ -55,7 +55,7 @@ export default function AdminEditChallenge() {
     const token = localStorage.getItem("token");
 
     try {
-      const res = await fetch(`${API}/challenges/${id}`, {
+      const res = await fetch(`https://infina-coding-platform-1.onrender.com/api/challenges/${id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

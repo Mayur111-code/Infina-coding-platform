@@ -55,7 +55,7 @@ export default function AdminAddReward() {
         isPopular: form.isPopular,
       };
 
-      const res = await fetch(`${API}/rewards`, {
+      const res = await fetch(`https://infina-coding-platform-1.onrender.com/api/rewards`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -13,7 +13,7 @@ export default function AdminEditReward() {
   // Fetch one reward
   const fetchReward = async () => {
     try {
-      const res = await fetch(`${API}/rewards`);
+      const res = await fetch(`https://infina-coding-platform-1.onrender.com/api/rewards`);
       const data = await res.json();
 
       const one = data.rewards.find((r) => r._id === id);
@@ -42,7 +42,7 @@ export default function AdminEditReward() {
     const token = localStorage.getItem("token");
 
     try {
-      const res = await fetch(`${API}/rewards/${id}`, {
+      const res = await fetch(`https://infina-coding-platform-1.onrender.com/api/rewards/${id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

@@ -8,7 +8,7 @@ export default function Leaderboard() {
   useEffect(() => {
     const fetchLeaderboard = async () => {
       try {
-        const res = await fetch("http://127.0.0.1:3000/api/leaderboard");
+        const res = await fetch("https://infina-coding-platform-1.onrender.com/api/leaderboard");
         const data = await res.json();
 
         if (res.ok && data.success) {

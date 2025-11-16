@@ -11,7 +11,7 @@ export default function AdminManageRewards() {
 
   const fetchRewards = async () => {
     try {
-      const res = await fetch(`${API}/rewards`);
+      const res = await fetch(`https://infina-coding-platform-1.onrender.com/api/rewards`);
       const data = await res.json();
 
       if (!res.ok) throw new Error(data.message);
@@ -34,7 +34,7 @@ export default function AdminManageRewards() {
     const token = localStorage.getItem("token");
 
     try {
-      const res = await fetch(`${API}/rewards/${id}`, {
+      const res = await fetch(`https://infina-coding-platform-1.onrender.com/api/rewards/${id}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${token}`,
