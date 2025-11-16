@@ -91,7 +91,6 @@
 
 
 //  vercel deployement  
-
 const dotenv = require('dotenv');
 const express = require('express');
 const cors = require('cors');
@@ -106,6 +105,7 @@ dotenv.config();
 
 const app = express();
 
+// CORS
 app.use(
   cors({
     origin: "*",
@@ -113,19 +113,25 @@ app.use(
   })
 );
 
+// Middleware
 app.use(express.json());
 
+// MongoDB
 connection();
 
+// Routes
 app.use('/api/users', userRoutes);
 app.use('/api/challenges', challengeRoutes);
 app.use("/api/solve", solveRoutes);
 app.use("/api/leaderboard", leaderboardRoutes);
 app.use("/api/rewards", rewardRoutes);
 
+// Root route
 app.get('/', (req, res) => {
   res.send('🚀 Backend running on Vercel successfully!');
 });
 
-// 👉 MOST IMPORTANT
+// ❌ NO app.listen() for Vercel
+
+// ✔ IMPORTANT EXPORT
 module.exports = app;
