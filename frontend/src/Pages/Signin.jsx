@@ -9,7 +9,7 @@ export default function Signin() {
 
   const [loading, setLoading] = useState(false);
 
-  const API = "http://127.0.0.1:3000/api"; // ⭐ LOCAL ONLY
+  const API = "http://127.0.0.1:3000/api"; 
 
   // Input change
   const handleChange = (e) => {
@@ -25,7 +25,7 @@ export default function Signin() {
     setLoading(true);
 
     try {
-      const res = await fetch(`https://infina-coding-platform-1.onrender.com/api/users/signin`, {
+      const res = await fetch(`http://127.0.0.1:3000/api/users/signin`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

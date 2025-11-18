@@ -8,21 +8,20 @@ export default function Challenges() {
   const [solvedIds, setSolvedIds] = useState([]);
   const [activeFilter, setActiveFilter] = useState("all");
 
-  // LOCAL backend only
   const API = "http://127.0.0.1:3000/api";
 
-  // ⭐ Fetch challenges + solved list
+  
   useEffect(() => {
     const fetchData = async () => {
       try {
         const token = localStorage.getItem("token");
         if (!token) return toast.error("Please login first!");
 
-        // 1️⃣ Fetch all challenges
+        //  Fetch all challenges
         const res = await fetch(`${API}/challenges`);
         const data = await res.json();
 
-        // 2️⃣ Fetch user dashboard (includes solved challenges)
+        //  Fetch user dashboard (includes solved challenges)
         const solvedRes = await fetch(`${API}/users/dashboard`, {
           headers: { Authorization: `Bearer ${token}` },
         });
@@ -48,7 +47,7 @@ export default function Challenges() {
     fetchData();
   }, []);
 
-  // ⭐ Solve challenge logic
+ 
   const handleAnswer = async (challengeId, selectedOption) => {
     const token = localStorage.getItem("token");
     if (!token) return toast.error("Please login first!");
@@ -80,7 +79,7 @@ export default function Challenges() {
           toast.error("💥 Wrong answer! Try again!");
         }
 
-        // ⭐ Add solved challenge locally
+      
         setSolvedIds((prev) => [...prev, challengeId]);
       } else {
         toast.error(data.message || "Something went wrong!");
@@ -94,7 +93,7 @@ export default function Challenges() {
     }
   };
 
-  // ⭐ Filter logic (unchanged)
+
   const filteredChallenges = challenges.filter((challenge) => {
     const isSolved = solvedIds.includes(challenge._id);
     if (activeFilter === "solved") return isSolved;

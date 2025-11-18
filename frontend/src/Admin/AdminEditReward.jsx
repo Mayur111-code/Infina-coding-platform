@@ -8,12 +8,12 @@ export default function AdminEditReward() {
   const [form, setForm] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  const API = "http://127.0.0.1:3000/api"; // ⭐ LOCAL ONLY
+  const API = "http://127.0.0.1:3000/api"; 
 
   // Fetch one reward
   const fetchReward = async () => {
     try {
-      const res = await fetch(`https://infina-coding-platform-1.onrender.com/api/rewards`);
+      const res = await fetch(`${API}/rewards`);
       const data = await res.json();
 
       const one = data.rewards.find((r) => r._id === id);
@@ -36,13 +36,13 @@ export default function AdminEditReward() {
     setForm((f) => ({ ...f, [name]: value }));
   };
 
-  // Submit updated reward
+  //  updated reward
   const handleSubmit = async (e) => {
     e.preventDefault();
     const token = localStorage.getItem("token");
 
     try {
-      const res = await fetch(`https://infina-coding-platform-1.onrender.com/api/rewards/${id}`, {
+      const res = await fetch(`${API}/rewards/${id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

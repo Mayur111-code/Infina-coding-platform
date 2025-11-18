@@ -127,6 +127,7 @@ import AdminManageRewards from "./Admin/AdminManageRewards";
 import AdminEditReward from "./Admin/AdminEditReward";
 import AdminManageChallenges from "./Admin/AdminManageChallenges";
 import AdminEditChallenge from "./Admin/AdminEditChallenge";
+import Referrals from "./Pages/Referrals";
 
 // Protected Route
 const ProtectedRoute = ({ children }) => {
@@ -213,6 +214,7 @@ function App() {
                     <Route path="/marketplace" element={<Marketplace />} />
                     <Route path="/leaderboard" element={<Leaderboard />} />
                     <Route path="/settings" element={<Settings />} />
+                    <Route path="/referrals" element={<Referrals/>} />
                   </Routes>
                 </main>
               </div>

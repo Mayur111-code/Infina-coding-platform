@@ -8,7 +8,7 @@ export default function Marketplace() {
   const [redeeming, setRedeeming] = useState({});
   const [userPoints, setUserPoints] = useState(0);
 
-  // LOCAL API ONLY
+ 
   const API = "http://127.0.0.1:3000/api";
 
   useEffect(() => {
@@ -22,7 +22,7 @@ export default function Marketplace() {
   const fetchData = async () => {
     setLoading(true);
     try {
-      const res = await fetch(`https://infina-coding-platform-1.onrender.com/api/rewards`);
+      const res = await fetch(`${API}/rewards`);
       const json = await res.json();
 
       if (!res.ok) throw new Error(json.message || "Failed to load rewards");
@@ -36,7 +36,7 @@ export default function Marketplace() {
     }
   };
 
-  // ⭐ Redeem Reward
+  //  Redeem Reward
   const handleRedeem = async (rewardId) => {
     const token = localStorage.getItem("token");
     if (!token) {
@@ -55,7 +55,7 @@ export default function Marketplace() {
     setRedeeming((prev) => ({ ...prev, [rewardId]: true }));
 
     try {
-      const res = await fetch(`https://infina-coding-platform-1.onrender.com/api/rewards/redeem/${rewardId}`, {
+      const res = await fetch(`${API}/rewards/redeem/${rewardId}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

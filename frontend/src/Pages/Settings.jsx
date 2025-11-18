@@ -15,7 +15,7 @@ export default function Settings() {
   });
   const [loading, setLoading] = useState(false);
 
-  const API = "http://127.0.0.1:3000/api";  // ⭐ LOCAL ONLY
+  const API = "http://127.0.0.1:3000/api";  
 
   // Load user data
   useEffect(() => {
@@ -60,7 +60,6 @@ export default function Settings() {
     setPreview(null);
   };
 
-  // ⭐ Submit Profile Update (LOCAL API)
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!user) return toast.error("User not found!");
@@ -82,9 +81,8 @@ export default function Settings() {
       if (formData.userprofile)
         formDataToSend.append("userprofile", formData.userprofile);
 
-      // ⭐ PURE LOCAL URL
       const res = await fetch(
-        `https://infina-coding-platform-1.onrender.com/api/users/update/${user.id}`,
+        `http://127.0.0.1:3000/api/users/update/${user.id}`,
         {
           method: "PUT",
           headers: { Authorization: `Bearer ${token}` },
@@ -110,10 +108,6 @@ export default function Settings() {
       setLoading(false);
     }
   };
-
-  
-
-
 
   if (!user)
     return (

@@ -7,11 +7,11 @@ export default function AdminManageChallenges() {
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
-  const API = "http://127.0.0.1:3000/api"; // ⭐ LOCAL ONLY
+  const API = "http://127.0.0.1:3000/api";
 
   const fetchChallenges = async () => {
     try {
-      const res = await fetch(`https://infina-coding-platform-1.onrender.com/api/challenges`);
+      const res = await fetch(`${API}/challenges`);
       const data = await res.json();
 
       if (!res.ok) throw new Error(data.message);
@@ -34,7 +34,7 @@ export default function AdminManageChallenges() {
     const token = localStorage.getItem("token");
 
     try {
-      const res = await fetch(`https://infina-coding-platform-1.onrender.com/api/challenges/${id}`, {
+      const res = await fetch(`${API}/challenges/${id}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${token}`,

@@ -14,7 +14,7 @@ export default function AdminEditChallenge() {
   // Fetch specific challenge
   const fetchChallenge = async () => {
     try {
-      const res = await fetch(`https://infina-coding-platform-1.onrender.com/api/challenges`);
+      const res = await fetch(`${API}/challenges`);
       const data = await res.json();
 
       const challenge = data.challenges.find((c) => c._id === id);
@@ -38,7 +38,7 @@ export default function AdminEditChallenge() {
     });
   };
 
-  // Handle editing MCQ options
+  // editing MCQ options
   const handleOptionChange = (index, value) => {
     const updated = [...formData.options];
     updated[index] = value;
@@ -55,7 +55,7 @@ export default function AdminEditChallenge() {
     const token = localStorage.getItem("token");
 
     try {
-      const res = await fetch(`https://infina-coding-platform-1.onrender.com/api/challenges/${id}`, {
+      const res = await fetch(`${API}/challenges/${id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

@@ -243,7 +243,6 @@ export default function RegistrationForm() {
     setPreviewUrl(null);
   };
 
-  // ⭐ Submit Registration (LOCAL ONLY)
   const handleSubmit = async (e) => {
   e.preventDefault();
   setLoading(true);
@@ -258,11 +257,10 @@ export default function RegistrationForm() {
       submitData.append("userprofile", formData.userprofile);
     }
 
-    const res = await fetch(
-      "https://infina-coding-platform-2.onrender.com/api/users/register",
+    const res = await fetch("http://127.0.0.1:3000/api/users/register",
       {
         method: "POST",
-        body: submitData,   // ❗ Use FormData
+        body: submitData,   
       }
     );
 

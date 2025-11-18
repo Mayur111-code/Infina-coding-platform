@@ -17,7 +17,7 @@ export default function AddChallenge() {
 
   const API = "http://127.0.0.1:3000/api"; // ⭐ LOCAL ONLY
 
-  // Input for title, description, points, correct
+  
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -25,19 +25,19 @@ export default function AddChallenge() {
     });
   };
 
-  // Handle MCQ options
+  // MCQ options
   const handleOptionChange = (index, value) => {
     const updated = [...formData.options];
     updated[index] = value;
     setFormData({ ...formData, options: updated });
   };
 
-  // Submit handler (LOCAL API)
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
 
-    // Basic validation
+   
     if (
       !formData.title ||
       !formData.description ||
@@ -53,7 +53,7 @@ export default function AddChallenge() {
     try {
       const token = localStorage.getItem("token");
 
-      const res = await fetch(`https://infina-coding-platform-1.onrender.com/api/challenges`, {
+      const res = await fetch(`${API}/challenges`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

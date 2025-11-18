@@ -34,7 +34,7 @@ export default function AdminAddReward() {
     const token = localStorage.getItem("token");
     if (!token) return toast.error("Admin token required");
 
-    // Basic validation
+    
     if (!form.title || !form.pointsRequired || !form.image) {
       return toast.error("Title, image and points are required");
     }
@@ -55,7 +55,7 @@ export default function AdminAddReward() {
         isPopular: form.isPopular,
       };
 
-      const res = await fetch(`https://infina-coding-platform-1.onrender.com/api/rewards`, {
+      const res = await fetch(`${API}/rewards`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
