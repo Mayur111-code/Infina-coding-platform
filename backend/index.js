@@ -1,99 +1,69 @@
-
+// ------------------------------
+//  📌 Imports
+// ------------------------------
 const dotenv = require('dotenv'); 
 const express = require('express');
-const cors = require('cors'); // ✅ add this
+const cors = require('cors');
 const connection = require('./config/db');
-const userRoutes = require('./routes/userRoutes');
-const challengeRoutes = require("./routes/challengeRoutes");
-const solveRoutes = require('./routes/solveRoutes');
-const leaderboardRoutes = require("./routes/leaderboardRoutes");
-const rewardRoutes = require("./routes/rewardRoutes")
-// const authRoutes = require('./routes/authRoute');
 
+const userRoutes = require('./routes/userRoutes');
+const challengeRoutes = require('./routes/challengeRoutes');
+const solveRoutes = require('./routes/solveRoutes');
+const leaderboardRoutes = require('./routes/leaderboardRoutes');
+const rewardRoutes = require('./routes/rewardRoutes');
+
+// ------------------------------
+//  📌 Environment Config
+// ------------------------------
 dotenv.config();
 
-// ✅ Initialize app first
+// ------------------------------
+//  📌 Initialize Express App
+// ------------------------------
 const app = express();
 
-// ✅ Enable CORS (allow frontend requests)
-app.use(cors({ origin: "http://localhost:5173",  credentials: true }));
+// ------------------------------
+//  ✅ CORS Setup (Vercel + Local)
+// ------------------------------
+app.use(cors({
+  origin: [
+    "https://infina-coding-platform.vercel.app", // frontend URL
+    "http://localhost:3000"
+  ],
+  credentials: true,
+}));
 
-// ✅ Middleware
+// ------------------------------
+//  📌 Middlewares
+// ------------------------------
 app.use(express.json());
 
-// ✅ Connect MongoDB
+// ------------------------------
+//  📌 Database Connection
+// ------------------------------
 connection();
 
-// ✅ Routes
+// ------------------------------
+//  📌 API Routes
+// ------------------------------
 app.use('/api/users', userRoutes);
-// app.use('/api/auth', authRoutes);
 app.use('/api/challenges', challengeRoutes);
-app.use("/api/solve", solveRoutes)
+app.use('/api/solve', solveRoutes);
+app.use('/api/leaderboard', leaderboardRoutes);
+app.use('/api/rewards', rewardRoutes);
 
-app.use("/api/leaderboard", leaderboardRoutes);
-app.use("/api/rewards", rewardRoutes);
-
-
-// ✅ Root route
+// ------------------------------
+//  📌 Test Route
+// ------------------------------
 app.get('/', (req, res) => {
-  res.send('✅ Server is running successfully!');
+  res.send('✅ Infina Coding Platform Backend is Running Successfully!');
 });
 
-// ✅ Start server
-const port = process.env.PORT || 3000;
- 
+// ------------------------------
+//  📌 Start Server
+// ------------------------------
+const PORT = process.env.PORT || 3000;
 
-app.listen(port,"0.0.0.0", () => {
-  console.log(`🚀 Server running at:${port}`);
+app.listen(PORT, "0.0.0.0", () => {
+  console.log(`🚀 Server running on PORT: ${PORT}`);
 });
-
-
-
-
-// const dotenv = require('dotenv'); 
-// const express = require('express');
-// const cors = require('cors');
-// const connection = require('./config/db');
-
-// const userRoutes = require('./routes/userRoutes');
-// const challengeRoutes = require("./routes/challengeRoutes");
-// const solveRoutes = require('./routes/solveRoutes');
-// const leaderboardRoutes = require("./routes/leaderboardRoutes");
-// const rewardRoutes = require("./routes/rewardRoutes");
-
-// dotenv.config();
-
-// const app = express();
-
-// /* --------------------------------------------
-//    ✅ FIXED CORS for Render + Local Development
-// ----------------------------------------------*/
-// app.use(cors({
-//   origin: "*",
-//   credentials: true,
-// }));
-
-// // Middleware
-// app.use(express.json());
-
-// // Connect Database
-// connection();
-
-// // API Routes
-// app.use('/api/users', userRoutes);
-// app.use('/api/challenges', challengeRoutes);
-// app.use("/api/solve", solveRoutes);
-// app.use("/api/leaderboard", leaderboardRoutes);
-// app.use("/api/rewards", rewardRoutes);
-
-// // Root Test Route
-// app.get('/', (req, res) => {
-//   res.send('✅ Infina Coding Platform Backend is Running!');
-// });
-
-// // Start Server
-// const PORT = process.env.PORT || 3000;
-// const host = process.env.HOST || "0.0.0.0"
-// app.listen(PORT, "0.0.0.0", () => {
-//   console.log(`🚀 Server running at: ${host}:${PORT}`);
-// });
