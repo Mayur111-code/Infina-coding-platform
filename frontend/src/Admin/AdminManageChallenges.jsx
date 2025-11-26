@@ -7,7 +7,7 @@ export default function AdminManageChallenges() {
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
-  const API = "http://127.0.0.1:3000/api";
+  const API = "https://infina-coding-platform-3.onrender.com/api";
 
   const fetchChallenges = async () => {
     try {

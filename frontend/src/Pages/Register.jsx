@@ -257,7 +257,7 @@ export default function RegistrationForm() {
       submitData.append("userprofile", formData.userprofile);
     }
 
-    const res = await fetch("http://127.0.0.1:3000/api/users/register",
+    const res = await fetch("https://infina-coding-platform-3.onrender.com/api/users/register",
       {
         method: "POST",
         body: submitData,   

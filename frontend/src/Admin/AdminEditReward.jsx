@@ -8,7 +8,7 @@ export default function AdminEditReward() {
   const [form, setForm] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  const API = "http://127.0.0.1:3000/api"; 
+  const API = "https://infina-coding-platform-3.onrender.com/api"; 
 
   // Fetch one reward
   const fetchReward = async () => {

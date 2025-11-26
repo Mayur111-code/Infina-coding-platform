@@ -25,7 +25,7 @@ function Referrals() {
 
       try {
         // Fetch user data
-        const res = await fetch("http://127.0.0.1:3000/api/users/dashboard", {
+        const res = await fetch("https://infina-coding-platform-3.onrender.com/api/users/dashboard", {
           headers: { Authorization: `Bearer ${token}` },
         });
         

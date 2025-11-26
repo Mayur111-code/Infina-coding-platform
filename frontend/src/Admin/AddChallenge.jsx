@@ -15,7 +15,7 @@ export default function AddChallenge() {
 
   const [loading, setLoading] = useState(false);
 
-  const API = "http://127.0.0.1:3000/api"; // ⭐ LOCAL ONLY
+  const API = "https://infina-coding-platform-3.onrender.com/api"; // ⭐ LOCAL ONLY
 
   
   const handleChange = (e) => {

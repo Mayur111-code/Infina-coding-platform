@@ -15,7 +15,7 @@ export default function Settings() {
   });
   const [loading, setLoading] = useState(false);
 
-  const API = "http://127.0.0.1:3000/api";  
+  const API = "https://infina-coding-platform-3.onrender.com/api";  
 
   // Load user data
   useEffect(() => {
@@ -82,7 +82,7 @@ export default function Settings() {
         formDataToSend.append("userprofile", formData.userprofile);
 
       const res = await fetch(
-        `http://127.0.0.1:3000/api/users/update/${user.id}`,
+        `https://infina-coding-platform-3.onrender.com/api/users/update/${user.id}`,
         {
           method: "PUT",
           headers: { Authorization: `Bearer ${token}` },

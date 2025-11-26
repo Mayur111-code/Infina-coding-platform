@@ -8,7 +8,7 @@ export default function Challenges() {
   const [solvedIds, setSolvedIds] = useState([]);
   const [activeFilter, setActiveFilter] = useState("all");
 
-  const API = "http://127.0.0.1:3000/api";
+  const API = "https://infina-coding-platform-3.onrender.com/api";
 
   
   useEffect(() => {
