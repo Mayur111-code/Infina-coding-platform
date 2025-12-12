@@ -1,4 +1,3 @@
-// src/pages/Marketplace.jsx
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
@@ -8,17 +7,22 @@ export default function Marketplace() {
   const [redeeming, setRedeeming] = useState({});
   const [userPoints, setUserPoints] = useState(0);
 
- 
   const API = "https://infina-coding-platform-3.onrender.com/api";
 
   useEffect(() => {
     fetchData();
-
-    const storedUser = JSON.parse(localStorage.getItem("user") || "{}");
-    setUserPoints(storedUser.points || storedUser.totalPoints || 0);
+    updateUserPoints();
   }, []);
 
-  // ⭐ Fetch Rewards
+  const updateUserPoints = () => {
+    try {
+      const storedUser = JSON.parse(localStorage.getItem("user") || "{}");
+      setUserPoints(storedUser.points || storedUser.totalPoints || 0);
+    } catch (err) {
+      console.error("Error reading user data:", err);
+    }
+  };
+
   const fetchData = async () => {
     setLoading(true);
     try {
@@ -26,7 +30,6 @@ export default function Marketplace() {
       const json = await res.json();
 
       if (!res.ok) throw new Error(json.message || "Failed to load rewards");
-
       setRewards(json.rewards || []);
     } catch (err) {
       console.error("Rewards fetch error:", err);
@@ -36,11 +39,10 @@ export default function Marketplace() {
     }
   };
 
-  //  Redeem Reward
   const handleRedeem = async (rewardId) => {
     const token = localStorage.getItem("token");
     if (!token) {
-      toast.error("Please sign in to redeem");
+      toast.error("Please sign in to redeem rewards");
       return;
     }
 
@@ -48,7 +50,7 @@ export default function Marketplace() {
     if (!reward) return;
 
     if ((userPoints || 0) < reward.pointsRequired) {
-      toast.info("You don't have enough points to redeem this reward");
+      toast.info("You don't have enough points for this reward");
       return;
     }
 
@@ -64,106 +66,61 @@ export default function Marketplace() {
       });
 
       const json = await res.json();
-      if (!res.ok) throw new Error(json.message || "Redeem failed");
+      if (!res.ok) throw new Error(json.message || "Redemption failed");
 
-      toast.success(json.message || "Redeemed successfully!");
+      toast.success(json.message || "Reward redeemed successfully!");
 
-      const updatedPoints = json.remainingPoints ?? json.remainingPoints;
+      const updatedPoints = json.remainingPoints ?? (userPoints - reward.pointsRequired);
+      setUserPoints(updatedPoints);
 
-      setUserPoints((prev) =>
-        typeof updatedPoints === "number"
-          ? updatedPoints
-          : prev - reward.pointsRequired
-      );
-
+      // Update localStorage
       const storedUser = JSON.parse(localStorage.getItem("user") || "{}");
       if (storedUser) {
-        storedUser.points =
-          typeof updatedPoints === "number"
-            ? updatedPoints
-            : (storedUser.points || 0) - reward.pointsRequired;
-
+        storedUser.points = updatedPoints;
         localStorage.setItem("user", JSON.stringify(storedUser));
       }
     } catch (err) {
       console.error("Redeem error:", err);
-      toast.error(err.message || "Redeem failed");
+      toast.error(err.message || "Redemption failed");
     } finally {
       setRedeeming((prev) => ({ ...prev, [rewardId]: false }));
     }
   };
 
-
-
-
-  if (loading)
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900 flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-yellow-400 mx-auto mb-4"></div>
-          <h2 className="text-xl font-bold text-white">Loading Marketplace...</h2>
-          <p className="text-blue-200 mt-2">Preparing amazing rewards! 🎁</p>
-        </div>
-      </div>
-    );
-
-  if (!rewards.length)
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900 flex items-center justify-center">
-        <div className="text-center">
-          <div className="text-6xl mb-4">🏪</div>
-          <h2 className="text-2xl font-bold text-white mb-2">Marketplace Empty</h2>
-          <p className="text-blue-200">No rewards available yet. Check back soon! 🌟</p>
-        </div>
-      </div>
-    );
+  if (loading) return <LoadingSpinner />;
+  if (!rewards.length) return <EmptyMarketplace />;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900 p-4 lg:p-6">
-      {/* Animated Background Particles */}
-      <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        {[...Array(15)].map((_, i) => (
-          <div
-            key={i}
-            className="absolute w-1 h-1 bg-blue-400 rounded-full opacity-20 animate-float"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              animationDelay: `${Math.random() * 5}s`,
-              animationDuration: `${10 + Math.random() * 10}s`
-            }}
-          />
-        ))}
-      </div>
-
-      <div className="max-w-7xl mx-auto relative z-10">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 p-4 md:p-6">
+      <div className="max-w-7xl mx-auto">
         {/* Header */}
-        <div className="text-center mb-8">
-          <h1 className="text-3xl lg:text-4xl font-bold text-white mb-3 mt-20">
-            🏪 Reward Marketplace
+        <div className="mb-8">
+          <h1 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-2">
+            Rewards Marketplace
           </h1>
-          <p className="text-blue-200 text-lg">
-            Exchange your hard-earned XP for amazing rewards! 🎁
+          <p className="text-gray-600 dark:text-gray-400">
+            Exchange your XP points for amazing rewards
           </p>
         </div>
 
         {/* Points Display */}
-        <div className="bg-gray-800/50 backdrop-blur-sm rounded-2xl p-6 mb-8 border border-yellow-500/30">
-          <div className="flex flex-col lg:flex-row items-center justify-between">
-            <div className="text-center lg:text-left mb-4 lg:mb-0">
-              <h2 className="text-xl font-bold text-white mb-2">Your Treasure Chest</h2>
-              <p className="text-blue-200">Earn more XP by solving coding challenges!</p>
+        <div className="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-6 mb-6 shadow-sm">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+            <div>
+              <h2 className="font-semibold text-gray-900 dark:text-white mb-1">Your Balance</h2>
+              <p className="text-sm text-gray-600 dark:text-gray-400">
+                Earn more points by solving coding challenges
+              </p>
             </div>
-            <div className="bg-gradient-to-r from-yellow-500 to-orange-600 rounded-xl p-4 text-center min-w-[200px]">
-              <div className="text-2xl mb-2">💰</div>
-              <div className="text-sm text-white/80 font-semibold">Available Points</div>
-              <div className="text-3xl font-bold text-white">{userPoints ?? 0} XP</div>
+            <div className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 border border-blue-200 dark:border-blue-800 rounded-lg px-6 py-4 text-center">
+              <div className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-1">Available Points</div>
+              <div className="text-3xl font-bold text-blue-600 dark:text-blue-400">{userPoints} XP</div>
             </div>
           </div>
         </div>
 
         {/* Rewards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
           {rewards.map((reward) => {
             const progress = Math.min(100, Math.round(((userPoints || 0) / reward.pointsRequired) * 100));
             const canRedeem = (userPoints || 0) >= reward.pointsRequired;
@@ -182,150 +139,145 @@ export default function Marketplace() {
           })}
         </div>
 
-        {/* Motivational Footer */}
-        <div className="text-center mt-8">
-          <p className="text-gray-400 text-sm">
-            🌟 Keep coding to unlock more amazing rewards! 
-            {rewards.length > 0 && ` ${rewards.length} incredible rewards waiting for you!`}
+        {/* Footer */}
+        <div className="text-center mt-8 text-sm text-gray-600 dark:text-gray-400">
+          <p>
+            Keep solving challenges to earn more points and unlock better rewards!
           </p>
         </div>
       </div>
-
-      {/* Custom CSS for animations */}
-      <style jsx>{`
-        @keyframes float {
-          0%, 100% { transform: translateY(0) rotate(0deg); }
-          50% { transform: translateY(-10px) rotate(180deg); }
-        }
-        .animate-float {
-          animation: float linear infinite;
-        }
-      `}</style>
     </div>
   );
 }
 
-// 🎁 Enhanced Reward Card Component
+function LoadingSpinner() {
+  return (
+    <div className="min-h-screen flex items-center justify-center">
+      <div className="text-center">
+        <div className="w-12 h-12 border-4 border-blue-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+        <h2 className="text-lg font-semibold text-gray-900 dark:text-white">Loading Marketplace</h2>
+        <p className="text-gray-600 dark:text-gray-400 mt-2">Loading rewards...</p>
+      </div>
+    </div>
+  );
+}
+
+function EmptyMarketplace() {
+  return (
+    <div className="min-h-screen flex items-center justify-center">
+      <div className="text-center">
+        <div className="text-4xl mb-4 text-gray-300 dark:text-gray-600">🏪</div>
+        <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">No Rewards Available</h2>
+        <p className="text-gray-600 dark:text-gray-400">Check back soon for new rewards!</p>
+      </div>
+    </div>
+  );
+}
+
 function RewardCard({ reward, progress, canRedeem, isRedeeming, userPoints, onRedeem }) {
-  const getTierColor = (points) => {
-    if (points >= 1000) return "from-purple-500 to-pink-600";
-    if (points >= 500) return "from-red-500 to-orange-500";
-    if (points >= 250) return "from-yellow-500 to-orange-500";
-    return "from-green-500 to-emerald-600";
+  const getTierInfo = (points) => {
+    if (points >= 1000) return { 
+      color: "bg-purple-100 dark:bg-purple-900/20 text-purple-600 dark:text-purple-400",
+      name: "Premium"
+    };
+    if (points >= 500) return { 
+      color: "bg-red-100 dark:bg-red-900/20 text-red-600 dark:text-red-400",
+      name: "Epic"
+    };
+    if (points >= 250) return { 
+      color: "bg-orange-100 dark:bg-orange-900/20 text-orange-600 dark:text-orange-400",
+      name: "Rare"
+    };
+    return { 
+      color: "bg-green-100 dark:bg-green-900/20 text-green-600 dark:text-green-400",
+      name: "Common"
+    };
   };
 
-  const getTierName = (points) => {
-    if (points >= 1000) return "Legendary";
-    if (points >= 500) return "Epic";
-    if (points >= 250) return "Rare";
-    return "Common";
-  };
+  const tierInfo = getTierInfo(reward.pointsRequired);
 
   return (
-    <div className={`
-      bg-gray-800/30 backdrop-blur-sm rounded-2xl p-6 border overflow-hidden
-      transform hover:scale-105 transition-all duration-300 group
-      ${canRedeem ? "border-yellow-500/30 hover:border-yellow-400/50" : "border-blue-500/30 hover:border-blue-400/50"}
-    `}>
+    <div className="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 overflow-hidden transition-shadow hover:shadow-md">
       {/* Reward Image */}
-      <div className="relative mb-4">
+      <div className="relative h-48 bg-gray-100 dark:bg-gray-900">
         <img 
           src={reward.image} 
           alt={reward.title}
-          className="w-full h-48 object-cover rounded-xl border-2 border-gray-600 group-hover:border-yellow-400 transition-colors duration-300"
+          className="w-full h-full object-cover"
         />
         <div className="absolute top-3 right-3">
-          <span className={`text-xs font-bold px-2 py-1 rounded-full bg-gradient-to-r ${getTierColor(reward.pointsRequired)} text-white`}>
-            {getTierName(reward.pointsRequired)}
+          <span className={`text-xs font-medium px-2 py-1 rounded ${tierInfo.color}`}>
+            {tierInfo.name}
           </span>
         </div>
-        {canRedeem && (
-          <div className="absolute top-3 left-3">
-            <span className="text-xs font-bold px-2 py-1 rounded-full bg-green-500/20 text-green-300 border border-green-500/30">
-              READY TO CLAIM! 🎉
-            </span>
-          </div>
-        )}
       </div>
 
       {/* Reward Info */}
-      <div className="mb-4">
-        <h3 className="text-xl font-bold text-white mb-2 group-hover:text-yellow-300 transition-colors">
+      <div className="p-5">
+        <h3 className="font-bold text-gray-900 dark:text-white text-lg mb-2">
           {reward.title}
         </h3>
-        <p className="text-gray-300 text-sm mb-3 line-clamp-2">
+        <p className="text-gray-600 dark:text-gray-400 text-sm mb-4 line-clamp-2">
           {reward.description}
         </p>
-        
+
         {/* Points Required */}
-        <div className="flex items-center justify-between mb-3">
+        <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-2">
-            <span className="text-yellow-400 text-lg">💰</span>
-            <span className="text-white font-bold text-xl">{reward.pointsRequired} XP</span>
+            <span className="text-blue-500">•</span>
+            <span className="font-bold text-gray-900 dark:text-white">{reward.pointsRequired} XP</span>
           </div>
-          <div className="flex items-center gap-1">
-            <span className="text-yellow-400 text-sm">⭐</span>
-            <span className="text-gray-300 text-sm">{reward.rating ?? 4.5}</span>
-          </div>
-        </div>
-      </div>
-
-      {/* Progress Bar */}
-      <div className="mb-4">
-        <div className="flex justify-between text-xs text-gray-400 mb-2">
-          <span>Your Progress</span>
-          <span>{Math.min(userPoints || 0, reward.pointsRequired)}/{reward.pointsRequired}</span>
-        </div>
-        <div className="w-full bg-gray-600 rounded-full h-2">
-          <div 
-            className="bg-gradient-to-r from-green-400 to-blue-500 h-2 rounded-full transition-all duration-1000"
-            style={{ width: `${progress}%` }}
-          ></div>
-        </div>
-        <div className="text-xs text-gray-400 mt-1 text-center">
-          {progress < 100 ? `${100 - progress}% more to go!` : "Ready to claim! 🎉"}
-        </div>
-      </div>
-
-      {/* Redeem Button */}
-      <button
-        onClick={() => onRedeem(reward._id)}
-        disabled={!canRedeem || isRedeeming}
-        className={`
-          w-full py-3 rounded-xl font-bold transition-all duration-300 relative overflow-hidden group
-          ${canRedeem 
-            ? "bg-gradient-to-r from-yellow-500 to-orange-600 hover:from-yellow-600 hover:to-orange-700 text-white transform hover:scale-105 shadow-lg" 
-            : "bg-gray-700 text-gray-400 cursor-not-allowed"
-          }
-        `}
-      >
-        {/* Animated background effect for redeemable items */}
-        {canRedeem && !isRedeeming && (
-          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -skew-x-12 transform translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000"></div>
-        )}
-        
-        <span className="relative z-10 flex items-center justify-center gap-2">
-          {isRedeeming ? (
-            <>
-              <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
-              Processing...
-            </>
-          ) : canRedeem ? (
-            <>
-              🎁 Claim Reward
-            </>
-          ) : (
-            <>
-              🔒 Need More Points
-            </>
+          {reward.rating && (
+            <div className="flex items-center gap-1 text-sm text-gray-600 dark:text-gray-400">
+              <span>⭐ {reward.rating}</span>
+            </div>
           )}
-        </span>
-      </button>
+        </div>
 
-      {/* Quick Stats */}
-      <div className="flex justify-between items-center mt-3 text-xs text-gray-400">
-        <span>Value: {Math.round(reward.pointsRequired * 0.25)}₹</span>
-        <span>Tier: {getTierName(reward.pointsRequired)}</span>
+        {/* Progress Bar */}
+        <div className="mb-4">
+          <div className="flex justify-between text-xs text-gray-600 dark:text-gray-400 mb-1">
+            <span>Progress</span>
+            <span>{Math.min(userPoints, reward.pointsRequired)}/{reward.pointsRequired}</span>
+          </div>
+          <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+            <div 
+              className="bg-gradient-to-r from-blue-500 to-purple-500 h-2 rounded-full transition-all duration-500"
+              style={{ width: `${progress}%` }}
+            />
+          </div>
+          <div className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+            {progress < 100 ? `${100 - progress}% more needed` : "Ready to claim"}
+          </div>
+        </div>
+
+        {/* Redeem Button */}
+        <button
+          onClick={() => onRedeem(reward._id)}
+          disabled={!canRedeem || isRedeeming}
+          className={`
+            w-full py-3 rounded-lg font-medium transition-colors
+            ${canRedeem 
+              ? "bg-blue-600 hover:bg-blue-700 text-white" 
+              : "bg-gray-100 dark:bg-gray-700 text-gray-400 dark:text-gray-500 cursor-not-allowed"
+            }
+          `}
+        >
+          {isRedeeming ? (
+            <span className="flex items-center justify-center gap-2">
+              <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+              Processing...
+            </span>
+          ) : canRedeem ? (
+            <span className="flex items-center justify-center gap-2">
+              Claim Reward
+            </span>
+          ) : (
+            <span className="flex items-center justify-center gap-2">
+              Need More Points
+            </span>
+          )}
+        </button>
       </div>
     </div>
   );

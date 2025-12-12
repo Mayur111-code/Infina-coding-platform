@@ -10,10 +10,8 @@ function Dashboard() {
   const [activeTab, setActiveTab] = useState("overview");
 
   const navigate = useNavigate();
-
   const API = "https://infina-coding-platform-3.onrender.com/api";
 
- //  Fetch real user data + rank from backend (unchanged)
   useEffect(() => {
     const fetchDashboardData = async () => {
       const token = localStorage.getItem("token");
@@ -23,8 +21,7 @@ function Dashboard() {
       }
 
       try {
-        // Fetch user data
-        const res = await fetch("https://infina-coding-platform-3.onrender.com/api/users/dashboard", {
+        const res = await fetch(`${API}/users/dashboard`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         const data = await res.json();
@@ -37,8 +34,7 @@ function Dashboard() {
 
         setUser(data.user);
 
-        // Fetch leaderboard for rank
-        const leaderboardRes = await fetch("https://infina-coding-platform-3.onrender.com/api/leaderboard");
+        const leaderboardRes = await fetch(`${API}/leaderboard`);
         const leaderboardData = await leaderboardRes.json();
 
         if (leaderboardRes.ok && leaderboardData.success) {
@@ -58,37 +54,8 @@ function Dashboard() {
     fetchDashboardData();
   }, [navigate]);
 
-
-
-
-
-
-
-   /# Vercel api #/
-
-
-  if (loading)
-    return (
-      <div className="flex items-center justify-center h-screen text-lg font-semibold">
-        <div className="animate-pulse flex space-x-4">
-          <div className="rounded-full bg-blue-500 h-12 w-12"></div>
-          <div className="flex-1 space-y-4 py-1">
-            <div className="h-4 bg-blue-500 rounded w-3/4"></div>
-            <div className="space-y-2">
-              <div className="h-4 bg-blue-500 rounded"></div>
-              <div className="h-4 bg-blue-500 rounded w-5/6"></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-
-  if (error)
-    return (
-      <div className="flex items-center justify-center h-screen text-red-500 text-lg">
-        {error}
-      </div>
-    );
+  if (loading) return <LoadingSpinner />;
+  if (error) return <ErrorDisplay error={error} />;
 
   const solved = user?.solvedChallenges?.length || 0;
   const totalPoints = user?.points || 0;
@@ -96,270 +63,224 @@ function Dashboard() {
   const progressPercent = solved > 0 ? Math.min((solved / 10) * 100, 100) : 0;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900 p-4 lg:p-6">
-      {/* Animated Background Particles */}
-      <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        {[...Array(20)].map((_, i) => (
-          <div
-            key={i}
-            className="absolute w-2 h-2 bg-blue-400 rounded-full opacity-20 animate-float"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              animationDelay: `${Math.random() * 5}s`,
-              animationDuration: `${10 + Math.random() * 10}s`
-            }}
-          />
-        ))}
-      </div>
-
-      <div className="max-w-7xl mx-auto relative z-10">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 p-4 md:p-6 transition-colors duration-300">
+      <div className="max-w-7xl mx-auto">
         {/* Header */}
-        <div className="flex flex-col lg:flex-row justify-between items-center mb-8 gap-4">
-          <div className="text-center lg:text-left">
-            <h1 className="text-4xl font-bold text-white mb-2 animate-pulse mt-20">
-              🎮 Infina Code Dashboard
+        <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center mb-8 gap-6">
+          <div>
+            <h1 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-2">
+              Dashboard
             </h1>
-            <p className="text-blue-200 text-lg">
-              Welcome back, <span className="font-bold text-yellow-300">{user.username}</span>! Ready to level up? 🚀
+            <p className="text-gray-600 dark:text-gray-300">
+              Welcome back, <span className="font-semibold text-blue-600 dark:text-blue-400">{user.username}</span>
             </p>
           </div>
-          <div className="flex items-center gap-4 bg-gray-800/50 backdrop-blur-sm border border-blue-500/30 px-6 py-3 rounded-2xl shadow-2xl hover:shadow-blue-500/20 hover:scale-105 transition-all duration-300 group">
+          
+          <div className="flex items-center gap-4 bg-white dark:bg-gray-800 px-6 py-4 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700">
             <div className="relative">
               <img
                 src={
-                  user.userprofile
-                    ? user.userprofile
-                    : `https://ui-avatars.com/api/?name=${user.username}&background=0D8ABC&color=fff&bold=true`
+                  user.userprofile || 
+                  `https://ui-avatars.com/api/?name=${user.username}&background=0D8ABC&color=fff&bold=true`
                 }
                 alt="profile"
-                className="w-14 h-14 rounded-full border-2 border-yellow-400 group-hover:border-green-400 transition-colors duration-300"
+                className="w-12 h-12 rounded-full border-2 border-white dark:border-gray-700 shadow"
               />
-              <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-green-500 rounded-full border-2 border-gray-900"></div>
             </div>
             <div>
-              <p className="font-bold text-white text-lg">{user.username}</p>
-              <p className="text-sm text-blue-300">{user.useremail}</p>
+              <p className="font-semibold text-gray-900 dark:text-white">{user.username}</p>
+              <p className="text-sm text-gray-500 dark:text-gray-400">{user.useremail}</p>
             </div>
           </div>
         </div>
 
         {/* Stats Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 mb-8">
           <StatCard
             title="Total Points"
             value={totalPoints}
             subtitle={`≈ ₹${earnings}`}
-            emoji="💰"
-            color="from-yellow-500 to-orange-600"
-            points={totalPoints}
+            icon="🏆"
+            color="bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/30 dark:to-blue-800/30"
+            borderColor="border-blue-200 dark:border-blue-700"
           />
           <StatCard
             title="Challenges Solved"
             value={solved}
-            subtitle="Keep the streak! 🔥"
-            emoji="✅"
-            color="from-green-500 to-emerald-600"
-            challenges={solved}
+            subtitle="Keep the streak"
+            icon="✅"
+            color="bg-gradient-to-br from-green-50 to-green-100 dark:from-green-900/30 dark:to-green-800/30"
+            borderColor="border-green-200 dark:border-green-700"
           />
           <StatCard
             title="Progress"
             value={`${progressPercent}%`}
-            subtitle="Learning Journey 📈"
-            emoji="📘"
-            color="from-blue-500 to-cyan-600"
+            subtitle="Learning Journey"
+            icon="📈"
+            color="bg-gradient-to-br from-purple-50 to-purple-100 dark:from-purple-900/30 dark:to-purple-800/30"
+            borderColor="border-purple-200 dark:border-purple-700"
             progress={progressPercent}
           />
           <StatCard
             title="Global Rank"
             value={`#${rank || "N/A"}`}
-            subtitle={
-              rank === 1
-                ? "🥇 Champion!"
-                : rank <= 5
-                ? "🎯 Elite Ranker!"
-                : rank
-                ? `Top ${Math.ceil((rank / 100) * 100)}% 🏆`
-                : "Calculating..."
-            }
-            emoji="🏅"
-            color="from-purple-500 to-pink-600"
-            rank={rank}
+            subtitle={rank ? `Top ${rank}` : "Calculating"}
+            icon="🏅"
+            color="bg-gradient-to-br from-amber-50 to-amber-100 dark:from-amber-900/30 dark:to-amber-800/30"
+            borderColor="border-amber-200 dark:border-amber-700"
           />
         </div>
 
-        {/* Tabs */}
-        <div className="bg-gray-800/50 backdrop-blur-sm rounded-2xl p-2 mb-8 flex gap-2 border border-gray-600/30">
+        {/* Tabs Navigation */}
+        <div className="flex space-x-2 mb-6 border-b border-gray-200 dark:border-gray-700">
           {[
-            { id: "overview", label: "📊 Mission Overview", icon: "🎯" },
-            { id: "solved", label: "✅ Completed Quests", icon: "🛡️" }
+            { id: "overview", label: "Overview", icon: "📊" },
+            { id: "solved", label: "Completed", icon: "✅" }
           ].map((tab) => (
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              className={`flex-1 py-4 rounded-xl font-bold text-lg transition-all duration-300 transform hover:scale-105 ${
+              className={`flex items-center gap-2 px-4 py-3 font-medium text-sm md:text-base transition-colors border-b-2 ${
                 activeTab === tab.id
-                  ? "bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-2xl shadow-blue-500/30"
-                  : "text-gray-300 hover:bg-gray-700/50 hover:text-white"
+                  ? "text-blue-600 dark:text-blue-400 border-blue-600 dark:border-blue-400"
+                  : "text-gray-500 dark:text-gray-400 border-transparent hover:text-gray-700 dark:hover:text-gray-300"
               }`}
             >
-              <span className="flex items-center justify-center gap-2">
-                <span className="text-xl">{tab.icon}</span>
-                {tab.label}
-              </span>
+              <span>{tab.icon}</span>
+              {tab.label}
             </button>
           ))}
         </div>
 
         {/* Content Area */}
-        <div className="bg-gray-800/30 backdrop-blur-sm rounded-2xl shadow-2xl border border-gray-600/30 overflow-hidden">
+        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden">
           {activeTab === "overview" && <OverviewTab user={user} solved={solved} progressPercent={progressPercent} />}
           {activeTab === "solved" && <SolvedTab user={user} />}
         </div>
       </div>
-
-      {/* Custom CSS for animations */}
-      <style jsx>{`
-        @keyframes float {
-          0%, 100% { transform: translateY(0) rotate(0deg); }
-          50% { transform: translateY(-20px) rotate(180deg); }
-        }
-        .animate-float {
-          animation: float linear infinite;
-        }
-      `}</style>
     </div>
   );
 }
 
-// 🎮 Enhanced Stat Card with Gaming Effects
-function StatCard({ title, value, subtitle, emoji, color, points, challenges, progress, rank }) {
+function LoadingSpinner() {
   return (
-    <div
-      className={`bg-gradient-to-br ${color} rounded-2xl p-6 shadow-2xl transform hover:scale-105 hover:rotate-1 transition-all duration-300 group relative overflow-hidden`}
-    >
-      {/* Animated background effect */}
-      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -skew-x-12 transform translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000"></div>
-      
-      <div className="relative z-10 flex justify-between items-start">
-        <div className="flex-1">
-          <p className="text-sm text-white/80 font-semibold mb-2">{title}</p>
-          <h2 className="text-4xl font-bold mb-2 text-white drop-shadow-lg">{value}</h2>
-          <p className="text-xs font-medium text-white/90">{subtitle}</p>
+    <div className="min-h-screen flex items-center justify-center">
+      <div className="text-center">
+        <div className="w-16 h-16 border-4 border-blue-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+        <p className="text-gray-600 dark:text-gray-400">Loading dashboard...</p>
+      </div>
+    </div>
+  );
+}
+
+function ErrorDisplay({ error }) {
+  return (
+    <div className="min-h-screen flex items-center justify-center">
+      <div className="text-center">
+        <div className="text-4xl mb-4">⚠️</div>
+        <h3 className="text-lg font-semibold text-red-600 dark:text-red-400 mb-2">Error Loading Dashboard</h3>
+        <p className="text-gray-600 dark:text-gray-400">{error}</p>
+      </div>
+    </div>
+  );
+}
+
+function StatCard({ title, value, subtitle, icon, color, borderColor, progress }) {
+  return (
+    <div className={`${color} rounded-xl p-5 border ${borderColor} transition-transform hover:scale-[1.02]`}>
+      <div className="flex justify-between items-start">
+        <div>
+          <p className="text-sm font-medium text-gray-600 dark:text-gray-300 mb-1">{title}</p>
+          <h3 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-1">{value}</h3>
+          <p className="text-xs text-gray-500 dark:text-gray-400">{subtitle}</p>
         </div>
-        <span className="text-3xl transform group-hover:scale-125 group-hover:rotate-12 transition-transform duration-300">
-          {emoji}
-        </span>
+        <span className="text-2xl">{icon}</span>
       </div>
       
-      {/* Progress bar for progress card */}
       {progress !== undefined && (
-        <div className="mt-4 bg-white/20 rounded-full h-2">
-          <div 
-            className="bg-white h-2 rounded-full transition-all duration-1000 ease-out"
-            style={{ width: `${progress}%` }}
-          ></div>
+        <div className="mt-4">
+          <div className="flex justify-between text-xs text-gray-600 dark:text-gray-400 mb-1">
+            <span>Progress</span>
+            <span>{progress}%</span>
+          </div>
+          <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+            <div 
+              className="bg-gradient-to-r from-blue-500 to-purple-500 h-2 rounded-full transition-all duration-700 ease-out"
+              style={{ width: `${progress}%` }}
+            />
+          </div>
         </div>
       )}
     </div>
   );
 }
 
-// 🎯 Enhanced Overview Tab
 function OverviewTab({ user, solved, progressPercent }) {
   const nextLevelPoints = Math.max(0, 1000 - user.points);
   const level = Math.floor(user.points / 100) + 1;
 
   return (
-    <div className="p-8">
-      <h2 className="text-3xl font-bold text-white mb-6 flex items-center gap-3">
-        🎯 Mission Control Center
-        <span className="text-sm bg-blue-600 px-3 py-1 rounded-full">Level {level}</span>
-      </h2>
+    <div className="p-6">
+      <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-6">Learning Progress</h2>
       
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Progress Section */}
-        <div className="bg-gray-700/30 rounded-2xl p-6 border border-blue-500/20">
-          <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
-            📈 Learning Progress
-          </h3>
-          <div className="space-y-4">
-            <div className="flex justify-between text-sm">
-              <span className="text-gray-300">Current Level</span>
-              <span className="text-yellow-300 font-bold">Level {level}</span>
-            </div>
-            <div className="w-full bg-gray-600 rounded-full h-4">
-              <div 
-                className="bg-gradient-to-r from-green-400 to-blue-500 h-4 rounded-full transition-all duration-1000 ease-out"
-                style={{ width: `${progressPercent}%` }}
-              ></div>
-            </div>
-            <div className="flex justify-between text-sm">
-              <span className="text-gray-300">Challenges Completed</span>
-              <span className="text-green-400 font-bold">{solved}/10</span>
-            </div>
-            <div className="flex justify-between text-sm">
-              <span className="text-gray-300">Points to Next Level</span>
-              <span className="text-blue-400 font-bold">{nextLevelPoints} XP</span>
+        <div className="space-y-6">
+          <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-5 border border-gray-200 dark:border-gray-700">
+            <h3 className="font-semibold text-gray-900 dark:text-white mb-4">Level Progress</h3>
+            <div className="space-y-4">
+              <div className="flex justify-between items-center">
+                <span className="text-gray-600 dark:text-gray-400">Current Level</span>
+                <span className="font-bold text-blue-600 dark:text-blue-400">Level {level}</span>
+              </div>
+              <div>
+                <div className="flex justify-between text-sm text-gray-600 dark:text-gray-400 mb-1">
+                  <span>Challenges Completed</span>
+                  <span>{solved}/10</span>
+                </div>
+                <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-3">
+                  <div 
+                    className="bg-gradient-to-r from-green-400 to-blue-500 h-3 rounded-full transition-all duration-700"
+                    style={{ width: `${progressPercent}%` }}
+                  />
+                </div>
+              </div>
+              <div className="flex justify-between items-center">
+                <span className="text-gray-600 dark:text-gray-400">Points to Next Level</span>
+                <span className="font-semibold text-amber-600 dark:text-amber-400">{nextLevelPoints} XP</span>
+              </div>
             </div>
           </div>
         </div>
 
-        {/* Achievements Preview */}
-        <div className="bg-gray-700/30 rounded-2xl p-6 border border-purple-500/20">
-          <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
-            🏆 Recent Achievements
-          </h3>
-          <div className="space-y-3">
-            {solved >= 1 && (
-              <div className="flex items-center gap-3 p-3 bg-green-500/10 rounded-lg border border-green-500/30">
-                <span className="text-2xl">🥉</span>
-                <div>
-                  <p className="text-white font-semibold">First Challenge</p>
-                  <p className="text-green-300 text-sm">Completed your first challenge!</p>
+        {/* Achievements Section */}
+        <div>
+          <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-5 border border-gray-200 dark:border-gray-700 h-full">
+            <h3 className="font-semibold text-gray-900 dark:text-white mb-4">Achievements</h3>
+            <div className="space-y-3">
+              {solved >= 1 && (
+                <div className="flex items-center gap-3 p-3 bg-green-50 dark:bg-green-900/20 rounded-lg">
+                  <span className="text-xl">🥉</span>
+                  <div>
+                    <p className="font-medium text-gray-900 dark:text-white">First Challenge</p>
+                    <p className="text-xs text-gray-600 dark:text-gray-400">Completed your first challenge</p>
+                  </div>
                 </div>
-              </div>
-            )}
-            {solved >= 5 && (
-              <div className="flex items-center gap-3 p-3 bg-blue-500/10 rounded-lg border border-blue-500/30">
-                <span className="text-2xl">🥈</span>
-                <div>
-                  <p className="text-white font-semibold">Halfway There</p>
-                  <p className="text-blue-300 text-sm">5 challenges completed!</p>
+              )}
+              {solved >= 5 && (
+                <div className="flex items-center gap-3 p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
+                  <span className="text-xl">🥈</span>
+                  <div>
+                    <p className="font-medium text-gray-900 dark:text-white">Halfway There</p>
+                    <p className="text-xs text-gray-600 dark:text-gray-400">5 challenges completed</p>
+                  </div>
                 </div>
-              </div>
-            )}
-            {solved === 0 && (
-              <div className="text-center py-4">
-                <p className="text-gray-400">No achievements yet. Complete challenges to earn badges!</p>
-              </div>
-            )}
-          </div>
-        </div>
-
-        {/* Quick Stats */}
-        <div className="lg:col-span-2 bg-gray-700/30 rounded-2xl p-6 border border-yellow-500/20">
-          <h3 className="text-xl font-bold text-white mb-4">⚡ Performance Stats</h3>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <div className="text-center p-4 bg-gray-600/30 rounded-lg">
-              <div className="text-2xl mb-2">🔥</div>
-              <p className="text-white font-bold">{solved}</p>
-              <p className="text-gray-400 text-sm">Solved</p>
-            </div>
-            <div className="text-center p-4 bg-gray-600/30 rounded-lg">
-              <div className="text-2xl mb-2">⚡</div>
-              <p className="text-white font-bold">{user.points || 0}</p>
-              <p className="text-gray-400 text-sm">XP</p>
-            </div>
-            <div className="text-center p-4 bg-gray-600/30 rounded-lg">
-              <div className="text-2xl mb-2">⭐</div>
-              <p className="text-white font-bold">{Math.floor(user.points / 100)}</p>
-              <p className="text-gray-400 text-sm">Stars</p>
-            </div>
-            <div className="text-center p-4 bg-gray-600/30 rounded-lg">
-              <div className="text-2xl mb-2">🎯</div>
-              <p className="text-white font-bold">{10 - solved}</p>
-              <p className="text-gray-400 text-sm">Remaining</p>
+              )}
+              {solved === 0 && (
+                <div className="text-center py-4">
+                  <p className="text-gray-500 dark:text-gray-400">No achievements yet. Complete challenges to earn badges!</p>
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -368,69 +289,53 @@ function OverviewTab({ user, solved, progressPercent }) {
   );
 }
 
-// ✅ Enhanced Solved Tab
 function SolvedTab({ user }) {
   const solvedChallenges = user.solvedChallenges || [];
 
   return (
-    <div className="p-8">
-      <h2 className="text-3xl font-bold text-white mb-6 flex items-center gap-3">
-        ✅ Completed Quests
-        <span className="text-sm bg-green-600 px-3 py-1 rounded-full">
-          {solvedChallenges.length} Challenges
+    <div className="p-6">
+      <div className="flex justify-between items-center mb-6">
+        <h2 className="text-xl font-bold text-gray-900 dark:text-white">Completed Challenges</h2>
+        <span className="px-3 py-1 bg-blue-100 dark:bg-blue-900 text-blue-600 dark:text-blue-300 text-sm font-medium rounded-full">
+          {solvedChallenges.length} Completed
         </span>
-      </h2>
+      </div>
 
       {solvedChallenges.length === 0 ? (
         <div className="text-center py-12">
-          <div className="text-6xl mb-4">🎯</div>
-          <h3 className="text-2xl font-bold text-white mb-2">No Quests Completed Yet</h3>
-          <p className="text-gray-400 mb-6">Start your coding journey by solving your first challenge!</p>
+          <div className="text-5xl mb-4 text-gray-300 dark:text-gray-600">🎯</div>
+          <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">No Challenges Completed Yet</h3>
+          <p className="text-gray-600 dark:text-gray-400 mb-6">Start your coding journey by solving your first challenge</p>
           <button 
             onClick={() => window.location.href = '/challenges'}
-            className="bg-gradient-to-r from-green-500 to-blue-600 hover:from-green-600 hover:to-blue-700 text-white font-bold py-3 px-8 rounded-2xl transition-all duration-300 transform hover:scale-105 shadow-2xl"
+            className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2.5 px-6 rounded-lg transition-colors"
           >
-            Start Your First Quest 🚀
+            Start Your First Challenge
           </button>
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {solvedChallenges.map((challenge, index) => (
             <div
               key={index}
-              className="bg-gradient-to-br from-gray-700 to-gray-800 rounded-2xl p-6 border border-green-500/30 hover:border-green-400 hover:shadow-2xl hover:shadow-green-500/20 transition-all duration-300 transform hover:-translate-y-2 group"
+              className="border border-gray-200 dark:border-gray-700 rounded-lg p-4 hover:border-blue-300 dark:hover:border-blue-700 transition-colors bg-white dark:bg-gray-900"
             >
-              <div className="flex justify-between items-start mb-4">
-                <h3 className="text-lg font-bold text-white group-hover:text-green-300 transition-colors">
+              <div className="flex justify-between items-start mb-3">
+                <h3 className="font-semibold text-gray-900 dark:text-white line-clamp-1">
                   {challenge.title}
                 </h3>
-                <span className="bg-green-500/20 text-green-300 px-3 py-1 rounded-full text-sm font-bold">
+                <span className="bg-green-100 dark:bg-green-900 text-green-600 dark:text-green-300 text-xs font-medium px-2 py-1 rounded">
                   +{challenge.points} XP
                 </span>
               </div>
               
-              <div className="flex items-center justify-between mt-4 pt-4 border-t border-gray-600">
+              <div className="flex items-center justify-between mt-4 pt-3 border-t border-gray-100 dark:border-gray-800">
                 <div className="flex items-center gap-2">
-                  <span className="text-2xl">✅</span>
-                  <span className="text-green-400 text-sm font-semibold">Completed</span>
+                  <span className="text-green-500">✓</span>
+                  <span className="text-xs text-gray-600 dark:text-gray-400">Completed</span>
                 </div>
-                <div className="text-yellow-300 text-sm font-bold">
+                <div className="text-xs text-gray-500 dark:text-gray-400">
                   #{index + 1}
-                </div>
-              </div>
-              
-              {/* Difficulty indicator */}
-              <div className="mt-3 flex justify-between items-center">
-                <span className="text-xs text-gray-400">Difficulty:</span>
-                <div className="flex gap-1">
-                  {[...Array(3)].map((_, i) => (
-                    <div
-                      key={i}
-                      className={`w-2 h-2 rounded-full ${
-                        i < (challenge.points / 50) ? 'bg-yellow-400' : 'bg-gray-600'
-                      }`}
-                    />
-                  ))}
                 </div>
               </div>
             </div>
@@ -438,20 +343,19 @@ function SolvedTab({ user }) {
         </div>
       )}
 
-      {/* Completion Celebration */}
       {solvedChallenges.length > 0 && (
-        <div className="mt-8 bg-gradient-to-r from-purple-500/10 to-pink-500/10 rounded-2xl p-6 border border-purple-500/30">
+        <div className="mt-6 p-4 bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 rounded-lg border border-blue-200 dark:border-blue-800">
           <div className="flex items-center justify-between">
             <div>
-              <h3 className="text-xl font-bold text-white mb-2">🎉 Amazing Progress!</h3>
-              <p className="text-gray-300">
-                You've completed {solvedChallenges.length} challenge{solvedChallenges.length !== 1 ? 's' : ''}. 
-                {solvedChallenges.length >= 5 ? " You're on fire! 🔥" : " Keep going! 💪"}
+              <h3 className="font-semibold text-gray-900 dark:text-white mb-1">Great Progress!</h3>
+              <p className="text-sm text-gray-600 dark:text-gray-400">
+                You've completed {solvedChallenges.length} challenge{solvedChallenges.length !== 1 ? 's' : ''}.
+                {solvedChallenges.length >= 5 ? " Keep up the good work!" : ""}
               </p>
             </div>
-            <div className="text-4xl animate-bounce">
+            <span className="text-2xl">
               {solvedChallenges.length >= 10 ? "🏆" : "⭐"}
-            </div>
+            </span>
           </div>
         </div>
       )}

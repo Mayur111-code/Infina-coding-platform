@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
-import { Copy, Users, Gift, Share2, Award, TrendingUp } from "lucide-react";
+import { Copy, Users, Gift, Share2, Award } from "lucide-react";
 
 function Referrals() {
   const [user, setUser] = useState(null);
@@ -8,7 +8,6 @@ function Referrals() {
   const [loading, setLoading] = useState(true);
   const [copying, setCopying] = useState(false);
 
-  // Generate referral code from user ID or username
   const referralCode = user ? 
     (user._id ? user._id.slice(-8).toUpperCase() : user.username?.slice(0, 8).toUpperCase()) : 
     "LOADING";
@@ -24,7 +23,6 @@ function Referrals() {
       }
 
       try {
-        // Fetch user data
         const res = await fetch("https://infina-coding-platform-3.onrender.com/api/users/dashboard", {
           headers: { Authorization: `Bearer ${token}` },
         });
@@ -32,9 +30,6 @@ function Referrals() {
         if (res.ok) {
           const data = await res.json();
           setUser(data.user);
-          
-          // In a real app, you'd fetch actual referral data
-          // For now, we'll simulate some referral data
           simulateReferralData();
         }
       } catch (error) {
@@ -49,7 +44,6 @@ function Referrals() {
   }, []);
 
   const simulateReferralData = () => {
-    // Simulated referral data
     const simulatedReferrals = [
       { id: 1, name: "Alex Johnson", joined: "2024-01-15", status: "active", points: 50 },
       { id: 2, name: "Sarah Miller", joined: "2024-01-10", status: "active", points: 75 },
@@ -63,13 +57,11 @@ function Referrals() {
     try {
       setCopying(true);
       await navigator.clipboard.writeText(referralLink);
-      toast.success("🎉 Referral link copied to clipboard!");
-      
-      // Reset copying state after a short delay
+      toast.success("Referral link copied to clipboard!");
       setTimeout(() => setCopying(false), 2000);
     } catch (err) {
       console.error("Failed to copy:", err);
-      toast.error("❌ Failed to copy link");
+      toast.error("Failed to copy link");
       setCopying(false);
     }
   };
@@ -82,7 +74,7 @@ function Referrals() {
           text: 'Learn coding and earn rewards with me on Infina Code!',
           url: referralLink,
         });
-        toast.success("🚀 Referral shared successfully!");
+        toast.success("Referral shared successfully!");
       } catch (err) {
         console.error("Error sharing:", err);
       }
@@ -91,17 +83,7 @@ function Referrals() {
     }
   };
 
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900 flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-yellow-400 mx-auto mb-4"></div>
-          <h2 className="text-xl font-bold text-white">Loading Referral Program...</h2>
-          <p className="text-blue-200 mt-2">Preparing your rewards! 🎁</p>
-        </div>
-      </div>
-    );
-  }
+  if (loading) return <LoadingSpinner />;
 
   const totalReferrals = referrals.length;
   const activeReferrals = referrals.filter(r => r.status === 'active').length;
@@ -109,105 +91,85 @@ function Referrals() {
   const pendingReferrals = referrals.filter(r => r.status === 'pending').length;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900 p-4 lg:p-6">
-      {/* Animated Background Particles */}
-      <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        {[...Array(15)].map((_, i) => (
-          <div
-            key={i}
-            className="absolute w-1 h-1 bg-blue-400 rounded-full opacity-20 animate-float"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              animationDelay: `${Math.random() * 5}s`,
-              animationDuration: `${10 + Math.random() * 10}s`
-            }}
-          />
-        ))}
-      </div>
-
-      <div className="max-w-6xl mx-auto relative z-10">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 p-4 md:p-6">
+      <div className="max-w-6xl mx-auto">
         {/* Header */}
-        <div className="text-center mb-8">
-          <h1 className="text-3xl lg:text-4xl font-bold text-white mb-3 mt-20">
-            🤝 Refer & Earn Rewards
+        <div className="mb-8">
+          <h1 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-2">
+            Refer & Earn
           </h1>
-          <p className="text-blue-200 text-lg">
-            Invite friends and earn amazing rewards together! 🚀
+          <p className="text-gray-600 dark:text-gray-400">
+            Invite friends and earn rewards together
           </p>
         </div>
 
         {/* Stats Grid */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
           <StatCard
             title="Total Referrals"
             value={totalReferrals}
-            subtitle="Friends Joined"
-            emoji="👥"
-            color="from-blue-500 to-cyan-600"
+            icon={<Users className="w-5 h-5" />}
+            color="blue"
           />
           <StatCard
             title="Active Friends"
             value={activeReferrals}
-            subtitle="Learning Together"
-            emoji="✅"
-            color="from-green-500 to-emerald-600"
+            icon={<Users className="w-5 h-5" />}
+            color="green"
           />
           <StatCard
             title="Points Earned"
             value={totalPoints}
-            subtitle="Reward Points"
-            emoji="💰"
-            color="from-yellow-500 to-orange-600"
+            icon={<Award className="w-5 h-5" />}
+            color="yellow"
           />
           <StatCard
             title="Pending"
             value={pendingReferrals}
-            subtitle="Awaiting Join"
-            emoji="⏳"
-            color="from-purple-500 to-pink-600"
+            icon={<Users className="w-5 h-5" />}
+            color="purple"
           />
         </div>
 
         {/* Main Content Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
           {/* Referral Link Card */}
-          <div className="lg:col-span-2 bg-gray-800/30 backdrop-blur-sm rounded-2xl p-6 border border-yellow-500/30">
-            <h2 className="text-2xl font-bold text-white mb-4 flex items-center gap-3">
-              <Share2 className="text-yellow-400" size={28} />
+          <div className="lg:col-span-2 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-5">
+            <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+              <Share2 className="text-blue-500" size={20} />
               Your Referral Link
             </h2>
             
             <div className="space-y-4">
-              <div className="bg-gray-700/50 rounded-xl p-4 border border-gray-600">
-                <div className="flex items-center justify-between">
-                  <code className="text-blue-300 text-sm lg:text-base font-mono break-all">
+              <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-3 border border-gray-200 dark:border-gray-700">
+                <div className="flex items-center gap-3">
+                  <code className="text-gray-700 dark:text-gray-300 text-sm font-mono flex-1 break-all">
                     {referralLink}
                   </code>
                   <button
                     onClick={copyToClipboard}
                     disabled={copying}
-                    className="ml-4 bg-blue-600 hover:bg-blue-700 text-white p-2 rounded-lg transition-all duration-300 transform hover:scale-110 flex-shrink-0"
+                    className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300 p-2 rounded-lg transition-colors"
                   >
-                    <Copy size={18} />
+                    <Copy size={16} />
                   </button>
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div className="flex gap-3">
                 <button
                   onClick={copyToClipboard}
                   disabled={copying}
-                  className="bg-gradient-to-r from-blue-600 to-purple-600 text-white py-3 px-4 rounded-xl font-semibold hover:from-blue-700 hover:to-purple-700 transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-2"
+                  className="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-2.5 px-4 rounded-lg font-medium transition-colors flex items-center justify-center gap-2"
                 >
                   {copying ? (
                     <>
-                      <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
-                      Copied!
+                      <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                      Copied
                     </>
                   ) : (
                     <>
-                      <Copy size={18} />
+                      <Copy size={16} />
                       Copy Link
                     </>
                   )}
@@ -215,9 +177,9 @@ function Referrals() {
                 
                 <button
                   onClick={shareReferral}
-                  className="bg-gradient-to-r from-green-500 to-emerald-600 text-white py-3 px-4 rounded-xl font-semibold hover:from-green-600 hover:to-emerald-700 transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-2"
+                  className="flex-1 bg-green-600 hover:bg-green-700 text-white py-2.5 px-4 rounded-lg font-medium transition-colors flex items-center justify-center gap-2"
                 >
-                  <Share2 size={18} />
+                  <Share2 size={16} />
                   Share
                 </button>
               </div>
@@ -225,13 +187,13 @@ function Referrals() {
           </div>
 
           {/* Rewards Card */}
-          <div className="bg-gray-800/30 backdrop-blur-sm rounded-2xl p-6 border border-purple-500/30">
-            <h2 className="text-2xl font-bold text-white mb-4 flex items-center gap-3">
-              <Gift className="text-purple-400" size={28} />
+          <div className="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-5">
+            <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+              <Gift className="text-purple-500" size={20} />
               Your Rewards
             </h2>
             
-            <div className="space-y-4">
+            <div className="space-y-3">
               <RewardTier
                 level="1 Friend"
                 reward="100 XP Points"
@@ -257,28 +219,28 @@ function Referrals() {
         </div>
 
         {/* Referral List */}
-        <div className="bg-gray-800/30 backdrop-blur-sm rounded-2xl border border-gray-600/30 overflow-hidden">
-          <div className="p-6 border-b border-gray-600/30">
-            <h2 className="text-2xl font-bold text-white flex items-center gap-3">
-              <Users className="text-blue-400" size={28} />
+        <div className="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 mb-6">
+          <div className="p-5 border-b border-gray-200 dark:border-gray-700">
+            <h2 className="text-lg font-semibold text-gray-900 dark:text-white flex items-center gap-2">
+              <Users className="text-blue-500" size={20} />
               Your Referred Friends
             </h2>
           </div>
           
           {referrals.length === 0 ? (
-            <div className="text-center py-12">
-              <div className="text-6xl mb-4">👥</div>
-              <h3 className="text-2xl font-bold text-white mb-2">No Friends Referred Yet</h3>
-              <p className="text-gray-400 mb-6">Share your referral link to start earning rewards!</p>
+            <div className="text-center py-8">
+              <Users className="w-12 h-12 text-gray-300 dark:text-gray-600 mx-auto mb-3" />
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">No Friends Referred Yet</h3>
+              <p className="text-gray-600 dark:text-gray-400 mb-4">Share your referral link to start earning rewards</p>
               <button 
                 onClick={copyToClipboard}
-                className="bg-gradient-to-r from-green-500 to-blue-600 hover:from-green-600 hover:to-blue-700 text-white font-bold py-3 px-6 rounded-xl transition-all duration-300 transform hover:scale-105"
+                className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-6 rounded-lg transition-colors"
               >
                 Copy Referral Link
               </button>
             </div>
           ) : (
-            <div className="divide-y divide-gray-600/30">
+            <div className="divide-y divide-gray-200 dark:divide-gray-700">
               {referrals.map((referral) => (
                 <ReferralRow key={referral.id} referral={referral} />
               ))}
@@ -287,145 +249,135 @@ function Referrals() {
         </div>
 
         {/* Tips Section */}
-        <div className="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <TipCard
-            icon="📱"
             title="Share on Social Media"
-            description="Post your referral link on Twitter, LinkedIn, or Facebook to reach more friends."
+            description="Post your referral link on social platforms to reach more friends."
           />
           <TipCard
-            icon="👨‍💻"
             title="Send to Coding Friends"
-            description="Your coding buddies will love the challenges and rewards on Infina Code!"
+            description="Your coding buddies will love the challenges and rewards."
           />
           <TipCard
-            icon="🎯"
             title="Track Your Progress"
-            description="Monitor your referrals and claim rewards as your friends join and learn."
+            description="Monitor your referrals and claim rewards as friends join."
           />
         </div>
       </div>
-
-      {/* Custom CSS for animations */}
-      <style jsx>{`
-        @keyframes float {
-          0%, 100% { transform: translateY(0) rotate(0deg); }
-          50% { transform: translateY(-10px) rotate(180deg); }
-        }
-        .animate-float {
-          animation: float linear infinite;
-        }
-      `}</style>
     </div>
   );
 }
 
-// 🎮 Stat Card Component
-function StatCard({ title, value, subtitle, emoji, color }) {
+function LoadingSpinner() {
   return (
-    <div
-      className={`bg-gradient-to-br ${color} rounded-xl p-4 shadow-lg transform hover:scale-105 transition-all duration-300 group relative overflow-hidden`}
-    >
-      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -skew-x-12 transform translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000"></div>
-      
-      <div className="relative z-10 flex justify-between items-start">
-        <div className="flex-1">
-          <p className="text-xs text-white/80 font-semibold mb-1">{title}</p>
-          <h2 className="text-2xl font-bold mb-1 text-white">{value}</h2>
-          <p className="text-xs text-white/90">{subtitle}</p>
-        </div>
-        <span className="text-2xl transform group-hover:scale-110 transition-transform duration-300">
-          {emoji}
-        </span>
+    <div className="min-h-screen flex items-center justify-center">
+      <div className="text-center">
+        <div className="w-12 h-12 border-4 border-blue-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+        <h2 className="text-lg font-semibold text-gray-900 dark:text-white">Loading Referrals</h2>
+        <p className="text-gray-600 dark:text-gray-400 mt-2">Please wait...</p>
       </div>
     </div>
   );
 }
 
-// 🎁 Reward Tier Component
-function RewardTier({ level, reward, status }) {
-  const getStatusColor = () => {
-    switch (status) {
-      case 'claimed': return 'from-green-500 to-emerald-600';
-      case 'unlocked': return 'from-yellow-500 to-orange-500';
-      default: return 'from-gray-600 to-gray-700';
-    }
-  };
-
-  const getStatusIcon = () => {
-    switch (status) {
-      case 'claimed': return '✅';
-      case 'unlocked': return '🎯';
-      default: return '🔒';
-    }
+function StatCard({ title, value, icon, color }) {
+  const colorClasses = {
+    blue: "bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 border-blue-200 dark:border-blue-800",
+    green: "bg-green-50 dark:bg-green-900/20 text-green-600 dark:text-green-400 border-green-200 dark:border-green-800",
+    yellow: "bg-yellow-50 dark:bg-yellow-900/20 text-yellow-600 dark:text-yellow-400 border-yellow-200 dark:border-yellow-800",
+    purple: "bg-purple-50 dark:bg-purple-900/20 text-purple-600 dark:text-purple-400 border-purple-200 dark:border-purple-800",
   };
 
   return (
-    <div className={`bg-gradient-to-r ${getStatusColor()} rounded-xl p-4 text-white transform hover:scale-105 transition-all duration-300`}>
+    <div className={`rounded-lg p-4 border ${colorClasses[color]}`}>
       <div className="flex items-center justify-between">
         <div>
-          <div className="font-bold text-sm">{level}</div>
-          <div className="text-xs opacity-90">{reward}</div>
+          <p className="text-sm font-medium">{title}</p>
+          <p className="text-xl font-bold mt-1">{value}</p>
         </div>
-        <div className="text-xl">
-          {getStatusIcon()}
+        <div className="text-gray-500">
+          {icon}
         </div>
       </div>
     </div>
   );
 }
 
-// 👥 Referral Row Component
+function RewardTier({ level, reward, status }) {
+  const getStatusStyle = () => {
+    switch (status) {
+      case 'claimed': 
+        return "bg-green-50 dark:bg-green-900/20 text-green-600 dark:text-green-400 border-green-200 dark:border-green-700";
+      case 'unlocked': 
+        return "bg-yellow-50 dark:bg-yellow-900/20 text-yellow-600 dark:text-yellow-400 border-yellow-200 dark:border-yellow-700";
+      default: 
+        return "bg-gray-50 dark:bg-gray-800 text-gray-600 dark:text-gray-400 border-gray-200 dark:border-gray-700";
+    }
+  };
+
+  return (
+    <div className={`rounded-lg p-3 border ${getStatusStyle()}`}>
+      <div className="flex items-center justify-between">
+        <div>
+          <div className="font-medium">{level}</div>
+          <div className="text-sm opacity-90">{reward}</div>
+        </div>
+        <div className="text-sm font-medium">
+          {status === 'claimed' ? '✓' : status === 'unlocked' ? '→' : '○'}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function ReferralRow({ referral }) {
   const getStatusBadge = () => {
     switch (referral.status) {
       case 'active':
-        return <span className="bg-green-500/20 text-green-300 px-2 py-1 rounded-full text-xs font-bold">Active</span>;
+        return <span className="bg-green-100 dark:bg-green-900/20 text-green-600 dark:text-green-400 text-xs font-medium px-2 py-1 rounded">Active</span>;
       case 'pending':
-        return <span className="bg-yellow-500/20 text-yellow-300 px-2 py-1 rounded-full text-xs font-bold">Pending</span>;
+        return <span className="bg-yellow-100 dark:bg-yellow-900/20 text-yellow-600 dark:text-yellow-400 text-xs font-medium px-2 py-1 rounded">Pending</span>;
       default:
-        return <span className="bg-gray-500/20 text-gray-300 px-2 py-1 rounded-full text-xs font-bold">Inactive</span>;
+        return <span className="bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 text-xs font-medium px-2 py-1 rounded">Inactive</span>;
     }
   };
 
   return (
-    <div className="p-4 hover:bg-gray-700/30 transition-all duration-300 group">
+    <div className="p-4 hover:bg-gray-50 dark:hover:bg-gray-900/50 transition-colors">
       <div className="flex items-center justify-between">
-        <div className="flex items-center gap-4">
-          <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white font-bold text-lg">
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 bg-blue-100 dark:bg-blue-900/30 rounded-full flex items-center justify-center text-blue-600 dark:text-blue-400 font-medium">
             {referral.name.charAt(0)}
           </div>
           <div>
-            <h3 className="text-white font-semibold group-hover:text-yellow-300 transition-colors">
+            <h3 className="font-medium text-gray-900 dark:text-white">
               {referral.name}
             </h3>
-            <p className="text-gray-400 text-sm">Joined {new Date(referral.joined).toLocaleDateString()}</p>
+            <p className="text-sm text-gray-600 dark:text-gray-400">
+              Joined {new Date(referral.joined).toLocaleDateString()}
+            </p>
           </div>
         </div>
         
         <div className="flex items-center gap-4">
           <div className="text-right">
-            <div className="text-yellow-400 font-bold text-lg">+{referral.points} XP</div>
+            <div className="font-bold text-gray-900 dark:text-white">+{referral.points} XP</div>
             {getStatusBadge()}
           </div>
-          <Award className="text-blue-400 group-hover:scale-110 transition-transform duration-300" size={20} />
+          <Award className="text-blue-500" size={18} />
         </div>
       </div>
     </div>
   );
 }
 
-// 💡 Tip Card Component
-function TipCard({ icon, title, description }) {
+function TipCard({ title, description }) {
   return (
-    <div className="bg-gray-800/30 backdrop-blur-sm rounded-xl p-4 border border-gray-600/30 hover:border-blue-500/50 transition-all duration-300 transform hover:scale-105 group">
-      <div className="text-3xl mb-3 group-hover:scale-110 transition-transform duration-300">
-        {icon}
-      </div>
-      <h3 className="text-white font-bold mb-2 group-hover:text-yellow-300 transition-colors">
+    <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-4 border border-gray-200 dark:border-gray-700">
+      <h3 className="font-medium text-gray-900 dark:text-white mb-2">
         {title}
       </h3>
-      <p className="text-gray-400 text-sm">
+      <p className="text-sm text-gray-600 dark:text-gray-400">
         {description}
       </p>
     </div>

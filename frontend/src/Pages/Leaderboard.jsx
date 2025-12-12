@@ -27,243 +27,219 @@ export default function Leaderboard() {
     fetchLeaderboard();
   }, []);
 
-
-
-  if (loading)
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900 flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-yellow-400 mx-auto mb-4"></div>
-          <h2 className="text-xl font-bold text-white ">Loading Leaderboard...</h2>
-          <p className="text-blue-200 mt-2">Preparing the arena 🏆</p>
-        </div>
-      </div>
-    );
-
-  if (users.length === 0)
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900 flex items-center justify-center">
-        <div className="text-center ">
-          <div className="text-6xl mb-4">🏆</div>
-          <h2 className="text-2xl font-bold text-white mb-2 ">Leaderboard Empty</h2>
-          <p className="text-blue-200">Be the first to climb the ranks! 🚀</p>
-        </div>
-      </div>
-    );
+  if (loading) return <LoadingSpinner />;
+  if (users.length === 0) return <EmptyLeaderboard />;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900 p-4 lg:p-6">
-      {/* Animated Background Particles */}
-      <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        {[...Array(15)].map((_, i) => (
-          <div
-            key={i}
-            className="absolute w-1 h-1 bg-blue-400 rounded-full opacity-20 animate-float"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              animationDelay: `${Math.random() * 5}s`,
-              animationDuration: `${10 + Math.random() * 10}s`
-            }}
-          />
-        ))}
-      </div>
-
-      <div className="max-w-6xl mx-auto relative z-10">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 p-4 md:p-6">
+      <div className="max-w-6xl mx-auto">
         {/* Header */}
-        <div className="text-center mb-8">
-          <h1 className="text-3xl lg:text-4xl font-bold text-white mb-3 mt-20">
-            🏆 Code Quest Leaderboard
+        <div className="mb-8">
+          <h1 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-2">
+            Leaderboard
           </h1>
-          <p className="text-blue-200 text-lg">
-            Compete, Learn, and Climb the Ranks! ⚡
+          <p className="text-gray-600 dark:text-gray-400">
+            See where you stand among other coders
           </p>
         </div>
 
-        {/* Leaderboard Container */}
-        <div className="bg-gray-800/30 backdrop-blur-sm rounded-2xl shadow-2xl border border-gray-600/30 overflow-hidden">
+        {/* Stats Overview */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+          <StatCard
+            title="Top Coder"
+            value={users[0]?.username || "N/A"}
+            icon="👑"
+            color="yellow"
+          />
+          <StatCard
+            title="Total Competitors"
+            value={`${users.length}`}
+            icon="🚀"
+            color="blue"
+          />
+          <StatCard
+            title="Highest Score"
+            value={`${users[0]?.points || 0} XP`}
+            icon="⭐"
+            color="green"
+          />
+        </div>
+
+        {/* Leaderboard Table */}
+        <div className="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm overflow-hidden mb-6">
           {/* Table Header */}
-          <div className="bg-gradient-to-r from-blue-600 to-purple-600 p-6">
-            <div className="grid grid-cols-12 gap-4 text-white font-bold text-sm lg:text-base">
-              <div className="col-span-1 text-center">Rank</div>
-              <div className="col-span-7 lg:col-span-8">Coder</div>
-              <div className="col-span-4 lg:col-span-3 text-center">XP Points</div>
+          <div className="bg-gray-50 dark:bg-gray-900 px-6 py-4 border-b border-gray-200 dark:border-gray-700">
+            <div className="grid grid-cols-12 gap-4">
+              <div className="col-span-2 text-center text-sm font-semibold text-gray-700 dark:text-gray-300">
+                Rank
+              </div>
+              <div className="col-span-7 text-sm font-semibold text-gray-700 dark:text-gray-300">
+                Coder
+              </div>
+              <div className="col-span-3 text-center text-sm font-semibold text-gray-700 dark:text-gray-300">
+                XP Points
+              </div>
             </div>
           </div>
 
-          {/* Leaderboard List */}
-          <div className="divide-y divide-gray-600/30">
+          {/* Leaderboard Rows */}
+          <div className="divide-y divide-gray-200 dark:divide-gray-700">
             {users.map((user, index) => (
               <LeaderboardRow 
                 key={user._id} 
                 user={user} 
                 rank={index + 1} 
-                isTopThree={index < 3}
               />
             ))}
           </div>
         </div>
 
-        {/* Stats Footer */}
-        <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div className="bg-gray-800/50 backdrop-blur-sm rounded-xl p-4 text-center border border-yellow-500/30">
-            <div className="text-2xl mb-2">👑</div>
-            <h3 className="text-white font-bold">Top Coder</h3>
-            <p className="text-yellow-300 text-sm">{users[0]?.username || "N/A"}</p>
-          </div>
-          <div className="bg-gray-800/50 backdrop-blur-sm rounded-xl p-4 text-center border border-blue-500/30">
-            <div className="text-2xl mb-2">🚀</div>
-            <h3 className="text-white font-bold">Total Competitors</h3>
-            <p className="text-blue-300 text-sm">{users.length} Coders</p>
-          </div>
-          <div className="bg-gray-800/50 backdrop-blur-sm rounded-xl p-4 text-center border border-green-500/30">
-            <div className="text-2xl mb-2">⭐</div>
-            <h3 className="text-white font-bold">Highest Score</h3>
-            <p className="text-green-300 text-sm">{users[0]?.points || 0} XP</p>
-          </div>
-        </div>
-
-        {/* Motivational Message */}
-        <div className="text-center mt-6">
-          <p className="text-gray-400 text-sm">
-            🌟 Every great coder was once a beginner. Keep solving! 
-            {users.length > 0 && ` ${users[users.length - 1]?.username} is currently in #${users.length} place.`}
+        {/* Footer Message */}
+        <div className="text-center text-sm text-gray-600 dark:text-gray-400">
+          <p>
+            {users.length > 0 && 
+              `${users[users.length - 1]?.username || "Last coder"} is currently in #${users.length} place. `
+            }
+            Keep coding to climb the ranks!
           </p>
         </div>
       </div>
-
-      {/* Custom CSS for animations */}
-      <style jsx>{`
-        @keyframes float {
-          0%, 100% { transform: translateY(0) rotate(0deg); }
-          50% { transform: translateY(-10px) rotate(180deg); }
-        }
-        .animate-float {
-          animation: float linear infinite;
-        }
-      `}</style>
     </div>
   );
 }
 
-// 🏆 Enhanced Leaderboard Row Component
-function LeaderboardRow({ user, rank, isTopThree }) {
-  const getRankColor = () => {
-    switch (rank) {
-      case 1: return "from-yellow-500 to-orange-500";
-      case 2: return "from-gray-400 to-gray-600";
-      case 3: return "from-orange-400 to-red-500";
-      default: return "from-blue-500 to-purple-600";
-    }
+function LoadingSpinner() {
+  return (
+    <div className="min-h-screen flex items-center justify-center">
+      <div className="text-center">
+        <div className="w-12 h-12 border-4 border-blue-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+        <h2 className="text-lg font-semibold text-gray-900 dark:text-white">Loading Leaderboard</h2>
+        <p className="text-gray-600 dark:text-gray-400 mt-2">Please wait...</p>
+      </div>
+    </div>
+  );
+}
+
+function EmptyLeaderboard() {
+  return (
+    <div className="min-h-screen flex items-center justify-center">
+      <div className="text-center">
+        <div className="text-4xl mb-4 text-gray-300 dark:text-gray-600">🏆</div>
+        <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">Leaderboard Empty</h2>
+        <p className="text-gray-600 dark:text-gray-400">Be the first to join the competition!</p>
+      </div>
+    </div>
+  );
+}
+
+function StatCard({ title, value, icon, color }) {
+  const colorClasses = {
+    yellow: "bg-yellow-50 dark:bg-yellow-900/20 text-yellow-600 dark:text-yellow-400 border-yellow-200 dark:border-yellow-800",
+    blue: "bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 border-blue-200 dark:border-blue-800",
+    green: "bg-green-50 dark:bg-green-900/20 text-green-600 dark:text-green-400 border-green-200 dark:border-green-800",
   };
 
-  const getRankIcon = () => {
-    switch (rank) {
-      case 1: return "🥇";
-      case 2: return "🥈";
-      case 3: return "🥉";
-      default: return `#${rank}`;
-    }
+  return (
+    <div className={`rounded-lg p-4 border ${colorClasses[color]}`}>
+      <div className="flex items-center gap-3">
+        <div className="text-xl">{icon}</div>
+        <div>
+          <p className="text-sm font-medium">{title}</p>
+          <p className="text-lg font-bold">{value}</p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function LeaderboardRow({ user, rank }) {
+  const getRankBadge = (rank) => {
+    if (rank === 1) return { text: "🥇", color: "bg-yellow-100 dark:bg-yellow-900/30 text-yellow-600 dark:text-yellow-400" };
+    if (rank === 2) return { text: "🥈", color: "bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400" };
+    if (rank === 3) return { text: "🥉", color: "bg-orange-100 dark:bg-orange-900/30 text-orange-600 dark:text-orange-400" };
+    return { text: `#${rank}`, color: "bg-gray-50 dark:bg-gray-800 text-gray-700 dark:text-gray-300" };
   };
 
   const getTier = (points) => {
-    if (points >= 1000) return { name: "Grand Master", color: "text-purple-400" };
-    if (points >= 750) return { name: "Master", color: "text-red-400" };
-    if (points >= 500) return { name: "Expert", color: "text-orange-400" };
-    if (points >= 250) return { name: "Advanced", color: "text-yellow-400" };
-    if (points >= 100) return { name: "Intermediate", color: "text-green-400" };
-    return { name: "Beginner", color: "text-blue-400" };
+    if (points >= 1000) return { name: "Grand Master", color: "text-purple-600 dark:text-purple-400" };
+    if (points >= 750) return { name: "Master", color: "text-red-600 dark:text-red-400" };
+    if (points >= 500) return { name: "Expert", color: "text-orange-600 dark:text-orange-400" };
+    if (points >= 250) return { name: "Advanced", color: "text-yellow-600 dark:text-yellow-400" };
+    if (points >= 100) return { name: "Intermediate", color: "text-green-600 dark:text-green-400" };
+    return { name: "Beginner", color: "text-blue-600 dark:text-blue-400" };
   };
 
+  const rankBadge = getRankBadge(rank);
   const tier = getTier(user.points || 0);
+  const level = Math.floor((user.points || 0) / 100) + 1;
 
   return (
-    <div className={`
-      group p-4 lg:p-6 transition-all duration-300 transform hover:scale-105 hover:bg-gray-700/50
-      ${isTopThree ? 'bg-gradient-to-r from-gray-700/50 to-gray-600/30' : 'bg-transparent'}
-      border-l-4 ${rank === 1 ? 'border-yellow-400' : rank === 2 ? 'border-gray-400' : rank === 3 ? 'border-orange-400' : 'border-blue-500'}
-    `}>
+    <div className="px-6 py-4 hover:bg-gray-50 dark:hover:bg-gray-900/50 transition-colors">
       <div className="grid grid-cols-12 gap-4 items-center">
         {/* Rank */}
-        <div className="col-span-2 lg:col-span-1 flex justify-center">
-          <div className={`
-            w-12 h-12 rounded-full flex items-center justify-center font-bold text-white
-            bg-gradient-to-br ${getRankColor()} shadow-lg group-hover:scale-110 transition-transform duration-300
-          `}>
-            {getRankIcon()}
+        <div className="col-span-2 flex justify-center">
+          <div className={`w-10 h-10 rounded-full flex items-center justify-center font-bold ${rankBadge.color}`}>
+            {rankBadge.text}
           </div>
         </div>
 
         {/* User Info */}
-        <div className="col-span-7 lg:col-span-8">
-          <div className="flex items-center gap-3 lg:gap-4">
-            <div className="relative">
-              <img
-                src={
-                  user.userprofile && user.userprofile !== "null"
-                    ? user.userprofile
-                    : `https://ui-avatars.com/api/?name=${user.username}&background=6366f1&color=fff&bold=true&size=128`
-                }
-                alt={user.username}
-                className="w-12 h-12 lg:w-14 lg:h-14 rounded-full border-2 border-yellow-400 group-hover:border-green-400 transition-colors duration-300"
-              />
-              {isTopThree && (
-                <div className="absolute -top-1 -right-1 w-6 h-6 bg-yellow-500 rounded-full flex items-center justify-center">
-                  <span className="text-xs font-bold">🔥</span>
-                </div>
-              )}
-            </div>
+        <div className="col-span-7">
+          <div className="flex items-center gap-3">
+            <img
+              src={
+                user.userprofile && user.userprofile !== "null"
+                  ? user.userprofile
+                  : `https://ui-avatars.com/api/?name=${user.username}&background=6366f1&color=fff&bold=true`
+              }
+              alt={user.username}
+              className="w-10 h-10 rounded-full border border-gray-200 dark:border-gray-700"
+            />
             
             <div className="flex-1 min-w-0">
               <div className="flex items-center gap-2 flex-wrap">
-                <h3 className="text-white font-bold text-lg lg:text-xl truncate">
+                <h3 className="font-medium text-gray-900 dark:text-white truncate">
                   {user.username}
                 </h3>
-                <span className={`text-xs font-semibold px-2 py-1 rounded-full ${tier.color} bg-gray-700/50`}>
+                <span className={`text-xs font-medium px-2 py-1 rounded-full ${tier.color} bg-gray-100 dark:bg-gray-800`}>
                   {tier.name}
                 </span>
               </div>
-              <div className="flex items-center gap-2 mt-1">
-                <div className="flex items-center gap-1">
-                  <span className="text-yellow-400 text-sm">⭐</span>
-                  <span className="text-gray-300 text-sm">
-                    Level {Math.floor((user.points || 0) / 100) + 1}
-                  </span>
-                </div>
-                <span className="text-gray-500">•</span>
-                <span className="text-green-400 text-sm">
-                  {user.solvedChallenges?.length || 0} challenges
-                </span>
+              
+              <div className="flex items-center gap-2 mt-1 text-sm text-gray-600 dark:text-gray-400">
+                <span>Level {level}</span>
+                <span>•</span>
+                <span>{user.solvedChallenges?.length || 0} challenges</span>
               </div>
             </div>
           </div>
         </div>
 
         {/* Points */}
-        <div className="col-span-3 lg:col-span-3 text-center">
-          <div className="bg-gray-700/50 rounded-xl p-3 group-hover:bg-gray-600/50 transition-colors duration-300">
-            <div className="text-2xl lg:text-3xl font-bold text-white mb-1">
+        <div className="col-span-3">
+          <div className="text-center">
+            <div className="text-xl font-bold text-gray-900 dark:text-white">
               {user.points || 0}
             </div>
-            <div className="text-xs text-gray-300 font-semibold">
-              XP POINTS
+            <div className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+              XP
             </div>
           </div>
         </div>
       </div>
 
       {/* Progress Bar for Top 3 */}
-      {isTopThree && (
-        <div className="mt-3">
-          <div className="flex justify-between text-xs text-gray-400 mb-1">
-            <span>Progress to next tier</span>
-            <span>{((user.points || 0) / 1000 * 100).toFixed(1)}%</span>
+      {rank <= 3 && (
+        <div className="mt-3 ml-12">
+          <div className="flex justify-between text-xs text-gray-600 dark:text-gray-400 mb-1">
+            <span>Progress</span>
+            <span>{((user.points || 0) / 1000 * 100).toFixed(0)}%</span>
           </div>
-          <div className="w-full bg-gray-600 rounded-full h-2">
+          <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-1.5">
             <div 
-              className="bg-gradient-to-r from-green-400 to-blue-500 h-2 rounded-full transition-all duration-1000"
+              className="bg-gradient-to-r from-blue-500 to-purple-500 h-1.5 rounded-full transition-all duration-500"
               style={{ width: `${Math.min(((user.points || 0) / 1000 * 100), 100)}%` }}
-            ></div>
+            />
           </div>
         </div>
       )}

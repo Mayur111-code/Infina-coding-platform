@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import { Upload, X, Settings as SettingsIcon, User, Mail, Calendar } from "lucide-react";
+import { Upload, X, Settings as SettingsIcon, User, Mail, Calendar, Save } from "lucide-react";
 
 export default function Settings() {
   const navigate = useNavigate();
@@ -15,9 +15,6 @@ export default function Settings() {
   });
   const [loading, setLoading] = useState(false);
 
-  const API = "https://infina-coding-platform-3.onrender.com/api";  
-
-  // Load user data
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
     if (storedUser) {
@@ -37,15 +34,17 @@ export default function Settings() {
     }
   }, []);
 
-  // Handle input
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  // Handle image upload
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (file) {
+      if (file.size > 5 * 1024 * 1024) {
+        toast.error("Image size should be less than 5MB");
+        return;
+      }
       setFormData({ ...formData, userprofile: file });
 
       const reader = new FileReader();
@@ -54,7 +53,6 @@ export default function Settings() {
     }
   };
 
-  // Remove image
   const removeImage = () => {
     setFormData({ ...formData, userprofile: null });
     setPreview(null);
@@ -66,7 +64,7 @@ export default function Settings() {
 
     const token = localStorage.getItem("token");
     if (!token) {
-      toast.error("Unauthorized! Please sign in again.");
+      toast.error("Please sign in again");
       navigate("/signin");
       return;
     }
@@ -75,11 +73,12 @@ export default function Settings() {
       setLoading(true);
 
       const formDataToSend = new FormData();
-      formDataToSend.append("username", formData.username);
-      formDataToSend.append("useremail", formData.useremail);
+      formDataToSend.append("username", formData.username.trim());
+      formDataToSend.append("useremail", formData.useremail.trim());
       formDataToSend.append("userbirthdate", formData.userbirthdate);
-      if (formData.userprofile)
+      if (formData.userprofile) {
         formDataToSend.append("userprofile", formData.userprofile);
+      }
 
       const res = await fetch(
         `https://infina-coding-platform-3.onrender.com/api/users/update/${user.id}`,
@@ -94,14 +93,12 @@ export default function Settings() {
 
       if (!res.ok) throw new Error(data.message || "Update failed");
 
-      toast.success("✅ Profile updated successfully!");
-
-      // Update localStorage
+      toast.success("Profile updated successfully!");
+      
       localStorage.setItem("user", JSON.stringify(data.user));
       setUser(data.user);
 
       setTimeout(() => navigate("/"), 1500);
-
     } catch (err) {
       toast.error(err.message || "Something went wrong");
     } finally {
@@ -109,87 +106,70 @@ export default function Settings() {
     }
   };
 
-  if (!user)
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900 flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-yellow-400 mx-auto mb-4"></div>
-          <h2 className="text-xl font-bold text-white">Loading Profile...</h2>
-          <p className="text-blue-200 mt-2">Getting your settings ready! ⚙️</p>
-        </div>
-      </div>
-    );
+  if (!user) return <LoadingSpinner />;
+
+  const profileComplete = formData.username && formData.useremail && formData.userbirthdate;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900 p-4 lg:p-6">
-      {/* Animated Background Particles */}
-      <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        {[...Array(15)].map((_, i) => (
-          <div
-            key={i}
-            className="absolute w-1 h-1 bg-blue-400 rounded-full opacity-20 animate-float"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              animationDelay: `${Math.random() * 5}s`,
-              animationDuration: `${10 + Math.random() * 10}s`
-            }}
-          />
-        ))}
-      </div>
-
-      <div className="max-w-2xl mx-auto relative z-10">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 p-4 md:p-6">
+      <div className="max-w-2xl mx-auto">
         {/* Header */}
-        <div className="text-center mb-8">
-          <div className="flex items-center justify-center gap-3 mb-4">
-            <div className="bg-gradient-to-r from-blue-600 to-purple-600 p-3 rounded-2xl mt-20">
-              <SettingsIcon className="text-white" size={32} />
+        <div className="mb-8">
+          <div className="flex items-center gap-3 mb-4">
+            <div className="bg-blue-100 dark:bg-blue-900/30 p-3 rounded-lg">
+              <SettingsIcon className="text-blue-600 dark:text-blue-400" size={24} />
             </div>
-            <h1 className="text-3xl lg:text-4xl font-bold text-white mt-20">
-              Player Settings
+            <h1 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white">
+              Profile Settings
             </h1>
           </div>
-          <p className="text-blue-200 text-lg">
-            Customize your gaming profile and preferences! 🎮
+          <p className="text-gray-600 dark:text-gray-400">
+            Update your profile information
           </p>
         </div>
 
-        {/* Settings Card */}
-        <div className="bg-gray-800/30 backdrop-blur-sm rounded-2xl shadow-2xl border border-gray-600/30 overflow-hidden">
-          <div className="p-6 lg:p-8">
-            <form onSubmit={handleSubmit} className="space-y-6" encType="multipart/form-data">
+        {/* Settings Form */}
+        <div className="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm">
+          <div className="p-6 md:p-8">
+            <form onSubmit={handleSubmit} className="space-y-6">
               
               {/* Profile Picture Section */}
               <div className="text-center mb-6">
-                <h3 className="text-lg font-bold text-white mb-4 flex items-center justify-center gap-2">
-                  <User size={20} />
-                  Avatar Customization
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4 flex items-center justify-center gap-2">
+                  <User size={18} />
+                  Profile Picture
                 </h3>
                 
                 <div className="flex flex-col items-center">
                   {preview ? (
-                    <div className="relative group">
+                    <div className="relative">
                       <img
                         src={preview}
                         alt="Profile Preview"
-                        className="w-32 h-32 rounded-full object-cover border-4 border-yellow-400 shadow-2xl transform group-hover:scale-110 transition-all duration-300"
+                        className="w-24 h-24 rounded-full object-cover border-4 border-white dark:border-gray-800 shadow-md"
                       />
                       <button
                         type="button"
                         onClick={removeImage}
-                        className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full p-2 hover:bg-red-600 transition-all duration-300 transform hover:scale-110 shadow-lg"
+                        className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full p-1 hover:bg-red-600 transition-colors"
+                        aria-label="Remove image"
                       >
-                        <X size={16} />
+                        <X size={14} />
                       </button>
-                      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -skew-x-12 transform translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000 rounded-full"></div>
                     </div>
                   ) : (
                     <label className="group cursor-pointer">
-                      <div className="w-32 h-32 flex flex-col items-center justify-center border-2 border-dashed border-blue-400 rounded-full bg-blue-500/10 hover:bg-blue-500/20 transition-all duration-300 transform hover:scale-105">
-                        <Upload className="text-blue-300 group-hover:text-blue-200" size={30} />
-                        <span className="text-xs text-blue-300 mt-2 font-semibold">Upload Avatar</span>
+                      <div className="w-24 h-24 flex flex-col items-center justify-center border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-full bg-gray-50 dark:bg-gray-900 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+                        <Upload className="text-gray-400 group-hover:text-gray-500 dark:text-gray-500" size={24} />
+                        <span className="text-xs text-gray-500 dark:text-gray-400 mt-2">Upload Photo</span>
                       </div>
-                      <input type="file" className="hidden" accept="image/*" onChange={handleFileChange} />
+                      <input 
+                        type="file" 
+                        className="hidden" 
+                        accept="image/*" 
+                        onChange={handleFileChange}
+                        aria-label="Upload profile picture"
+                      />
                     </label>
                   )}
                 </div>
@@ -197,133 +177,118 @@ export default function Settings() {
 
               {/* Username Field */}
               <div className="space-y-2">
-                <label className="flex items-center gap-2 text-sm font-medium text-white mb-2">
-                  <User size={16} />
-                  Player Name
+                <label className="flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                  <User size={14} />
+                  Username
                 </label>
-                <div className="relative">
-                  <input
-                    type="text"
-                    name="username"
-                    value={formData.username}
-                    onChange={handleChange}
-                    className="w-full px-4 py-3 bg-gray-700/50 border border-gray-600 rounded-xl text-white placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all duration-300"
-                    placeholder="Enter your gaming username"
-                    required
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -skew-x-12 transform translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000 rounded-xl"></div>
-                </div>
+                <input
+                  type="text"
+                  name="username"
+                  value={formData.username}
+                  onChange={handleChange}
+                  className="w-full px-4 py-2.5 bg-gray-50 dark:bg-gray-900 border border-gray-300 dark:border-gray-700 rounded-lg text-gray-900 dark:text-white placeholder-gray-500 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-colors"
+                  placeholder="Enter your username"
+                  required
+                />
               </div>
 
               {/* Email Field */}
               <div className="space-y-2">
-                <label className="flex items-center gap-2 text-sm font-medium text-white mb-2">
-                  <Mail size={16} />
+                <label className="flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                  <Mail size={14} />
                   Email Address
                 </label>
-                <div className="relative">
-                  <input
-                    type="email"
-                    name="useremail"
-                    value={formData.useremail}
-                    onChange={handleChange}
-                    className="w-full px-4 py-3 bg-gray-700/50 border border-gray-600 rounded-xl text-white placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all duration-300"
-                    placeholder="Enter your email"
-                    required
-                  />
-                </div>
+                <input
+                  type="email"
+                  name="useremail"
+                  value={formData.useremail}
+                  onChange={handleChange}
+                  className="w-full px-4 py-2.5 bg-gray-50 dark:bg-gray-900 border border-gray-300 dark:border-gray-700 rounded-lg text-gray-900 dark:text-white placeholder-gray-500 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-colors"
+                  placeholder="Enter your email"
+                  required
+                />
               </div>
 
               {/* Birthdate Field */}
               <div className="space-y-2">
-                <label className="flex items-center gap-2 text-sm font-medium text-white mb-2">
-                  <Calendar size={16} />
+                <label className="flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                  <Calendar size={14} />
                   Birthdate
                 </label>
-                <div className="relative">
-                  <input
-                    type="date"
-                    name="userbirthdate"
-                    value={formData.userbirthdate}
-                    onChange={handleChange}
-                    className="w-full px-4 py-3 bg-gray-700/50 border border-gray-600 rounded-xl text-white placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all duration-300"
-                    required
-                  />
-                </div>
+                <input
+                  type="date"
+                  name="userbirthdate"
+                  value={formData.userbirthdate}
+                  onChange={handleChange}
+                  className="w-full px-4 py-2.5 bg-gray-50 dark:bg-gray-900 border border-gray-300 dark:border-gray-700 rounded-lg text-gray-900 dark:text-white placeholder-gray-500 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-colors"
+                  required
+                />
               </div>
 
               {/* Action Buttons */}
-              <div className="flex gap-4 pt-4">
+              <div className="flex gap-3 pt-6">
                 <button
                   type="button"
                   onClick={() => navigate("/")}
-                  className="flex-1 py-3 bg-gray-600 text-white rounded-xl font-semibold hover:bg-gray-700 transition-all duration-300 transform hover:scale-105 border border-gray-500"
+                  className="flex-1 py-2.5 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg font-medium hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors border border-gray-300 dark:border-gray-600"
                 >
-                  ← Back to Dashboard
+                  Cancel
                 </button>
                 <button
                   type="submit"
-                  disabled={loading}
-                  className="flex-1 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-xl font-semibold hover:from-blue-700 hover:to-purple-700 transition-all duration-300 transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg relative overflow-hidden group"
+                  disabled={loading || !profileComplete}
+                  className="flex-1 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                 >
-                  {/* Animated background effect */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -skew-x-12 transform translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000"></div>
-                  
-                  <span className="relative z-10 flex items-center justify-center gap-2">
-                    {loading ? (
-                      <>
-                        <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
-                        Saving...
-                      </>
-                    ) : (
-                      <>
-                        💾 Save Changes
-                      </>
-                    )}
-                  </span>
+                  {loading ? (
+                    <>
+                      <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                      Saving...
+                    </>
+                  ) : (
+                    <>
+                      <Save size={16} />
+                      Save Changes
+                    </>
+                  )}
                 </button>
               </div>
             </form>
           </div>
 
-          {/* Stats Footer */}
-          <div className="bg-gray-700/30 border-t border-gray-600/30 p-4">
-            <div className="grid grid-cols-3 gap-4 text-center">
+          {/* Status Footer */}
+          <div className="bg-gray-50 dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700 p-4">
+            <div className="flex justify-between items-center text-sm">
               <div>
-                <div className="text-white font-bold text-sm">Account Status</div>
-                <div className="text-green-400 text-xs">Active 🟢</div>
+                <div className="text-gray-600 dark:text-gray-400">Profile Status</div>
+                <div className={`font-medium ${profileComplete ? 'text-green-600 dark:text-green-400' : 'text-yellow-600 dark:text-yellow-400'}`}>
+                  {profileComplete ? 'Complete' : 'Incomplete'}
+                </div>
               </div>
-              <div>
-                <div className="text-white font-bold text-sm">Profile Level</div>
-                <div className="text-yellow-400 text-xs">Complete {formData.username && formData.useremail && formData.userbirthdate ? '100%' : 'Incomplete'}</div>
-              </div>
-              <div>
-                <div className="text-white font-bold text-sm">Last Updated</div>
-                <div className="text-blue-400 text-xs">Just now</div>
+              <div className="text-right">
+                <div className="text-gray-600 dark:text-gray-400">Last Updated</div>
+                <div className="font-medium text-gray-900 dark:text-white">Now</div>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Tips Section */}
-        <div className="mt-6 text-center">
-          <p className="text-gray-400 text-sm">
-            💡 Pro tip: A unique avatar helps you stand out in the leaderboards!
-          </p>
+        {/* Help Text */}
+        <div className="mt-6 text-center text-sm text-gray-600 dark:text-gray-400">
+          <p>Update your profile information to keep your account current</p>
         </div>
       </div>
-
-      {/* Custom CSS for animations */}
-      <style jsx>{`
-        @keyframes float {
-          0%, 100% { transform: translateY(0) rotate(0deg); }
-          50% { transform: translateY(-10px) rotate(180deg); }
-        }
-        .animate-float {
-          animation: float linear infinite;
-        }
-      `}</style>
     </div>
   );
-};
+}
 
+function LoadingSpinner() {
+  return (
+    <div className="min-h-screen flex items-center justify-center">
+      <div className="text-center">
+        <div className="w-12 h-12 border-4 border-blue-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+        <h2 className="text-lg font-semibold text-gray-900 dark:text-white">Loading Settings</h2>
+        <p className="text-gray-600 dark:text-gray-400 mt-2">Please wait...</p>
+      </div>
+    </div>
+  );
+}
