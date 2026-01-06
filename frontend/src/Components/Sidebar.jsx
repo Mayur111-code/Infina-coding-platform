@@ -142,24 +142,24 @@ function Sidebar() {
           {/* Top Section */}
           <div>
             {/* Logo Section */}
-            <div className="flex items-center gap-3 mb-8 pb-4 border-b border-gray-700">
-              <div className="bg-gradient-to-r from-indigo-500 to-purple-600 p-2 rounded-xl min-w-[44px] flex items-center justify-center">
-                {/* ✅ Logo added here for desktop */}
-                <img 
-                  src="/infina.jpg" 
-                  alt="Logo" 
-                  className="w-7 h-7 object-cover rounded-lg" 
-                />
-              </div>
-              <div
-                className={`transition-all duration-300 overflow-hidden ${
-                  isMobile || isHovered ? "opacity-100 w-auto" : "opacity-0 w-0"
-                }`}
-              >
-                <h1 className="text-xl font-bold text-white whitespace-nowrap">InfiCode</h1>
-                <p className="text-gray-400 text-sm">Coding Platform</p>
-              </div>
-            </div>
+          
+<div className="flex items-center gap-3 mb-8 pb-4 border-b border-gray-700">
+  <div className="bg-gradient-to-r from-indigo-500 to-purple-600 p-1 rounded-xl min-w-[44px] h-[44px] flex items-center justify-center shadow-lg overflow-hidden">
+    <img 
+      src="/log.jpg" 
+      alt="InfiCode Logo" 
+      className="w-full h-full object-cover rounded-lg" 
+    />
+  </div>
+  <div
+    className={`transition-all duration-300 overflow-hidden ${
+      isMobile || isHovered ? "opacity-100 w-auto" : "opacity-0 w-0"
+    }`}
+  >
+    <h1 className="text-xl font-bold text-white whitespace-nowrap leading-tight">InfiCode</h1>
+    <p className="text-gray-400 text-xs tracking-wide">Coding Platform</p>
+  </div>
+</div>
 
             {/* Nav Items */}
             <nav className="flex flex-col gap-2">
