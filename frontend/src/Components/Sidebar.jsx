@@ -10,7 +10,6 @@ import {
   Wallet,
   Menu,
   X,
-  Code,
   Sparkles,
   Crown,
   TrendingUp,
@@ -33,13 +32,6 @@ const navItems = [
     badge: "⚡",
     gradient: "from-green-500 to-emerald-500"
   },
-  // {
-  //   name: "Earnings",
-  //   path: "/earnings",
-  //   icon: <Wallet size={22} />,
-  //   badge: "💰",
-  //   gradient: "from-amber-500 to-orange-500"
-  // },
   {
     name: "Marketplace",
     path: "/marketplace",
@@ -54,13 +46,6 @@ const navItems = [
     badge: "🏆",
     gradient: "from-yellow-500 to-red-500"
   },
-  // {
-  //   name: "History",
-  //   path: "/history",
-  //   icon: <History size={22} />,
-  //   badge: "📊",
-  //   gradient: "from-indigo-500 to-blue-500"
-  // },
   {
     name: "Referrals",
     path: "/referrals",
@@ -101,14 +86,13 @@ function Sidebar() {
     if (isMobile) setIsOpen(false);
   }, [pathname, isMobile]);
 
-  // ✅ Logout handler
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
     toast.success("Logged out successfully 👋");
     setTimeout(() => {
       navigate("/signin");
-      window.location.reload(); // optional but ensures state reset
+      window.location.reload();
     }, 800);
   };
 
@@ -117,8 +101,13 @@ function Sidebar() {
       {/* Mobile Header */}
       <div className="lg:hidden flex items-center justify-between bg-gradient-to-r from-indigo-600 to-purple-600 px-4 py-3 shadow-2xl fixed top-0 left-0 right-0 z-50">
         <div className="flex items-center gap-3">
-          <div className="bg-white/20 p-2 rounded-xl">
-            <Code className="text-white" size={24} />
+          <div className="bg-white/20 p-1.5 rounded-xl overflow-hidden flex items-center justify-center">
+            {/* ✅ Logo added here for mobile */}
+            <img 
+              src="/log.jpg" 
+              alt="Logo" 
+              className="w-7 h-7 object-cover rounded-lg" 
+            />
           </div>
           <div>
             <h1 className="text-lg font-bold text-white">InfiCode</h1>
@@ -152,10 +141,15 @@ function Sidebar() {
         <div className="p-4 h-full flex flex-col justify-between overflow-y-auto">
           {/* Top Section */}
           <div>
-            {/* Logo */}
+            {/* Logo Section */}
             <div className="flex items-center gap-3 mb-8 pb-4 border-b border-gray-700">
-              <div className="bg-gradient-to-r from-indigo-500 to-purple-600 p-2 rounded-xl min-w-[44px]">
-                <Code className="text-white" size={28} />
+              <div className="bg-gradient-to-r from-indigo-500 to-purple-600 p-2 rounded-xl min-w-[44px] flex items-center justify-center">
+                {/* ✅ Logo added here for desktop */}
+                <img 
+                  src="/infina.jpg" 
+                  alt="Logo" 
+                  className="w-7 h-7 object-cover rounded-lg" 
+                />
               </div>
               <div
                 className={`transition-all duration-300 overflow-hidden ${
@@ -206,7 +200,7 @@ function Sidebar() {
             </nav>
           </div>
 
-          {/* ✅ Logout Button at Bottom */}
+          {/* Logout Button */}
           <button
             onClick={handleLogout}
             className="mt-6 flex items-center justify-center gap-3 bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded-lg font-semibold shadow-md transition-all duration-200"
