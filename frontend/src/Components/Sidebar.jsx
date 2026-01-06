@@ -104,7 +104,7 @@ function Sidebar() {
           <div className="bg-white/20 p-1.5 rounded-xl overflow-hidden flex items-center justify-center">
             {/* ✅ Logo added here for mobile */}
             <img 
-              src="/log.jpg" 
+              src="/infina.jpg" 
               alt="Logo" 
               className="w-7 h-7 object-cover rounded-lg" 
             />
