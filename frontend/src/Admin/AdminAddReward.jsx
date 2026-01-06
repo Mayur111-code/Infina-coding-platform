@@ -18,7 +18,7 @@ export default function AdminAddReward() {
 
   const [loading, setLoading] = useState(false);
 
-  const API = "hhttps://infina-coding-platform-3.onrender.com/api"; // ⭐ LOCAL ONLY
+  const API = "https://infina-coding-platform-3.onrender.com/api"; 
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
