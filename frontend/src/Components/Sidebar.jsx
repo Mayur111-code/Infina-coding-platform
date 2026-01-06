@@ -32,6 +32,13 @@ const navItems = [
     badge: "⚡",
     gradient: "from-green-500 to-emerald-500"
   },
+  // {
+  //   name: "Earnings",
+  //   path: "/earnings",
+  //   icon: <Wallet size={22} />,
+  //   badge: "💰",
+  //   gradient: "from-amber-500 to-orange-500"
+  // },
   {
     name: "Marketplace",
     path: "/marketplace",
@@ -46,6 +53,13 @@ const navItems = [
     badge: "🏆",
     gradient: "from-yellow-500 to-red-500"
   },
+  // {
+  //   name: "History",
+  //   path: "/history",
+  //   icon: <History size={22} />,
+  //   badge: "📊",
+  //   gradient: "from-indigo-500 to-blue-500"
+  // },
   {
     name: "Referrals",
     path: "/referrals",
@@ -86,13 +100,14 @@ function Sidebar() {
     if (isMobile) setIsOpen(false);
   }, [pathname, isMobile]);
 
+  // ✅ Logout handler
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
     toast.success("Logged out successfully 👋");
     setTimeout(() => {
       navigate("/signin");
-      window.location.reload();
+      window.location.reload(); // optional but ensures state reset
     }, 800);
   };
 
@@ -101,12 +116,12 @@ function Sidebar() {
       {/* Mobile Header */}
       <div className="lg:hidden flex items-center justify-between bg-gradient-to-r from-indigo-600 to-purple-600 px-4 py-3 shadow-2xl fixed top-0 left-0 right-0 z-50">
         <div className="flex items-center gap-3">
-          <div className="bg-white/20 p-1.5 rounded-xl overflow-hidden flex items-center justify-center">
-            {/* ✅ Logo added here for mobile */}
+          <div className="bg-white/20 p-2 rounded-xl">
+            {/* Logo for mobile header */}
             <img 
               src="/infina.jpg" 
-              alt="Logo" 
-              className="w-7 h-7 object-cover rounded-lg" 
+              alt="Infina Logo" 
+              className="w-6 h-6 object-contain"
             />
           </div>
           <div>
@@ -141,25 +156,25 @@ function Sidebar() {
         <div className="p-4 h-full flex flex-col justify-between overflow-y-auto">
           {/* Top Section */}
           <div>
-            {/* Logo Section */}
-          
-<div className="flex items-center gap-3 mb-8 pb-4 border-b border-gray-700">
-  <div className="bg-gradient-to-r from-indigo-500 to-purple-600 p-1 rounded-xl min-w-[44px] h-[44px] flex items-center justify-center shadow-lg overflow-hidden">
-    <img 
-      src="/log.jpg" 
-      alt="InfiCode Logo" 
-      className="w-full h-full object-cover rounded-lg" 
-    />
-  </div>
-  <div
-    className={`transition-all duration-300 overflow-hidden ${
-      isMobile || isHovered ? "opacity-100 w-auto" : "opacity-0 w-0"
-    }`}
-  >
-    <h1 className="text-xl font-bold text-white whitespace-nowrap leading-tight">InfiCode</h1>
-    <p className="text-gray-400 text-xs tracking-wide">Coding Platform</p>
-  </div>
-</div>
+            {/* Logo */}
+            <div className="flex items-center gap-3 mb-8 pb-4 border-b border-gray-700">
+              <div className="bg-gradient-to-r from-indigo-500 to-purple-600 p-2 rounded-xl min-w-[44px] flex justify-center items-center">
+                {/* Logo image */}
+                <img 
+                  src="/infina.jpg" 
+                  alt="Infina Logo" 
+                  className="w-8 h-8 object-contain"
+                />
+              </div>
+              <div
+                className={`transition-all duration-300 overflow-hidden ${
+                  isMobile || isHovered ? "opacity-100 w-auto" : "opacity-0 w-0"
+                }`}
+              >
+                <h1 className="text-xl font-bold text-white whitespace-nowrap">InfiCode</h1>
+                <p className="text-gray-400 text-sm">Coding Platform</p>
+              </div>
+            </div>
 
             {/* Nav Items */}
             <nav className="flex flex-col gap-2">
@@ -200,7 +215,7 @@ function Sidebar() {
             </nav>
           </div>
 
-          {/* Logout Button */}
+          {/* ✅ Logout Button at Bottom */}
           <button
             onClick={handleLogout}
             className="mt-6 flex items-center justify-center gap-3 bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded-lg font-semibold shadow-md transition-all duration-200"
