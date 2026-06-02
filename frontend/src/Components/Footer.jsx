@@ -217,7 +217,7 @@ const contactItems = [
   { icon: Mail, label: "Email", value: "webcarftservices@gmail.com", href: "mailto:webcarftservices@gmail.com" },
   { icon: Globe, label: "Website", value: "web-craft-services.vercel.app", href: "https://web-craft-services.vercel.app/" },
   { icon: MapPin, label: "Location", value: "Remote-first, Global" },
-  { icon: ChevronsLeftRightEllipsis, label: "Community", value: "The DevHub", herf: "https://the-dev-hub.vercel.app/" },
+  { icon: ChevronsLeftRightEllipsis, label: "Community", value: "https://the-dev-hub.vercel.app/", herf: "https://the-dev-hub.vercel.app/" },
 ];
 
 const socialLinks = [
