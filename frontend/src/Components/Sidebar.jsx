@@ -68,10 +68,10 @@ function Sidebar() {
       >
         <div className="flex items-center gap-3">
           <div className="bg-white/20 p-2 rounded-xl ring-1 ring-white/30">
-            <img src="/infina.jpg" alt="Infina Logo" className="w-6 h-6 object-contain" />
+            <img src="/infina.jpg" alt="CodeOn Logo" className="w-6 h-6 object-contain" />
           </div>
           <div>
-            <h1 className="text-lg font-bold text-white">InfiCode</h1>
+            <h1 className="text-lg font-bold text-white">CodeOn</h1>
             <p className="text-indigo-200 text-xs flex items-center gap-1">
               <Zap size={10} /> Learn • Earn • Grow
             </p>
@@ -120,14 +120,14 @@ function Sidebar() {
                 whileHover={{ rotate: 5, scale: 1.05 }}
                 className="bg-gradient-to-br from-indigo-500 to-purple-600 p-2 rounded-xl min-w-[44px] flex justify-center items-center shadow-lg shadow-indigo-500/25"
               >
-                <img src="/infina.jpg" alt="Infina Logo" className="w-8 h-8 object-contain" />
+                <img src="/infina.jpg" alt="CodeOn Logo" className="w-8 h-8 object-contain" />
               </motion.div>
               <div
                 className={`transition-all duration-300 overflow-hidden ${
                   showText ? "opacity-100 w-auto" : "opacity-0 w-0"
                 }`}
               >
-                <h1 className="text-xl font-bold text-white whitespace-nowrap">InfiCode</h1>
+                <h1 className="text-xl font-bold text-white whitespace-nowrap">CodeOn</h1>
                 <p className="text-gray-400 text-sm">Coding Platform</p>
               </div>
             </div>

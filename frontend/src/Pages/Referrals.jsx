@@ -17,7 +17,7 @@ function Referrals() {
       : user.username?.slice(0, 8).toUpperCase()
     : "LOADING";
 
-  const referralLink = `https://infinacode.com/signup?ref=${referralCode}`;
+  const referralLink = `https://codeon.dev/signup?ref=${referralCode}`;
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -74,8 +74,8 @@ function Referrals() {
     if (navigator.share) {
       try {
         await navigator.share({
-          title: "Join me on Infina Code!",
-          text: "Learn coding and earn rewards with me on Infina Code!",
+          title: "Join me on CodeOn!",
+          text: "Learn coding and earn rewards with me on CodeOn!",
           url: referralLink,
         });
         toast.success("Referral shared successfully!");

@@ -430,7 +430,7 @@ export default function RegistrationForm() {
             <div style={{ width: 40, height: 40, borderRadius: 10, background: "linear-gradient(135deg, #7c3aed, #4f46e5)", display: "flex", alignItems: "center", justifyContent: "center" }}>
               <Code2 size={20} color="#fff" />
             </div>
-            <span style={{ fontSize: "1.1rem", fontWeight: 700, color: "#fff", letterSpacing: "-0.02em" }}>Infina Coding</span>
+            <span style={{ fontSize: "1.1rem", fontWeight: 700, color: "#fff", letterSpacing: "-0.02em" }}>CodeOn</span>
           </motion.div>
 
           <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}
@@ -490,7 +490,7 @@ export default function RegistrationForm() {
             <div style={{ width: 32, height: 32, borderRadius: 8, background: "linear-gradient(135deg, #7c3aed, #4f46e5)", display: "flex", alignItems: "center", justifyContent: "center" }}>
               <Code2 size={15} color="#fff" />
             </div>
-            <span style={{ fontSize: "1rem", fontWeight: 700, color: "#fff" }}>Infina Coding</span>
+            <span style={{ fontSize: "1rem", fontWeight: 700, color: "#fff" }}>CodeOn</span>
           </motion.div>
 
           <motion.div variants={itemVariants} style={{ marginBottom: "1.75rem" }}>

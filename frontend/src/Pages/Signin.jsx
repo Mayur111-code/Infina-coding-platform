@@ -340,7 +340,7 @@ export default function SigninForm() {
               <Code2 size={20} color="#fff" />
             </div>
             <span style={{ fontSize: "1.1rem", fontWeight: 700, color: "#fff", letterSpacing: "-0.02em" }}>
-              Infina Coding
+              CodeOn
             </span>
           </motion.div>
 
@@ -440,7 +440,7 @@ export default function SigninForm() {
             <div style={{ width: 34, height: 34, borderRadius: 8, background: "linear-gradient(135deg, #7c3aed, #4f46e5)", display: "flex", alignItems: "center", justifyContent: "center" }}>
               <Code2 size={16} color="#fff" />
             </div>
-            <span style={{ fontSize: "1rem", fontWeight: 700, color: "#fff" }}>Infina Coding</span>
+            <span style={{ fontSize: "1rem", fontWeight: 700, color: "#fff" }}>CodeOn</span>
           </motion.div>
 
           <motion.div variants={itemVariants} style={{ marginBottom: "2rem" }}>
